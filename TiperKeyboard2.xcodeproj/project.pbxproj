@@ -1,0 +1,583 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
+		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
+		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
+		F6FB59B91A4F36CE000A39CD /* TiperKeyboard2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59B81A4F36CE000A39CD /* TiperKeyboard2Tests.swift */; };
+		F6FB59CB1A4F378A000A39CD /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
+		F6FB59CE1A4F378A000A39CD /* TiperKeyboardKB.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
+		F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F6FB59B31A4F36CE000A39CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6FB599C1A4F36CE000A39CD;
+			remoteInfo = TiperKeyboard2;
+		};
+		F6FB59CC1A4F378A000A39CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6FB59C51A4F378A000A39CD;
+			remoteInfo = TiperKeyboardKB;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F6FB59D21A4F378A000A39CD /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F6FB59CE1A4F378A000A39CD /* TiperKeyboardKB.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
+		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
+		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F6FB59A91A4F36CE000A39CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F6FB59AC1A4F36CE000A39CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F6FB59B21A4F36CE000A39CD /* TiperKeyboard2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TiperKeyboard2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6FB59B71A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6FB59B81A4F36CE000A39CD /* TiperKeyboard2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiperKeyboard2Tests.swift; sourceTree = "<group>"; };
+		F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TiperKeyboardKB.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6FB59C91A4F378A000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataEntryViewController.swift; sourceTree = "<group>"; };
+		F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataCellTableViewCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F6FB599A1A4F36CE000A39CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59AF1A4F36CE000A39CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59C31A4F378A000A39CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F6FB59941A4F36CE000A39CD = {
+			isa = PBXGroup;
+			children = (
+				F6FB599F1A4F36CE000A39CD /* TiperKeyboard2 */,
+				F6FB59B51A4F36CE000A39CD /* TiperKeyboard2Tests */,
+				F6FB59C71A4F378A000A39CD /* TiperKeyboardKB */,
+				F6FB599E1A4F36CE000A39CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F6FB599E1A4F36CE000A39CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */,
+				F6FB59B21A4F36CE000A39CD /* TiperKeyboard2Tests.xctest */,
+				F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F6FB599F1A4F36CE000A39CD /* TiperKeyboard2 */ = {
+			isa = PBXGroup;
+			children = (
+				F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */,
+				F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */,
+				F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */,
+				F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */,
+				F6FB59A91A4F36CE000A39CD /* Images.xcassets */,
+				F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */,
+				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
+			);
+			path = TiperKeyboard2;
+			sourceTree = "<group>";
+		};
+		F6FB59A01A4F36CE000A39CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB59A11A4F36CE000A39CD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F6FB59B51A4F36CE000A39CD /* TiperKeyboard2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB59B81A4F36CE000A39CD /* TiperKeyboard2Tests.swift */,
+				F6FB59B61A4F36CE000A39CD /* Supporting Files */,
+			);
+			path = TiperKeyboard2Tests;
+			sourceTree = "<group>";
+		};
+		F6FB59B61A4F36CE000A39CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB59B71A4F36CE000A39CD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F6FB59C71A4F378A000A39CD /* TiperKeyboardKB */ = {
+			isa = PBXGroup;
+			children = (
+				F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */,
+				F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */,
+				F6FB59C81A4F378A000A39CD /* Supporting Files */,
+			);
+			path = TiperKeyboardKB;
+			sourceTree = "<group>";
+		};
+		F6FB59C81A4F378A000A39CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F6FB59C91A4F378A000A39CD /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6FB59BC1A4F36CE000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboard2" */;
+			buildPhases = (
+				F6FB59991A4F36CE000A39CD /* Sources */,
+				F6FB599A1A4F36CE000A39CD /* Frameworks */,
+				F6FB599B1A4F36CE000A39CD /* Resources */,
+				F6FB59D21A4F378A000A39CD /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6FB59CD1A4F378A000A39CD /* PBXTargetDependency */,
+			);
+			name = TiperKeyboard2;
+			productName = TiperKeyboard2;
+			productReference = F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F6FB59B11A4F36CE000A39CD /* TiperKeyboard2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6FB59BF1A4F36CE000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboard2Tests" */;
+			buildPhases = (
+				F6FB59AE1A4F36CE000A39CD /* Sources */,
+				F6FB59AF1A4F36CE000A39CD /* Frameworks */,
+				F6FB59B01A4F36CE000A39CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F6FB59B41A4F36CE000A39CD /* PBXTargetDependency */,
+			);
+			name = TiperKeyboard2Tests;
+			productName = TiperKeyboard2Tests;
+			productReference = F6FB59B21A4F36CE000A39CD /* TiperKeyboard2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F6FB59C51A4F378A000A39CD /* TiperKeyboardKB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6FB59CF1A4F378A000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboardKB" */;
+			buildPhases = (
+				F6FB59C21A4F378A000A39CD /* Sources */,
+				F6FB59C31A4F378A000A39CD /* Frameworks */,
+				F6FB59C41A4F378A000A39CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TiperKeyboardKB;
+			productName = TiperKeyboardKB;
+			productReference = F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F6FB59951A4F36CE000A39CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Kevin Taniguchi";
+				TargetAttributes = {
+					F6FB599C1A4F36CE000A39CD = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 3B3FT42G96;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
+					};
+					F6FB59B11A4F36CE000A39CD = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = F6FB599C1A4F36CE000A39CD;
+					};
+					F6FB59C51A4F378A000A39CD = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 3B3FT42G96;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = F6FB59981A4F36CE000A39CD /* Build configuration list for PBXProject "TiperKeyboard2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F6FB59941A4F36CE000A39CD;
+			productRefGroup = F6FB599E1A4F36CE000A39CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */,
+				F6FB59B11A4F36CE000A39CD /* TiperKeyboard2Tests */,
+				F6FB59C51A4F378A000A39CD /* TiperKeyboardKB */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F6FB599B1A4F36CE000A39CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */,
+				F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59B01A4F36CE000A39CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59C41A4F378A000A39CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F6FB59991A4F36CE000A39CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */,
+				F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */,
+				F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59AE1A4F36CE000A39CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6FB59B91A4F36CE000A39CD /* TiperKeyboard2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6FB59C21A4F378A000A39CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6FB59CB1A4F378A000A39CD /* KeyboardViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F6FB59B41A4F36CE000A39CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */;
+			targetProxy = F6FB59B31A4F36CE000A39CD /* PBXContainerItemProxy */;
+		};
+		F6FB59CD1A4F378A000A39CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6FB59C51A4F378A000A39CD /* TiperKeyboardKB */;
+			targetProxy = F6FB59CC1A4F378A000A39CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F6FB59AC1A4F36CE000A39CD /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F6FB59BA1A4F36CE000A39CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F6FB59BB1A4F36CE000A39CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F6FB59BD1A4F36CE000A39CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		F6FB59BE1A4F36CE000A39CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		F6FB59C01A4F36CE000A39CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TiperKeyboard2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
+			};
+			name = Debug;
+		};
+		F6FB59C11A4F36CE000A39CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TiperKeyboard2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
+			};
+			name = Release;
+		};
+		F6FB59D01A4F378A000A39CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TiperKeyboardKB/TiperKeyboardKB.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TiperKeyboardKB/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F6FB59D11A4F378A000A39CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TiperKeyboardKB/TiperKeyboardKB.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = TiperKeyboardKB/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F6FB59981A4F36CE000A39CD /* Build configuration list for PBXProject "TiperKeyboard2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6FB59BA1A4F36CE000A39CD /* Debug */,
+				F6FB59BB1A4F36CE000A39CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6FB59BC1A4F36CE000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboard2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6FB59BD1A4F36CE000A39CD /* Debug */,
+				F6FB59BE1A4F36CE000A39CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6FB59BF1A4F36CE000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboard2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6FB59C01A4F36CE000A39CD /* Debug */,
+				F6FB59C11A4F36CE000A39CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6FB59CF1A4F378A000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboardKB" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6FB59D01A4F378A000A39CD /* Debug */,
+				F6FB59D11A4F378A000A39CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F6FB59951A4F36CE000A39CD /* Project object */;
+}
