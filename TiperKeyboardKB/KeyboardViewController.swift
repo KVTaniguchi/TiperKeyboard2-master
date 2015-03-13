@@ -25,7 +25,7 @@ class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     
     let defaultskey = "tiper2Keyboard"
-    var dataArray = [[String:String]]()
+    var data = [[String:String]]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     
@@ -35,12 +35,9 @@ class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.sharedDefaults?.objectForKey(defaultskey) != nil {
-            self.dataArray = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
-        }
-        
-        for (index, entry) in enumerate(self.dataArray) {
+
+        self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        for (index, entry) in enumerate(data) {
             for (key, value) in entry {
                 addKeyboardButton(key, tag: index, keyTitle: value)
             }
@@ -76,7 +73,7 @@ class KeyboardViewController: UIInputViewController {
             keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: previousButton, attribute: .Bottom, multiplier: 1.0, constant: 0)
         }
         
-        var keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier: 0.5, constant: 0)
+        var keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier: self.data.count < 6 ? 1.0 : 0.5, constant: 0)
         
         var sideAttribute : NSLayoutAttribute?
         if tag <= 4 {
