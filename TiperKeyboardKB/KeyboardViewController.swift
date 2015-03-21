@@ -21,8 +21,6 @@ class KeyButton : UIButton {
 }
 
 class KeyboardViewController: UIInputViewController {
-
-    @IBOutlet var nextKeyboardButton: UIButton!
     
     let defaultskey = "tiper2Keyboard"
     var data = [[String:String]]()
@@ -37,30 +35,29 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
 
         self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+    
+        self.data.append(["Next Keyboard":"Next Keyboard"])
+        
         for (index, entry) in enumerate(data) {
             for (key, value) in entry {
                 addKeyboardButton(key, tag: index, keyTitle: value)
             }
         }
-    
-        self.nextKeyboardButton = UIButton.buttonWithType(.System) as! UIButton
-        self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), forState: .Normal)
-        self.nextKeyboardButton.sizeToFit()
-        self.nextKeyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.nextKeyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.nextKeyboardButton)
-
-        var nextKeyboardButtonLeftSideConstraint = NSLayoutConstraint(item: self.nextKeyboardButton, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1.0, constant: 0.0)
-        var nextKeyboardButtonBottomConstraint = NSLayoutConstraint(item: self.nextKeyboardButton, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-        self.view.addConstraints([nextKeyboardButtonLeftSideConstraint, nextKeyboardButtonBottomConstraint])
     }
     
     func addKeyboardButton (keyText: String, tag: NSInteger, keyTitle: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
         keyboardButton.setTitle(keyTitle, forState: .Normal)
         keyboardButton.keyText = keyText
+        keyboardButton.layer.cornerRadius = 10
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+        if keyTitle != "Next Keyboard" {
+            keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+        }
+        else {
+            keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
+        }
+
         keyboardButton.backgroundColor = getRandomColor()
         self.view.addSubview(keyboardButton)
         
@@ -111,7 +108,6 @@ class KeyboardViewController: UIInputViewController {
         } else {
             textColor = UIColor.blackColor()
         }
-        self.nextKeyboardButton.setTitleColor(textColor, forState: .Normal)
     }
     
     func getRandomColor() -> UIColor{
