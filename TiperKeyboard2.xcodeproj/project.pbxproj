@@ -7,14 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F664FCC01AB395EF0060CCB0 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F664FCBF1AB395EF0060CCB0 /* InterfaceController.swift */; };
-		F664FCC21AB395EF0060CCB0 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F664FCC11AB395EF0060CCB0 /* NotificationController.swift */; };
-		F664FCC41AB395EF0060CCB0 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F664FCC31AB395EF0060CCB0 /* GlanceController.swift */; };
-		F664FCC61AB395EF0060CCB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F664FCC51AB395EF0060CCB0 /* Images.xcassets */; };
-		F664FCCA1AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = F664FCC91AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app */; };
-		F664FCD21AB395F00060CCB0 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F664FCD01AB395F00060CCB0 /* Interface.storyboard */; };
-		F664FCD41AB395F00060CCB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F664FCD31AB395F00060CCB0 /* Images.xcassets */; };
-		F664FCD71AB395F00060CCB0 /* TiperKeyboard2 WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F664FCBA1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
@@ -26,20 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F664FCCB1AB395F00060CCB0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F664FCC81AB395F00060CCB0;
-			remoteInfo = "TiperKeyboard2 WatchKit App";
-		};
-		F664FCD51AB395F00060CCB0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F664FCB91AB395EF0060CCB0;
-			remoteInfo = "TiperKeyboard2 WatchKit Extension";
-		};
 		F6FB59B31A4F36CE000A39CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
@@ -63,7 +41,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F664FCD71AB395F00060CCB0 /* TiperKeyboard2 WatchKit Extension.appex in Embed App Extensions */,
 				F6FB59CE1A4F378A000A39CD /* TiperKeyboardKB.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -74,17 +51,6 @@
 /* Begin PBXFileReference section */
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
-		F664FCBA1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "TiperKeyboard2 WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F664FCBD1AB395EF0060CCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F664FCBE1AB395EF0060CCB0 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		F664FCBF1AB395EF0060CCB0 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
-		F664FCC11AB395EF0060CCB0 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		F664FCC31AB395EF0060CCB0 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
-		F664FCC51AB395EF0060CCB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F664FCC91AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TiperKeyboard2 WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F664FCCF1AB395F00060CCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F664FCD11AB395F00060CCB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		F664FCD31AB395F00060CCB0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,13 +67,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F664FCB71AB395EF0060CCB0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F6FB599A1A4F36CE000A39CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -132,53 +91,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F664FCBB1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension */ = {
-			isa = PBXGroup;
-			children = (
-				F664FCBF1AB395EF0060CCB0 /* InterfaceController.swift */,
-				F664FCC11AB395EF0060CCB0 /* NotificationController.swift */,
-				F664FCC31AB395EF0060CCB0 /* GlanceController.swift */,
-				F664FCC51AB395EF0060CCB0 /* Images.xcassets */,
-				F664FCBC1AB395EF0060CCB0 /* Supporting Files */,
-			);
-			path = "TiperKeyboard2 WatchKit Extension";
-			sourceTree = "<group>";
-		};
-		F664FCBC1AB395EF0060CCB0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F664FCBD1AB395EF0060CCB0 /* Info.plist */,
-				F664FCBE1AB395EF0060CCB0 /* PushNotificationPayload.apns */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		F664FCCD1AB395F00060CCB0 /* TiperKeyboard2 WatchKit App */ = {
-			isa = PBXGroup;
-			children = (
-				F664FCD01AB395F00060CCB0 /* Interface.storyboard */,
-				F664FCD31AB395F00060CCB0 /* Images.xcassets */,
-				F664FCCE1AB395F00060CCB0 /* Supporting Files */,
-			);
-			path = "TiperKeyboard2 WatchKit App";
-			sourceTree = "<group>";
-		};
-		F664FCCE1AB395F00060CCB0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				F664FCCF1AB395F00060CCB0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		F6FB59941A4F36CE000A39CD = {
 			isa = PBXGroup;
 			children = (
 				F6FB599F1A4F36CE000A39CD /* TiperKeyboard2 */,
 				F6FB59B51A4F36CE000A39CD /* TiperKeyboard2Tests */,
 				F6FB59C71A4F378A000A39CD /* TiperKeyboardKB */,
-				F664FCBB1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension */,
-				F664FCCD1AB395F00060CCB0 /* TiperKeyboard2 WatchKit App */,
 				F6FB599E1A4F36CE000A39CD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -189,8 +107,6 @@
 				F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */,
 				F6FB59B21A4F36CE000A39CD /* TiperKeyboard2Tests.xctest */,
 				F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */,
-				F664FCBA1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension.appex */,
-				F664FCC91AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,39 +171,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F664FCB91AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F664FCDD1AB395F00060CCB0 /* Build configuration list for PBXNativeTarget "TiperKeyboard2 WatchKit Extension" */;
-			buildPhases = (
-				F664FCB61AB395EF0060CCB0 /* Sources */,
-				F664FCB71AB395EF0060CCB0 /* Frameworks */,
-				F664FCB81AB395EF0060CCB0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F664FCCC1AB395F00060CCB0 /* PBXTargetDependency */,
-			);
-			name = "TiperKeyboard2 WatchKit Extension";
-			productName = "TiperKeyboard2 WatchKit Extension";
-			productReference = F664FCBA1AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
-		};
-		F664FCC81AB395F00060CCB0 /* TiperKeyboard2 WatchKit App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F664FCDC1AB395F00060CCB0 /* Build configuration list for PBXNativeTarget "TiperKeyboard2 WatchKit App" */;
-			buildPhases = (
-				F664FCC71AB395F00060CCB0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "TiperKeyboard2 WatchKit App";
-			productName = "TiperKeyboard2 WatchKit App";
-			productReference = F664FCC91AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
-		};
 		F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F6FB59BC1A4F36CE000A39CD /* Build configuration list for PBXNativeTarget "TiperKeyboard2" */;
@@ -301,7 +184,6 @@
 			);
 			dependencies = (
 				F6FB59CD1A4F378A000A39CD /* PBXTargetDependency */,
-				F664FCD61AB395F00060CCB0 /* PBXTargetDependency */,
 			);
 			name = TiperKeyboard2;
 			productName = TiperKeyboard2;
@@ -352,13 +234,6 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Kevin Taniguchi";
 				TargetAttributes = {
-					F664FCB91AB395EF0060CCB0 = {
-						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 3B3FT42G96;
-					};
-					F664FCC81AB395F00060CCB0 = {
-						CreatedOnToolsVersion = 6.3;
-					};
 					F6FB599C1A4F36CE000A39CD = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3B3FT42G96;
@@ -402,31 +277,11 @@
 				F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */,
 				F6FB59B11A4F36CE000A39CD /* TiperKeyboard2Tests */,
 				F6FB59C51A4F378A000A39CD /* TiperKeyboardKB */,
-				F664FCB91AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension */,
-				F664FCC81AB395F00060CCB0 /* TiperKeyboard2 WatchKit App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F664FCB81AB395EF0060CCB0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F664FCC61AB395EF0060CCB0 /* Images.xcassets in Resources */,
-				F664FCCA1AB395F00060CCB0 /* TiperKeyboard2 WatchKit App.app in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F664FCC71AB395F00060CCB0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F664FCD21AB395F00060CCB0 /* Interface.storyboard in Resources */,
-				F664FCD41AB395F00060CCB0 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F6FB599B1A4F36CE000A39CD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,16 +308,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F664FCB61AB395EF0060CCB0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F664FCC21AB395EF0060CCB0 /* NotificationController.swift in Sources */,
-				F664FCC01AB395EF0060CCB0 /* InterfaceController.swift in Sources */,
-				F664FCC41AB395EF0060CCB0 /* GlanceController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F6FB59991A4F36CE000A39CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -492,16 +337,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F664FCCC1AB395F00060CCB0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F664FCC81AB395F00060CCB0 /* TiperKeyboard2 WatchKit App */;
-			targetProxy = F664FCCB1AB395F00060CCB0 /* PBXContainerItemProxy */;
-		};
-		F664FCD61AB395F00060CCB0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F664FCB91AB395EF0060CCB0 /* TiperKeyboard2 WatchKit Extension */;
-			targetProxy = F664FCD51AB395F00060CCB0 /* PBXContainerItemProxy */;
-		};
 		F6FB59B41A4F36CE000A39CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */;
@@ -515,14 +350,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F664FCD01AB395F00060CCB0 /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F664FCD11AB395F00060CCB0 /* Base */,
-			);
-			name = Interface.storyboard;
-			sourceTree = "<group>";
-		};
 		F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -534,74 +361,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F664FCD81AB395F00060CCB0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "TiperKeyboard2 WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		F664FCD91AB395F00060CCB0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				INFOPLIST_FILE = "TiperKeyboard2 WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		F664FCDA1AB395F00060CCB0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				IBSC_MODULE = TiperKeyboard2_WatchKit_Extension;
-				INFOPLIST_FILE = "TiperKeyboard2 WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
-			};
-			name = Debug;
-		};
-		F664FCDB1AB395F00060CCB0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				IBSC_MODULE = TiperKeyboard2_WatchKit_Extension;
-				INFOPLIST_FILE = "TiperKeyboard2 WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
-			};
-			name = Release;
-		};
 		F6FB59BA1A4F36CE000A39CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -782,22 +541,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F664FCDC1AB395F00060CCB0 /* Build configuration list for PBXNativeTarget "TiperKeyboard2 WatchKit App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F664FCDA1AB395F00060CCB0 /* Debug */,
-				F664FCDB1AB395F00060CCB0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		F664FCDD1AB395F00060CCB0 /* Build configuration list for PBXNativeTarget "TiperKeyboard2 WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F664FCD81AB395F00060CCB0 /* Debug */,
-				F664FCD91AB395F00060CCB0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		F6FB59981A4F36CE000A39CD /* Build configuration list for PBXProject "TiperKeyboard2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

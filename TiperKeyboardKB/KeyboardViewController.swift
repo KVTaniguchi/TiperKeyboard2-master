@@ -51,6 +51,7 @@ class KeyboardViewController: UIInputViewController {
         keyboardButton.keyText = keyText
         keyboardButton.layer.cornerRadius = 10
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
         if keyTitle != "Next Keyboard" {
             keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
         }
@@ -97,7 +98,6 @@ class KeyboardViewController: UIInputViewController {
     }
 
     override func textWillChange(textInput: UITextInput) {
-        print("will change text")
     }
 
     override func textDidChange(textInput: UITextInput) {
@@ -105,7 +105,8 @@ class KeyboardViewController: UIInputViewController {
         var proxy = self.textDocumentProxy as! UITextDocumentProxy
         if proxy.keyboardAppearance == UIKeyboardAppearance.Dark {
             textColor = UIColor.whiteColor()
-        } else {
+        }
+        else {
             textColor = UIColor.blackColor()
         }
     }
