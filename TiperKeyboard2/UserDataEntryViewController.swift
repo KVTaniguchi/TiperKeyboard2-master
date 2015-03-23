@@ -48,7 +48,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
 
-        self.view.backgroundColor = UIColor.redColor()
         self.tableView = UITableView(frame: self.view.bounds, style: UITableViewStyle.Plain)
         self.tableView?.registerClass(UserDataCellTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         self.tableView?.dataSource = self
