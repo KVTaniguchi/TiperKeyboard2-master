@@ -21,6 +21,18 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.topItem?.title = "Set Up Your Keyboard Keys"
+        
+        /*
+        TODO 
+        1 - add a how to screen to get user to enable the keyboard
+        2 - add an animation to the table view cells when it is saved
+            -- add a checkmark view to indicate it has been saved
+        3 - choose a color to color code the individual keys
+            -- add an edit button the left side
+            -- push to a different color picker screen
+        */
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
         

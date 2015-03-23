@@ -33,6 +33,8 @@ class UserDataCellTableViewCell: UITableViewCell {
         self.userEmailTextField?.textAlignment = NSTextAlignment.Center
         self.userEmailTextField.backgroundColor = UIColor.clearColor()
         self.userNameTextField.backgroundColor = UIColor.clearColor()
+        self.userEmailTextField.textColor = UIColor.whiteColor()
+        self.userNameTextField.textColor = UIColor.whiteColor()
         
         if self.userNameTextField?.text.isEmpty == true {
             self.userNameTextField?.placeholder = "What you want the key to say"
