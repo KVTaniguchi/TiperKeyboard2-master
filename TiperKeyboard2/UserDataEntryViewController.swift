@@ -173,7 +173,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func getRandomColor() -> UIColor{
+    func getRandomColor() -> UIColor {
         var randomRed:CGFloat = CGFloat(drand48())
         var randomGreen:CGFloat = CGFloat(drand48())
         var randomBlue:CGFloat = CGFloat(drand48())

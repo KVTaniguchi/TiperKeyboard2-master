@@ -19,6 +19,7 @@ class UserDataCellTableViewCell: UITableViewCell {
     var userNameTextField : UITextField!
     var originalCenter = CGPoint()
     var deleteOnDragRelease = false
+    var lockLeftSideOpen = false
     var delegate : UserDataCellDelegate?
     let gradientLayer = CAGradientLayer()
     
@@ -35,6 +36,8 @@ class UserDataCellTableViewCell: UITableViewCell {
         self.userNameTextField.backgroundColor = UIColor.clearColor()
         self.userEmailTextField.textColor = UIColor.whiteColor()
         self.userNameTextField.textColor = UIColor.whiteColor()
+        self.userEmailTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.userNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if self.userNameTextField?.text.isEmpty == true {
             self.userNameTextField?.placeholder = "What you want the key to say"
@@ -65,11 +68,24 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         gradientLayer.frame = bounds
         
-        self.userEmailTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.userNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        var animatingView = UIView()
+        animatingView.backgroundColor = UIColor.blueColor()
+        
+        UIView.animateKeyframesWithDuration(2.0, delay: 0, options: UIViewKeyframeAnimationOptions.Autoreverse | UIViewKeyframeAnimationOptions.Repeat, animations: {
+                UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
+                    animatingView.backgroundColor = UIColor(red: 51/255, green: 66/255, blue: 239/255, alpha: 1.0)
+                })
+                UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
+                    animatingView.backgroundColor = UIColor.blueColor()
+                })
+            }, completion: nil)
+    
+        animatingView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        [self.contentView .addSubview(animatingView)]
         
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[emailTF][nameTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["emailTF":self.userEmailTextField, "nameTF":self.userNameTextField]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView]))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
     }
@@ -84,13 +100,19 @@ class UserDataCellTableViewCell: UITableViewCell {
             let translation = recognizer.translationInView(self)
             center = CGPointMake(originalCenter.x + translation.x, originalCenter.y)
             deleteOnDragRelease = frame.origin.x < -frame.size.width / 2.0
+            lockLeftSideOpen = frame.origin.x > frame.size.width / 4.0
         }
         
         if recognizer.state == .Ended {
             let originalFrame = CGRectMake(0, frame.origin.y, bounds.size.width, bounds.size.height)
-            if !deleteOnDragRelease {
+            if !deleteOnDragRelease && !lockLeftSideOpen {
                 UIView.animateWithDuration(0.2, animations: {
                     self.frame = originalFrame
+                })
+            }
+            else if lockLeftSideOpen {
+                UIView.animateWithDuration(0.2, animations: {
+                    self.frame = CGRectMake(44, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height)
                 })
             }
             else {
@@ -105,7 +127,6 @@ class UserDataCellTableViewCell: UITableViewCell {
             if fabs(translation.x) > fabs(translation.y) {
                 return true
             }
-            return false
         }
         return false
     }
