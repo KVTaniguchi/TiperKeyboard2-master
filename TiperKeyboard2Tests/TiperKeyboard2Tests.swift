@@ -11,6 +11,9 @@ import XCTest
 
 class TiperKeyboard2Tests: XCTestCase {
     
+    var userVC = UserDataEntryViewController()
+    var keyboardVC = KeyboardViewController()
+    
     override func setUp() {
         super.setUp()
         
@@ -20,6 +23,10 @@ class TiperKeyboard2Tests: XCTestCase {
         super.tearDown()
     }
     
+    func testUserVCAddingNewItemIncreasesCount () {
+        self.userVC.addNewItem()
+        XCTAssertTrue(self.userVC.count > 0, "failed to add to key array")
+    }
     
     
 }

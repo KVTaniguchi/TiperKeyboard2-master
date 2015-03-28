@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
+		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
+		F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
@@ -330,6 +333,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */,
+				F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */,
+				F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */,
 				F6FB59B91A4F36CE000A39CD /* TiperKeyboard2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
