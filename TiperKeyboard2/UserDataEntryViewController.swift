@@ -31,6 +31,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         3 - choose a color to color code the individual keys
             -- add an edit button the left side
             -- push to a different color picker screen
+        4 - replace all cell delegate protocols with closures
         */
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
@@ -117,6 +118,10 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
             cell.backgroundColor = getRandomColor()
         }
+    }
+    
+    func openColorPicker(tag: NSInteger) {
+        print("open color picker")
     }
     
     func textChanged (notification:NSNotification) {

@@ -18,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F6A1C01D1AC7371900EEC008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F6FB59C51A4F378A000A39CD;
+			remoteInfo = TiperKeyboardKB;
+		};
 		F6FB59B31A4F36CE000A39CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F6FB59951A4F36CE000A39CD /* Project object */;
@@ -201,6 +208,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F6A1C01E1AC7371900EEC008 /* PBXTargetDependency */,
 				F6FB59B41A4F36CE000A39CD /* PBXTargetDependency */,
 			);
 			name = TiperKeyboard2Tests;
@@ -337,6 +345,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F6A1C01E1AC7371900EEC008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F6FB59C51A4F378A000A39CD /* TiperKeyboardKB */;
+			targetProxy = F6A1C01D1AC7371900EEC008 /* PBXContainerItemProxy */;
+		};
 		F6FB59B41A4F36CE000A39CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F6FB599C1A4F36CE000A39CD /* TiperKeyboard2 */;

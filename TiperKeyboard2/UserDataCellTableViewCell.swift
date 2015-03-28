@@ -11,10 +11,12 @@ import UIKit
 protocol UserDataCellDelegate {
     func itemDeleted(tag:NSInteger)
     func slideBegan(tag:NSInteger)
+    func openColorPicker(tag:NSInteger)
 }
 
 class UserDataCellTableViewCell: UITableViewCell {
 
+    var colorButton : UIButton!
     var userEmailTextField : UITextField!
     var userNameTextField : UITextField!
     var originalCenter = CGPoint()
@@ -26,8 +28,14 @@ class UserDataCellTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
+
+        self.colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        self.colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.colorButton.backgroundColor = UIColor.greenColor()
+        self.colorButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.contentView.addSubview(self.colorButton)
+        
         self.userNameTextField = UITextField()
         self.userEmailTextField = UITextField()
         self.userNameTextField?.textAlignment = NSTextAlignment.Center
@@ -55,7 +63,7 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         var recognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         recognizer.delegate = self
-        addGestureRecognizer(recognizer)
+        self.contentView.addGestureRecognizer(recognizer)
         
         gradientLayer.frame = bounds
         let color1 = UIColor(white: 1.0, alpha: 0.2).CGColor as CGColorRef
@@ -73,7 +81,7 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         UIView.animateKeyframesWithDuration(2.0, delay: 0, options: UIViewKeyframeAnimationOptions.Autoreverse | UIViewKeyframeAnimationOptions.Repeat, animations: {
                 UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
-                    animatingView.backgroundColor = UIColor(red: 51/255, green: 66/255, blue: 239/255, alpha: 1.0)
+                    animatingView.backgroundColor = UIColor(red: 51/255, green: 56/255, blue: 239/255, alpha: 1.0)
                 })
                 UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
                     animatingView.backgroundColor = UIColor.blueColor()
@@ -81,13 +89,17 @@ class UserDataCellTableViewCell: UITableViewCell {
             }, completion: nil)
     
         animatingView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        [self.contentView .addSubview(animatingView)]
+        self.contentView.addSubview(animatingView)
         
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[emailTF][nameTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["emailTF":self.userEmailTextField, "nameTF":self.userNameTextField]))
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView]))
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+        
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.colorButton, attribute: .Right, relatedBy: .Equal, toItem: self.contentView, attribute: .Left, multiplier: 1.0, constant:0))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.colorButton, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 1.0, constant: 0))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[colorButton(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["colorButton":self.colorButton]))
     }
     
     func handlePan (recognizer : UIPanGestureRecognizer) {
@@ -97,7 +109,7 @@ class UserDataCellTableViewCell: UITableViewCell {
         }
         
         if recognizer.state == .Changed {
-            let translation = recognizer.translationInView(self)
+            let translation = recognizer.translationInView(self.contentView)
             center = CGPointMake(originalCenter.x + translation.x, originalCenter.y)
             deleteOnDragRelease = frame.origin.x < -frame.size.width / 2.0
             lockLeftSideOpen = frame.origin.x > frame.size.width / 4.0
@@ -119,6 +131,10 @@ class UserDataCellTableViewCell: UITableViewCell {
                 delegate?.itemDeleted(self.tag)
             }
         }
+    }
+    
+    func activateColorPicker (sender : UIButton) {
+        delegate?.openColorPicker(self.tag)
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
