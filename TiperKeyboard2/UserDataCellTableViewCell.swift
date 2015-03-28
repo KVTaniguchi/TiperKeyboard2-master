@@ -11,7 +11,6 @@ import UIKit
 protocol UserDataCellDelegate {
     func itemDeleted(tag:NSInteger)
     func slideBegan(tag:NSInteger)
-    func openColorPicker(tag:NSInteger)
 }
 
 class UserDataCellTableViewCell: UITableViewCell {
@@ -30,6 +29,9 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         self.selectionStyle = UITableViewCellSelectionStyle.None
 
+        // create array of buttons for 10 colors
+        // the last button will always be grey
+        
         self.colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
         self.colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
         self.colorButton.backgroundColor = UIColor.greenColor()
@@ -93,13 +95,11 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[emailTF][nameTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["emailTF":self.userEmailTextField, "nameTF":self.userNameTextField]))
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[colorButton(44)][animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView, "colorButton":self.colorButton]))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
         
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.colorButton, attribute: .Right, relatedBy: .Equal, toItem: self.contentView, attribute: .Left, multiplier: 1.0, constant:0))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.colorButton, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 1.0, constant: 0))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[colorButton(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["colorButton":self.colorButton]))
     }
     
     func handlePan (recognizer : UIPanGestureRecognizer) {
@@ -126,6 +126,7 @@ class UserDataCellTableViewCell: UITableViewCell {
                 UIView.animateWithDuration(0.2, animations: {
                     self.frame = CGRectMake(44, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height)
                 })
+                
             }
             else {
                 delegate?.itemDeleted(self.tag)
@@ -134,7 +135,7 @@ class UserDataCellTableViewCell: UITableViewCell {
     }
     
     func activateColorPicker (sender : UIButton) {
-        delegate?.openColorPicker(self.tag)
+        // change color of cell depending on the button sender
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

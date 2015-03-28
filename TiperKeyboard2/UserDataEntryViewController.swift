@@ -49,11 +49,12 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
 
-        self.tableView = UITableView(frame: self.view.bounds, style: UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width+44, self.view.frame.size.height), style: UITableViewStyle.Plain)
         self.tableView?.registerClass(UserDataCellTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView?.contentInset = UIEdgeInsetsMake(0, -44, 0, 0)
         self.view.addSubview(self.tableView!)
         
         self.tableView?.autoresizesSubviews = false
@@ -118,10 +119,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
             cell.backgroundColor = getRandomColor()
         }
-    }
-    
-    func openColorPicker(tag: NSInteger) {
-        print("open color picker")
     }
     
     func textChanged (notification:NSNotification) {
