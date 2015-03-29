@@ -64,18 +64,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         self.count++
         self.keyArray.append(["":""])
         self.tableView?.reloadData()
-    }
-    
-    func itemDeleted(tag: NSInteger) {
-//        self.count--
-//        self.keyArray.removeAtIndex(tag)
-//        self.sharedDefaults?.setValue(self.keyArray, forKey:defaultskey)
-//        self.sharedDefaults?.synchronize()
-//        
-//        self.tableView?.beginUpdates()
-//        self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
-//        self.tableView?.endUpdates()
-//        self.tableView?.reloadData()
+        let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
+        self.tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
@@ -93,13 +83,11 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         userDataCell.slideBeganCallback = { (tag : Int) in
-            println("the now ow")
             self.selectedRow = tag
             self.saveData()
         }
         
         userDataCell.deleteItemCallback = { (tag : Int) in
-            println("the who who")
             self.count--
             self.keyArray.removeAtIndex(tag)
             self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
@@ -145,11 +133,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     
     func textChanged (notification:NSNotification) {
         let textField = notification.object as! UITextField
-    }
-    
-    func slideBegan(tag: NSInteger) {
-//        self.selectedRow = tag
-//        saveData()
     }
     
     func keyboardShown (notification:NSNotification) {
