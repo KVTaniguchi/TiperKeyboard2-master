@@ -8,35 +8,26 @@
 
 import UIKit
 
-protocol UserDataCellDelegate {
-    func itemDeleted(tag:NSInteger)
-    func slideBegan(tag:NSInteger)
-}
-
 class UserDataCellTableViewCell: UITableViewCell {
 
+    var buttonArray = [UIButton]()
+    var colors = [UIColor]()
     var colorButton : UIButton!
     var userEmailTextField : UITextField!
     var userNameTextField : UITextField!
     var originalCenter = CGPoint()
     var deleteOnDragRelease = false
     var lockLeftSideOpen = false
-    var delegate : UserDataCellDelegate?
     let gradientLayer = CAGradientLayer()
+    
+    var updateColorCallback : ((tag : Int) -> ())?
+    var deleteItemCallback : ((tag : Int) -> ())?
+    var slideBeganCallback : ((tag : Int) -> ())?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = UITableViewCellSelectionStyle.None
-
-        // create array of buttons for 10 colors
-        // the last button will always be grey
-        
-        self.colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        self.colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
-        self.colorButton.backgroundColor = UIColor.greenColor()
-        self.colorButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.contentView.addSubview(self.colorButton)
         
         self.userNameTextField = UITextField()
         self.userEmailTextField = UITextField()
@@ -79,40 +70,65 @@ class UserDataCellTableViewCell: UITableViewCell {
         gradientLayer.frame = bounds
         
         var animatingView = UIView()
-        animatingView.backgroundColor = UIColor.blueColor()
+        animatingView.backgroundColor = UIColor.lightGrayColor()
         
         UIView.animateKeyframesWithDuration(2.0, delay: 0, options: UIViewKeyframeAnimationOptions.Autoreverse | UIViewKeyframeAnimationOptions.Repeat, animations: {
                 UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
                     animatingView.backgroundColor = UIColor(red: 51/255, green: 56/255, blue: 239/255, alpha: 1.0)
                 })
                 UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
-                    animatingView.backgroundColor = UIColor.blueColor()
+                    animatingView.backgroundColor = UIColor.lightGrayColor()
                 })
             }, completion: nil)
     
         animatingView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.contentView.addSubview(animatingView)
         
+        self.colors = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
+        
+        for index in 0...9 {
+            var colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+            colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+            colorButton.tag = index
+            colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
+            colorButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            colorButton.backgroundColor = colors[index]
+            self.buttonArray.append(colorButton)
+            self.contentView.addSubview(colorButton)
+            
+            if index == 0 {
+                self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Leading, relatedBy: .Equal, toItem: self.contentView, attribute: .Leading, multiplier: 1.0, constant: 0))
+            }
+            else {
+                let previousButton = self.buttonArray[index - 1]
+                self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
+                if index == 9 {
+                    self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: animatingView, attribute: .Left, multiplier: 1.0, constant: 0))
+                }
+            }
+            
+            self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorButton]|", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
+            self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(30)]", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
+        }
+        
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[emailTF][nameTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["emailTF":self.userEmailTextField, "nameTF":self.userNameTextField]))
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[colorButton(44)][animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView, "colorButton":self.colorButton]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView]))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
-        
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.colorButton, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 1.0, constant: 0))
     }
     
     func handlePan (recognizer : UIPanGestureRecognizer) {
         if recognizer.state == .Began {
             originalCenter = center
-            delegate?.slideBegan(self.tag)
+            self.slideBeganCallback!(tag : self.tag)
         }
         
         if recognizer.state == .Changed {
             let translation = recognizer.translationInView(self.contentView)
             center = CGPointMake(originalCenter.x + translation.x, originalCenter.y)
-            deleteOnDragRelease = frame.origin.x < -frame.size.width / 2.0
-            lockLeftSideOpen = frame.origin.x > frame.size.width / 4.0
+            deleteOnDragRelease = frame.origin.x < (-frame.size.width + 300 ) / 2.0
+            lockLeftSideOpen = frame.origin.x > (frame.size.width + 300) / 4.0
         }
         
         if recognizer.state == .Ended {
@@ -124,18 +140,19 @@ class UserDataCellTableViewCell: UITableViewCell {
             }
             else if lockLeftSideOpen {
                 UIView.animateWithDuration(0.2, animations: {
-                    self.frame = CGRectMake(44, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height)
+                    self.frame = CGRectMake(300, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height)
                 })
                 
             }
             else {
-                delegate?.itemDeleted(self.tag)
+                self.deleteItemCallback!(tag: self.tag)
             }
         }
     }
     
     func activateColorPicker (sender : UIButton) {
-        // change color of cell depending on the button sender
+        self.contentView.backgroundColor = self.colors[sender.tag]
+        self.updateColorCallback!(tag: sender.tag)
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

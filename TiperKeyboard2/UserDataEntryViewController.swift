@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UserDataCellDelegate {
+class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var tableView : UITableView?
     var selectedRow = 0
@@ -49,12 +49,12 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
 
-        self.tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width+44, self.view.frame.size.height), style: UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width+300, self.view.frame.size.height), style: UITableViewStyle.Plain)
         self.tableView?.registerClass(UserDataCellTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         self.tableView?.dataSource = self
         self.tableView?.delegate = self
         self.tableView?.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.tableView?.contentInset = UIEdgeInsetsMake(0, -44, 0, 0)
+        self.tableView?.contentInset = UIEdgeInsetsMake(0, -300, 0, 0)
         self.view.addSubview(self.tableView!)
         
         self.tableView?.autoresizesSubviews = false
@@ -67,15 +67,15 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func itemDeleted(tag: NSInteger) {
-        self.count--
-        self.keyArray.removeAtIndex(tag)
-        self.sharedDefaults?.setValue(self.keyArray, forKey:defaultskey)
-        self.sharedDefaults?.synchronize()
-        
-        self.tableView?.beginUpdates()
-        self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
-        self.tableView?.endUpdates()
-        self.tableView?.reloadData()
+//        self.count--
+//        self.keyArray.removeAtIndex(tag)
+//        self.sharedDefaults?.setValue(self.keyArray, forKey:defaultskey)
+//        self.sharedDefaults?.synchronize()
+//        
+//        self.tableView?.beginUpdates()
+//        self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
+//        self.tableView?.endUpdates()
+//        self.tableView?.reloadData()
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
@@ -84,10 +84,32 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var userDataCell = tableView.dequeueReusableCellWithIdentifier("UserDataTableViewCell") as! UserDataCellTableViewCell
-        userDataCell.delegate = self
         userDataCell.tag = indexPath.row
         userDataCell.userEmailTextField?.tag = indexPath.row
         userDataCell.userNameTextField?.tag = indexPath.row
+        
+        userDataCell.updateColorCallback = { (tag : Int) in
+            println("the whate whate")
+        }
+        
+        userDataCell.slideBeganCallback = { (tag : Int) in
+            println("the now ow")
+            self.selectedRow = tag
+            self.saveData()
+        }
+        
+        userDataCell.deleteItemCallback = { (tag : Int) in
+            println("the who who")
+            self.count--
+            self.keyArray.removeAtIndex(tag)
+            self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
+            self.sharedDefaults?.synchronize()
+            
+            self.tableView?.beginUpdates()
+            self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
+            self.tableView?.endUpdates()
+            self.tableView?.reloadData()
+        }
         
         if self.keyArray.count > indexPath.row {
             let keyDictionary = self.keyArray[indexPath.row] as [String:String]
@@ -126,8 +148,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func slideBegan(tag: NSInteger) {
-        self.selectedRow = tag
-        saveData()
+//        self.selectedRow = tag
+//        saveData()
     }
     
     func keyboardShown (notification:NSNotification) {
