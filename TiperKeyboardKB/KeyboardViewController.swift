@@ -40,12 +40,12 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in enumerate(data) {
             for (key, value) in entry {
-                addKeyboardButton(key, tag: index, keyTitle: value)
+                self.addKeyboardButton(key, tag: index, keyText: value)
             }
         }
     }
     
-    func addKeyboardButton (keyText: String, tag: NSInteger, keyTitle: String) {
+    func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
         keyboardButton.setTitle(keyTitle, forState: .Normal)
         keyboardButton.keyText = keyText

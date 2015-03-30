@@ -15,8 +15,10 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     var count = 0
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var keyArray = [[String:String]]()
+    var colorDictionary = [String:String]()
     let cellIdentifier = "UserDataTableViewCell"
     let defaultskey = "tiper2Keyboard"
+    let defaultColors = "tiper2Colors"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,10 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             self.keyArray = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             self.count = self.keyArray.count
             self.tableView?.reloadData()
+        }
+        
+        if self.sharedDefaults?.objectForKey(defaultColors) != nil {
+            
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getSelectedRow:", name: UITextFieldTextDidBeginEditingNotification, object: nil)
@@ -78,25 +84,27 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.keyInputDataTextField?.tag = indexPath.row
         userDataCell.keyNameTextField?.tag = indexPath.row
         
+        weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
             println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
+            
         }
         
         userDataCell.slideBeganCallback = { (tag : Int) in
-            self.selectedRow = tag
-            self.saveData()
+            weakSelf!.selectedRow = tag
+            weakSelf!.saveData()
         }
         
         userDataCell.deleteItemCallback = { (tag : Int) in
-            self.count--
-            self.keyArray.removeAtIndex(tag)
-            self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
-            self.sharedDefaults?.synchronize()
+            weakSelf!.count--
+            weakSelf!.keyArray.removeAtIndex(tag)
+            weakSelf!.sharedDefaults?.setValue(weakSelf!.keyArray, forKey:weakSelf!.defaultskey)
+            weakSelf!.sharedDefaults?.synchronize()
             
-            self.tableView?.beginUpdates()
-            self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
-            self.tableView?.endUpdates()
-            self.tableView?.reloadData()
+            weakSelf!.tableView?.beginUpdates()
+            weakSelf!.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
+            weakSelf!.tableView?.endUpdates()
+            weakSelf!.tableView?.reloadData()
         }
         
         if self.keyArray.count > indexPath.row {
