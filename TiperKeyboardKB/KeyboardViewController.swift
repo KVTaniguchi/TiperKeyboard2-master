@@ -23,9 +23,12 @@ class KeyButton : UIButton {
 class KeyboardViewController: UIInputViewController {
     
     let defaultskey = "tiper2Keyboard"
+    let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
+    var colors = [String:String]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
+    var colorRef = [UIColor]()
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -35,17 +38,21 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
 
         self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+        
+        self.colorRef = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
     
         self.data.append(["Next Keyboard":"Next Keyboard"])
         
         for (index, entry) in enumerate(data) {
             for (key, value) in entry {
-                self.addKeyboardButton(key, tag: index, keyText: value)
+                var color = self.colors[key] as String!
+                self.addKeyboardButton("\(key) + \(color)", tag: index, keyText: value, colorIndex:"2")
             }
         }
     }
     
-    func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String) {
+    func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
         keyboardButton.setTitle(keyTitle, forState: .Normal)
         keyboardButton.keyText = keyText
@@ -59,7 +66,8 @@ class KeyboardViewController: UIInputViewController {
             keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
         }
 
-        keyboardButton.backgroundColor = getRandomColor()
+//        keyboardButton.backgroundColor = getRandomColor()
+        keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!]
         self.view.addSubview(keyboardButton)
         
         var keyboardTopConstraint = NSLayoutConstraint()

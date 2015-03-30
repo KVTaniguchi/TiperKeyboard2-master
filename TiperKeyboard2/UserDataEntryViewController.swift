@@ -87,7 +87,12 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
             println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
-            
+            if weakSelf!.colorDictionary[keyName] != nil {
+                weakSelf!.colorDictionary.removeValueForKey(keyName)
+            }
+            weakSelf!.colorDictionary[keyName] = colorIndex
+            weakSelf!.sharedDefaults?.setValue(weakSelf!.colorDictionary, forKey: weakSelf!.defaultColors)
+            weakSelf!.sharedDefaults?.synchronize()
         }
         
         userDataCell.slideBeganCallback = { (tag : Int) in
