@@ -75,12 +75,9 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var userDataCell = tableView.dequeueReusableCellWithIdentifier("UserDataTableViewCell") as! UserDataCellTableViewCell
         userDataCell.tag = indexPath.row
-        userDataCell.userEmailTextField?.tag = indexPath.row
-        userDataCell.userNameTextField?.tag = indexPath.row
+        userDataCell.keyInputDataTextField?.tag = indexPath.row
+        userDataCell.keyNameTextField?.tag = indexPath.row
         
-//        userDataCell.updateColorCallback = { (tag : Int) in
-//            println("the whate whate")
-//        }
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
             println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
         }
@@ -104,8 +101,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.keyArray.count > indexPath.row {
             let keyDictionary = self.keyArray[indexPath.row] as [String:String]
-            userDataCell.userNameTextField.text = keyDictionary.keys.array[0]
-            userDataCell.userEmailTextField.text = keyDictionary.values.array[0]
+            userDataCell.keyNameTextField.text = keyDictionary.keys.array[0]
+            userDataCell.keyInputDataTextField.text = keyDictionary.values.array[0]
         }
         
         userDataCell.backgroundColor = colorForIndex(indexPath.row)
@@ -158,8 +155,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     
     func saveData () {
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
-            if (!cell.userEmailTextField.text.isEmpty && !cell.userNameTextField.text.isEmpty) {
-                let keyDictionary = [cell.userNameTextField.text : cell.userEmailTextField.text] as [String:String]
+            if (!cell.keyInputDataTextField.text.isEmpty && !cell.keyNameTextField.text.isEmpty) {
+                let keyDictionary = [cell.keyNameTextField.text : cell.keyInputDataTextField.text] as [String:String]
                 if self.selectedRow + 1 > self.keyArray.count {
                     self.keyArray.append(keyDictionary)
                 }
@@ -174,11 +171,11 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
-            if cell.userNameTextField?.isFirstResponder() == true {
-                cell.userNameTextField?.resignFirstResponder()
+            if cell.keyNameTextField?.isFirstResponder() == true {
+                cell.keyNameTextField?.resignFirstResponder()
             }
-            else if cell.userEmailTextField?.isFirstResponder() == true {
-                cell.userEmailTextField?.resignFirstResponder()
+            else if cell.keyInputDataTextField?.isFirstResponder() == true {
+                cell.keyInputDataTextField?.resignFirstResponder()
             }
         }
     }

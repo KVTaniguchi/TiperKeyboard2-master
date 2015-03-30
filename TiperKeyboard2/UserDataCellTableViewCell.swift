@@ -13,8 +13,8 @@ class UserDataCellTableViewCell: UITableViewCell {
     var buttonArray = [UIButton]()
     var colors = [UIColor]()
     var colorButton : UIButton!
-    var userEmailTextField : UITextField!
-    var userNameTextField : UITextField!
+    var keyInputDataTextField : UITextField!
+    var keyNameTextField : UITextField!
     var originalCenter = CGPoint()
     var deleteOnDragRelease = false
     var lockLeftSideOpen = false
@@ -29,30 +29,30 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         self.selectionStyle = UITableViewCellSelectionStyle.None
         
-        self.userNameTextField = UITextField()
-        self.userEmailTextField = UITextField()
-        self.userNameTextField?.textAlignment = NSTextAlignment.Center
-        self.userEmailTextField?.textAlignment = NSTextAlignment.Center
-        self.userEmailTextField.backgroundColor = UIColor.clearColor()
-        self.userNameTextField.backgroundColor = UIColor.clearColor()
-        self.userEmailTextField.textColor = UIColor.whiteColor()
-        self.userNameTextField.textColor = UIColor.whiteColor()
-        self.userEmailTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.userNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.keyNameTextField = UITextField()
+        self.keyInputDataTextField = UITextField()
+        self.keyNameTextField?.textAlignment = NSTextAlignment.Center
+        self.keyInputDataTextField?.textAlignment = NSTextAlignment.Center
+        self.keyInputDataTextField.backgroundColor = UIColor.clearColor()
+        self.keyNameTextField.backgroundColor = UIColor.clearColor()
+        self.keyInputDataTextField.textColor = UIColor.whiteColor()
+        self.keyNameTextField.textColor = UIColor.whiteColor()
+        self.keyInputDataTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.keyNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
         
-        if self.userNameTextField?.text.isEmpty == true {
-            self.userNameTextField?.placeholder = "What you want the key to say"
+        if self.keyNameTextField?.text.isEmpty == true {
+            self.keyNameTextField?.placeholder = "Name of this key"
         }
-        if self.userEmailTextField?.text.isEmpty == true {
-            self.userEmailTextField?.placeholder = "Name of this key"
+        if self.keyInputDataTextField?.text.isEmpty == true {
+            self.keyInputDataTextField?.placeholder = "What you want the key to say"
         }
         
-        self.userNameTextField?.clearsOnBeginEditing = false
-        self.userEmailTextField?.clearsOnBeginEditing = false
-        self.userNameTextField.clearButtonMode = UITextFieldViewMode.Always
-        self.userEmailTextField.clearButtonMode = UITextFieldViewMode.Always
-        self.contentView.addSubview(self.userEmailTextField!)
-        self.contentView.addSubview(self.userNameTextField!)
+        self.keyNameTextField?.clearsOnBeginEditing = false
+        self.keyInputDataTextField?.clearsOnBeginEditing = false
+        self.keyNameTextField.clearButtonMode = UITextFieldViewMode.Always
+        self.keyInputDataTextField.clearButtonMode = UITextFieldViewMode.Always
+        self.contentView.addSubview(self.keyInputDataTextField!)
+        self.contentView.addSubview(self.keyNameTextField!)
         
         var recognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         recognizer.delegate = self
@@ -111,11 +111,11 @@ class UserDataCellTableViewCell: UITableViewCell {
             self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(30)]", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
         }
         
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[emailTF][nameTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["emailTF":self.userEmailTextField, "nameTF":self.userNameTextField]))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[nameTF][emailTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["nameTF":self.keyNameTextField, "emailTF":self.keyInputDataTextField]))
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.userEmailTextField, "animatingView":animatingView]))
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.userNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
-        self.contentView.addConstraint(NSLayoutConstraint(item: self.userEmailTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.keyInputDataTextField, "animatingView":animatingView]))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.keyNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+        self.contentView.addConstraint(NSLayoutConstraint(item: self.keyInputDataTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
     }
     
     func handlePan (recognizer : UIPanGestureRecognizer) {
@@ -152,9 +152,7 @@ class UserDataCellTableViewCell: UITableViewCell {
     
     func activateColorPicker (sender : UIButton) {
         self.contentView.backgroundColor = self.colors[sender.tag]
-//        self.updateColorCallback!(tag: sender.tag)
-//            var updateColorCallback : ((keyName : String, colorIndex: String) -> ())?
-        self.updateColorCallback!(keyName: self.userNameTextField.text, colorIndex: "\(sender.tag)")
+        self.updateColorCallback!(keyName: self.keyNameTextField.text, colorIndex: "\(sender.tag)")
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
