@@ -78,8 +78,11 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.userEmailTextField?.tag = indexPath.row
         userDataCell.userNameTextField?.tag = indexPath.row
         
-        userDataCell.updateColorCallback = { (tag : Int) in
-            println("the whate whate")
+//        userDataCell.updateColorCallback = { (tag : Int) in
+//            println("the whate whate")
+//        }
+        userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
+            println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
         }
         
         userDataCell.slideBeganCallback = { (tag : Int) in

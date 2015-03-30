@@ -20,7 +20,7 @@ class UserDataCellTableViewCell: UITableViewCell {
     var lockLeftSideOpen = false
     let gradientLayer = CAGradientLayer()
     
-    var updateColorCallback : ((tag : Int) -> ())?
+    var updateColorCallback : ((keyName : String, colorIndex: String) -> ())?
     var deleteItemCallback : ((tag : Int) -> ())?
     var slideBeganCallback : ((tag : Int) -> ())?
     
@@ -152,7 +152,9 @@ class UserDataCellTableViewCell: UITableViewCell {
     
     func activateColorPicker (sender : UIButton) {
         self.contentView.backgroundColor = self.colors[sender.tag]
-        self.updateColorCallback!(tag: sender.tag)
+//        self.updateColorCallback!(tag: sender.tag)
+//            var updateColorCallback : ((keyName : String, colorIndex: String) -> ())?
+        self.updateColorCallback!(keyName: self.userNameTextField.text, colorIndex: "\(sender.tag)")
     }
     
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
