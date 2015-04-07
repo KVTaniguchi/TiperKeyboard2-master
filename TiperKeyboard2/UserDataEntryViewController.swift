@@ -25,17 +25,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.navigationController?.navigationBar.topItem?.title = "Set Up Your Keyboard Keys"
         
-        /*
-        TODO 
-        1 - add a how to screen to get user to enable the keyboard
-        2 - add an animation to the table view cells when it is saved
-            -- add a checkmark view to indicate it has been saved
-        3 - choose a color to color code the individual keys
-            -- add an edit button the left side
-            -- push to a different color picker screen
-        4 - replace all cell delegate protocols with closures
-        */
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
         
@@ -46,7 +35,9 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if self.sharedDefaults?.objectForKey(defaultColors) != nil {
+            self.colorDictionary = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
             
+            println("\(self.colorDictionary)")
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getSelectedRow:", name: UITextFieldTextDidBeginEditingNotification, object: nil)
@@ -86,7 +77,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
-            println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
             if weakSelf!.colorDictionary[keyName] != nil {
                 weakSelf!.colorDictionary.removeValueForKey(keyName)
             }
@@ -153,7 +143,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             let info = notification.userInfo as! [String:AnyObject]
             let keyboardSize = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size
             let height = keyboardSize?.height
-            let insets = UIEdgeInsetsMake(0, 0, 130 + height!, 0)
+            let insets = UIEdgeInsetsMake(0, -300, 130 + height!, 0)
             self.tableView?.contentInset = insets
             self.tableView?.scrollToRowAtIndexPath((NSIndexPath(forRow:self.selectedRow, inSection: 0)), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -176,7 +166,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 else {
                     self.keyArray[self.selectedRow] = keyDictionary
                 }
-                self.sharedDefaults?.setValue(self.keyArray, forKey:defaultskey)
+                self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
+                self.sharedDefaults?.setValue(self.colorDictionary, forKey:self.defaultColors)
                 self.sharedDefaults?.synchronize()
             }
         }

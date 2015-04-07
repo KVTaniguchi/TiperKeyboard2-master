@@ -37,14 +37,19 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
-        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+        if self.sharedDefaults?.objectForKey(defaultskey) != nil {
+            self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        }
+
+        if self.sharedDefaults?.objectForKey(defaultColors) != nil {
+            self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+        }
         
         self.colorRef = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
     
         self.data.append(["Next Keyboard":"Next Keyboard"])
         
-        for (index, entry) in enumerate(data) {
+        for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {
                 var color = self.colors[key] as String!
                 self.addKeyboardButton("\(key) + \(color)", tag: index, keyText: value, colorIndex:"2")
@@ -66,7 +71,6 @@ class KeyboardViewController: UIInputViewController {
             keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
         }
 
-//        keyboardButton.backgroundColor = getRandomColor()
         keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!]
         self.view.addSubview(keyboardButton)
         
