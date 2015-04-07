@@ -59,17 +59,17 @@ class KeyboardViewController: UIInputViewController {
     
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
-        keyboardButton.setTitle(keyTitle, forState: .Normal)
-        keyboardButton.keyText = keyText
+        keyboardButton.setTitle(keyText, forState: .Normal)
+        keyboardButton.keyText = keyTitle
         keyboardButton.layer.cornerRadius = 10
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
-            keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
             keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
         else {
-            keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            keyboardButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
             keyboardButton.backgroundColor = UIColor.darkGrayColor()
         }
 

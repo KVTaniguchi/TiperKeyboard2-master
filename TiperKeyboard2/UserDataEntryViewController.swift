@@ -19,12 +19,12 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     let cellIdentifier = "UserDataTableViewCell"
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
+    let colors = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.topItem?.title = "Set Up Your Keyboard Keys"
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
         
@@ -36,7 +36,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.sharedDefaults?.objectForKey(defaultColors) != nil {
             self.colorDictionary = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-            
             println("\(self.colorDictionary)")
         }
         
@@ -75,7 +74,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.keyInputDataTextField?.tag = indexPath.row
         userDataCell.keyNameTextField?.tag = indexPath.row
         
-        
         weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
             if weakSelf!.colorDictionary[keyName] != nil {
@@ -107,9 +105,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             let keyDictionary = self.keyArray[indexPath.row] as [String:String]
             userDataCell.keyNameTextField.text = keyDictionary.keys.array[0]
             userDataCell.keyInputDataTextField.text = keyDictionary.values.array[0]
+            userDataCell.backgroundColor = colors[self.colorDictionary[userDataCell.keyNameTextField.text]!.toInt()!] as UIColor
         }
-        
-        userDataCell.backgroundColor = colorForIndex(indexPath.row)
         
         return userDataCell
     }
