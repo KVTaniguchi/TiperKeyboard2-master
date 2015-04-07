@@ -41,18 +41,18 @@ class KeyboardViewController: UIInputViewController {
             self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
         }
 
-        if self.sharedDefaults?.objectForKey(defaultColors) != nil {
-            self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-        }
+        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+
         
         self.colorRef = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
     
         self.data.append(["Next Keyboard":"Next Keyboard"])
+        self.colors["Next Keyboard"] = "10"
         
         for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {
                 var color = self.colors[key] as String!
-                self.addKeyboardButton("\(key) + \(color)", tag: index, keyText: value, colorIndex:"2")
+                self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
             }
         }
     }
@@ -66,12 +66,13 @@ class KeyboardViewController: UIInputViewController {
         
         if keyTitle != "Next Keyboard" {
             keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
         else {
             keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            keyboardButton.backgroundColor = UIColor.darkGrayColor()
         }
 
-        keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!]
         self.view.addSubview(keyboardButton)
         
         var keyboardTopConstraint = NSLayoutConstraint()

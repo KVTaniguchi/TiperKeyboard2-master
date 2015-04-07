@@ -75,6 +75,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.keyInputDataTextField?.tag = indexPath.row
         userDataCell.keyNameTextField?.tag = indexPath.row
         
+        
         weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
             if weakSelf!.colorDictionary[keyName] != nil {
@@ -130,7 +131,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         textField.placeholder = ""
         self.selectedRow = textField.tag
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
-            cell.backgroundColor = getRandomColor()
+            cell.backgroundColor = UIColor.darkGrayColor()
         }
     }
     
@@ -182,13 +183,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.keyInputDataTextField?.resignFirstResponder()
             }
         }
-    }
-    
-    func getRandomColor() -> UIColor {
-        var randomRed:CGFloat = CGFloat(drand48())
-        var randomGreen:CGFloat = CGFloat(drand48())
-        var randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
     
     func colorForIndex (index : Int) -> UIColor {
