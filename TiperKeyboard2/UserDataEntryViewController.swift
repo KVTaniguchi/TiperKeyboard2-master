@@ -105,7 +105,13 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             let keyDictionary = self.keyArray[indexPath.row] as [String:String]
             userDataCell.keyNameTextField.text = keyDictionary.keys.array[0]
             userDataCell.keyInputDataTextField.text = keyDictionary.values.array[0]
-            userDataCell.backgroundColor = colors[self.colorDictionary[userDataCell.keyNameTextField.text]!.toInt()!] as UIColor
+
+            if self.colorDictionary[userDataCell.keyNameTextField.text]?.toInt() != nil {
+                userDataCell.backgroundColor = colors[self.colorDictionary[userDataCell.keyNameTextField.text]!.toInt()!] as UIColor
+            }
+            else {
+                userDataCell.backgroundColor = UIColor.grayColor()
+            }
         }
         
         return userDataCell
