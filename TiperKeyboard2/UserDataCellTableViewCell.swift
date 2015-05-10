@@ -23,7 +23,7 @@ class UserDataCellTableViewCell: UITableViewCell {
     var updateColorCallback : ((keyName : String, colorIndex: String) -> ())?
     var deleteItemCallback : ((tag : Int) -> ())?
     var slideBeganCallback : ((tag : Int) -> ())?
-    
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -74,18 +74,7 @@ class UserDataCellTableViewCell: UITableViewCell {
         rightArrowImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.contentView.addSubview(rightArrowImageView)
         
-        let green = UIColor(red: 103/255.0, green: 113/255, blue: 72/255, alpha: 1.0)
-        let purple = UIColor(red: 70/255, green: 52/255, blue: 109/255, alpha: 1.0)
-        let blue = UIColor(red: 53/255, green: 76/255, blue: 116/255, alpha: 1.0)
-        let lightYellow = UIColor(red: 122/255, green: 116/255, blue: 50/255, alpha: 1.0)
-        let pumpkin = UIColor(red: 118/255, green: 86/255, blue: 43/255, alpha: 1.0)
-        let gold = UIColor(red: 180/255, green: 149/255, blue: 0/255, alpha: 1.0)
-        let majestic = UIColor(red: 138/255, green: 0/255, blue: 63/255, alpha: 1.0)
-        let brightRed = UIColor(red: 213/255, green: 17/255, blue: 17/255, alpha: 1.0)
-        let deepGreen = UIColor(red: 23/255, green: 50/255, blue: 0/255, alpha: 1.0)
-        let turq = UIColor(red: 12/255, green: 56/255, blue: 64/255, alpha: 1.0)
-        
-        self.colors = [green, purple, blue, lightYellow, pumpkin, gold, majestic, brightRed, deepGreen, turq]
+        self.colors = ColorPalette.colorRef
         
         for index in 0...9 {
             var colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton

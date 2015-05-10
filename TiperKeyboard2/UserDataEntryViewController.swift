@@ -19,7 +19,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     let cellIdentifier = "UserDataTableViewCell"
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
-    let colors = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
+    
+    let colors = ColorPalette.colorRef
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,11 +58,13 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addNewItem () {
-        self.count++
-        self.keyArray.append(["":""])
-        self.tableView?.reloadData()
-        let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
-        self.tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
+        if keyArray.count < 8 {
+            count++
+            keyArray.append(["":""])
+            tableView?.reloadData()
+            let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
+            tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
+        }
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
