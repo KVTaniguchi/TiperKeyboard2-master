@@ -148,17 +148,15 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     func keyboardShown (notification:NSNotification) {
         if self.selectedRow > 2 {
             let info = notification.userInfo as! [String:AnyObject]
-            let keyboardSize = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size
-            let height = keyboardSize?.height
-            let insets = UIEdgeInsetsMake(0, -300, 130 + height!, 0)
-            self.tableView?.contentInset = insets
+            self.tableView?.contentInset = UIEdgeInsetsMake(0, -300, 305, 0)
             self.tableView?.scrollToRowAtIndexPath((NSIndexPath(forRow:self.selectedRow, inSection: 0)), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }
     
     func keyboardHidden (notification:NSNotification) {
         if self.selectedRow > 2 {
-            self.tableView?.contentInset = UIEdgeInsetsMake(0, -300, 0, 0)
+            let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
+            self.tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
         }
         saveData()
     }
