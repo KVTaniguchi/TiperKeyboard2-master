@@ -155,7 +155,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     
     func keyboardHidden (notification:NSNotification) {
         if self.selectedRow > 2 {
-            self.tableView?.contentInset = UIEdgeInsetsMake(self.view.frame.size.height/7/2 + 18, 0, 0, 0)
+            self.tableView?.contentInset = UIEdgeInsetsMake(0, -300, 0, 0)
         }
         saveData()
     }
