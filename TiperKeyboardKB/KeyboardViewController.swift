@@ -94,7 +94,6 @@ class KeyboardViewController: UIInputViewController {
         
         switch self.data.count  {
             case 2:
-                println("2")
                 topRelationalAttribute = NSLayoutAttribute.Top
                 topRelationalItem = view
                 keyHeight = 1.0
@@ -106,7 +105,6 @@ class KeyboardViewController: UIInputViewController {
                 }
 
             case 3:
-                println("3")
                 if tag == 0 {
                     topRelationalAttribute = NSLayoutAttribute.Top
                     topRelationalItem = view
@@ -116,10 +114,9 @@ class KeyboardViewController: UIInputViewController {
                     topRelationalAttribute = NSLayoutAttribute.Bottom
                 }
                 keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier:1.0, constant: 0)
-                keyHeight = 0.33
+                keyHeight = 0.333
                 sideAttribute = NSLayoutAttribute.Left
             case 4:
-                println("4")
                 if tag == 0 || tag == 2 {
                     topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
@@ -137,14 +134,13 @@ class KeyboardViewController: UIInputViewController {
                 keyHeight = 0.5
 
             case 5:
-                println("5")
                 if tag == 0 || tag == 1 {
                     sideAttribute = NSLayoutAttribute.Left
                     keyHeight = 0.5
                 }
                 else {
                     sideAttribute = NSLayoutAttribute.Right
-                    keyHeight = 0.33
+                    keyHeight = 0.333
                 }
                 if tag == 0 || tag == 2 {
                     topRelationalItem = view
@@ -156,7 +152,6 @@ class KeyboardViewController: UIInputViewController {
                 }
             
             case 6:
-                println("6")
                 if tag == 0 || tag == 3 {
                     topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
@@ -172,11 +167,10 @@ class KeyboardViewController: UIInputViewController {
                     sideAttribute = NSLayoutAttribute.Right
                 }
 
-                keyHeight = 0.33
+                keyHeight = 0.333
             case 7:
-                println("7")
                 if tag < 3 {
-                    keyHeight = 0.33
+                    keyHeight = 0.333
                     sideAttribute = NSLayoutAttribute.Left
                 }
                 else {
@@ -192,7 +186,6 @@ class KeyboardViewController: UIInputViewController {
                     topRelationalItem = self.buttonArray[tag - 1] as UIButton
                 }
             case 8 :
-                println("8")
                 if tag == 0 || tag == 4 {
                     topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
@@ -210,7 +203,10 @@ class KeyboardViewController: UIInputViewController {
     
                 keyHeight = 0.25
             default:
-                println("8")
+                keyHeight = 0.20
+                sideAttribute = NSLayoutAttribute.Left
+                topRelationalAttribute = NSLayoutAttribute.Top
+                topRelationalItem = view
         }
         
         keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: topRelationalItem, attribute: topRelationalAttribute!, multiplier: 1.0, constant: 0)

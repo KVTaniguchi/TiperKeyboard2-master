@@ -25,7 +25,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.topItem?.title = "Set Up Your Keyboard Keys"
+        self.navigationController?.navigationBar.topItem?.title = "Add Keys"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
         
@@ -37,7 +37,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.sharedDefaults?.objectForKey(defaultColors) != nil {
             self.colorDictionary = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-            println("\(self.colorDictionary)")
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getSelectedRow:", name: UITextFieldTextDidBeginEditingNotification, object: nil)
@@ -58,7 +57,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addNewItem () {
-        if keyArray.count < 8 {
+        if keyArray.count < 7 {
             count++
             keyArray.append(["":""])
             tableView?.reloadData()

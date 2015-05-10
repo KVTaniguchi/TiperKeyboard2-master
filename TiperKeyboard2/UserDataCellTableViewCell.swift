@@ -41,10 +41,10 @@ class UserDataCellTableViewCell: UITableViewCell {
         self.keyNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if self.keyNameTextField?.text.isEmpty == true {
-            self.keyNameTextField?.placeholder = "Name of this key"
+            self.keyNameTextField?.placeholder = "What you want the key to say"
         }
         if self.keyInputDataTextField?.text.isEmpty == true {
-            self.keyInputDataTextField?.placeholder = "What you want the key to say"
+            self.keyInputDataTextField?.placeholder = "Name of this key"
         }
         
         self.keyNameTextField?.clearsOnBeginEditing = false
