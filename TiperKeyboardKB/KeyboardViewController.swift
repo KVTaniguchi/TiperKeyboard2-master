@@ -50,8 +50,12 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {
-                var color = self.colors[key] as String!
-                self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                if let var color = self.colors[key] as String! {
+                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                }
+                else {
+                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+                }
             }
         }
     }
