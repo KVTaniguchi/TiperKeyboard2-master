@@ -86,19 +86,26 @@ class UserDataCellTableViewCell: UITableViewCell {
             self.buttonArray.append(colorButton)
             self.contentView.addSubview(colorButton)
             
-            if index == 0 {
+            if index == 0 || index == 5 {
                 self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Leading, relatedBy: .Equal, toItem: self.contentView, attribute: .Leading, multiplier: 1.0, constant: 0))
             }
             else {
                 let previousButton = self.buttonArray[index - 1]
                 self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
-                if index == 9 {
+                if index == 9 || index == 4 {
                     self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: rightArrowImageView, attribute: .Left, multiplier: 1.0, constant: 0))
                 }
             }
             
-            self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorButton]|", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
-            self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(30)]", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
+            if index < 5 {
+                self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Top, relatedBy: .Equal, toItem: self.contentView, attribute: .Top, multiplier: 1.0, constant: 0))
+            }
+            else {
+                self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Bottom, relatedBy: .Equal, toItem: self.contentView, attribute: .Bottom, multiplier: 1.0, constant: 0))
+            }
+            
+            self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
+            self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(60)]", options: NSLayoutFormatOptions(0), metrics: nil, views:["colorButton":colorButton]))
         }
         
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[nameTF][emailTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["nameTF":self.keyNameTextField, "emailTF":self.keyInputDataTextField]))
