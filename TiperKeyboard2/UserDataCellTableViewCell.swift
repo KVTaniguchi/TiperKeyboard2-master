@@ -69,20 +69,10 @@ class UserDataCellTableViewCell: UITableViewCell {
         
         gradientLayer.frame = bounds
         
-        var animatingView = UIView()
-        animatingView.backgroundColor = UIColor.lightGrayColor()
-        
-        UIView.animateKeyframesWithDuration(2.0, delay: 0, options: UIViewKeyframeAnimationOptions.Autoreverse | UIViewKeyframeAnimationOptions.Repeat, animations: {
-                UIView.addKeyframeWithRelativeStartTime(0.0, relativeDuration: 0.5, animations: { () -> Void in
-                    animatingView.backgroundColor = UIColor(red: 51/255, green: 56/255, blue: 239/255, alpha: 1.0)
-                })
-                UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
-                    animatingView.backgroundColor = UIColor.lightGrayColor()
-                })
-            }, completion: nil)
+        var rightArrowImageView = UIImageView(image: UIImage(named: "forward-7"))
     
-        animatingView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.contentView.addSubview(animatingView)
+        rightArrowImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.contentView.addSubview(rightArrowImageView)
         
         self.colors = [UIColor.greenColor(), UIColor.orangeColor(), UIColor.cyanColor(), UIColor.darkGrayColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.magentaColor(), UIColor.purpleColor(), UIColor.lightGrayColor(), UIColor.brownColor()]
         
@@ -103,7 +93,7 @@ class UserDataCellTableViewCell: UITableViewCell {
                 let previousButton = self.buttonArray[index - 1]
                 self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
                 if index == 9 {
-                    self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: animatingView, attribute: .Left, multiplier: 1.0, constant: 0))
+                    self.contentView.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: rightArrowImageView, attribute: .Left, multiplier: 1.0, constant: 0))
                 }
             }
             
@@ -112,8 +102,8 @@ class UserDataCellTableViewCell: UITableViewCell {
         }
         
         self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[nameTF][emailTF]|", options:.AlignAllLeading | .AlignAllTrailing, metrics: nil, views: ["nameTF":self.keyNameTextField, "emailTF":self.keyInputDataTextField]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[animatingView]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["animatingView":animatingView]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[animatingView(10)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.keyInputDataTextField, "animatingView":animatingView]))
+        self.contentView.addConstraint(NSLayoutConstraint(item: rightArrowImageView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: 0))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[rightArrowImageView(20)][emailTF]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["emailTF":self.keyInputDataTextField, "rightArrowImageView":rightArrowImageView]))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.keyNameTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
         self.contentView.addConstraint(NSLayoutConstraint(item: self.keyInputDataTextField!, attribute: .Height, relatedBy: .Equal, toItem: self.contentView, attribute: .Height, multiplier: 0.5, constant: 0))
     }

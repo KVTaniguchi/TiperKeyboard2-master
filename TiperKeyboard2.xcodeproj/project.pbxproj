@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
 		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
 		F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F60DFF1D1AFEED2E00019FAB /* forward-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-7.png"; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				F6FB59A11A4F36CE000A39CD /* Info.plist */,
+				F60DFF1D1AFEED2E00019FAB /* forward-7.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */,
+				F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */,
 				F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
