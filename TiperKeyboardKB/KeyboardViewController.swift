@@ -62,17 +62,36 @@ class KeyboardViewController: UIInputViewController {
     
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
-        keyboardButton.setTitle(keyText, forState: .Normal)
-        keyboardButton.keyText = keyTitle
+
         keyboardButton.layer.cornerRadius = 10
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
+            keyboardButton.setTitle(keyText, forState: .Normal)
+            keyboardButton.keyText = keyTitle
             keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
             keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
         else {
-            keyboardButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            var nextButton = UIButton()
+            nextButton.backgroundColor = UIColor.blueColor()
+            nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            
+            var deleteButton = UIButton()
+            deleteButton.backgroundColor = UIColor.purpleColor()
+            deleteButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
+            
+            keyboardButton.addSubview(nextButton)
+            keyboardButton.addSubview(deleteButton)
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Width, multiplier: 0.5, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Width, multiplier: 0.5, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[next][delete]|", options: NSLayoutFormatOptions.AlignAllTop, metrics: nil, views: ["next":nextButton, "delete":deleteButton]))
             keyboardButton.backgroundColor = UIColor.darkGrayColor()
         }
 
@@ -219,8 +238,17 @@ class KeyboardViewController: UIInputViewController {
     
     func keyPressed (button: KeyButton) {
         let text = button.keyText
-        let proxy = textDocumentProxy as!UITextDocumentProxy
+        let proxy = textDocumentProxy as! UITextDocumentProxy
         proxy.insertText(text!)
+    }
+    
+    func deleteWord () {
+        let proxy = textDocumentProxy as! UITextDocumentProxy
+        proxy.deleteBackward()
+        let tokens = proxy.documentContextBeforeInput.componentsSeparatedByString(" ")
+        for var index = 0; index  < count(tokens.last!.utf16); index++ {
+            proxy.deleteBackward()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -239,12 +267,5 @@ class KeyboardViewController: UIInputViewController {
         else {
             textColor = UIColor.blackColor()
         }
-    }
-    
-    func getRandomColor() -> UIColor{
-        var randomRed:CGFloat = CGFloat(drand48())
-        var randomGreen:CGFloat = CGFloat(drand48())
-        var randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
 }
