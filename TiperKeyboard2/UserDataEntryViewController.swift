@@ -65,8 +65,18 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tableView?.autoresizesSubviews = false
         
-        var previewButton = UIButton()
-        
+        var previewButton = UIButton(frame: CGRectMake(0, CGRectGetMaxY(self.view.frame) - 44, view.frame.width, 44))
+        previewButton.backgroundColor = UIColor.darkGrayColor()
+        previewButton.layer.borderColor = UIColor.blackColor().CGColor
+        previewButton.layer.borderWidth = 5.0
+        previewButton.setTitle("Preview", forState: UIControlState.Normal)
+        previewButton.addTarget(self, action: "showPreview", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(previewButton)
+    }
+    
+    func showPreview () {
+        let vc = PreviewViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func addNewItem () {
