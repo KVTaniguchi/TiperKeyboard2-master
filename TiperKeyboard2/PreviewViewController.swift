@@ -107,7 +107,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         var keyBeingMoved = self.data[fromIndexPath.item]
         self.data.removeAtIndex(fromIndexPath.item)
         self.data.insert(keyBeingMoved, atIndex: toIndexPath.item)
-        self.sharedDefaults?.setValue(self.data, forKey:self.defaultskey)
+        var passingArray = data as [[String:String]]
+        passingArray.removeLast()
+        self.sharedDefaults?.setValue(passingArray, forKey:self.defaultskey)
         self.sharedDefaults?.synchronize()
         self.rearrangeKeysCallback!(self.data)
     }
