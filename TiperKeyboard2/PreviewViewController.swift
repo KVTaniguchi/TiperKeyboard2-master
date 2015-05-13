@@ -88,13 +88,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/3) - 2)
         case 7:
             if indexPath.item < 3 {
-                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/3)
+                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/3 - 2)
             }
             else {
-                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4)
+                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4 - 2)
             }
         case 8:
-            size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4)
+            size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4 - 2)
         default:
             println("2")
         }
@@ -110,6 +110,7 @@ class PreviewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         keyTextLabel = UILabel()
+        keyTextLabel?.textColor = UIColor.whiteColor()
         keyTextLabel?.numberOfLines = 0
         keyTextLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         keyTextLabel?.preferredMaxLayoutWidth = contentView.frame.width - 2

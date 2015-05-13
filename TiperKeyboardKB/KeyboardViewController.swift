@@ -75,8 +75,7 @@ class KeyboardViewController: UIInputViewController {
         else {
             var nextButton = UIButton()
             nextButton.backgroundColor = UIColor.darkGrayColor()
-            nextButton.setImage(UIImage(named: "globe_filled-75"), forState: UIControlState.Normal)
-            nextButton.imageEdgeInsets = UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30)
+            nextButton.setTitle("Next", forState: UIControlState.Normal)
             nextButton.layer.cornerRadius = 10
             nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
             nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
