@@ -13,6 +13,8 @@
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
 		F69E5CA81B02EA8700AFA35E /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F69E5CA71B02EA8700AFA35E /* SplashV3.png */; };
 		F69E5CAA1B02ED7000AFA35E /* globe_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69E5CA91B02ED7000AFA35E /* globe_filled-75.png */; };
+		F69E5CB31B02FC6200AFA35E /* CustomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB21B02FC6200AFA35E /* CustomLayout.m */; };
+		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
 		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
 		F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
@@ -73,6 +75,11 @@
 		F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		F69E5CA71B02EA8700AFA35E /* SplashV3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV3.png; sourceTree = "<group>"; };
 		F69E5CA91B02ED7000AFA35E /* globe_filled-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe_filled-75.png"; sourceTree = "<group>"; };
+		F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TiperKeyboard2-Bridging-Header.h"; sourceTree = "<group>"; };
+		F69E5CB11B02FC6200AFA35E /* CustomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLayout.h; sourceTree = "<group>"; };
+		F69E5CB21B02FC6200AFA35E /* CustomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLayout.m; sourceTree = "<group>"; };
+		F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,11 +148,16 @@
 				F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */,
 				F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */,
 				F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */,
+				F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */,
+				F69E5CB11B02FC6200AFA35E /* CustomLayout.h */,
+				F69E5CB21B02FC6200AFA35E /* CustomLayout.m */,
+				F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */,
+				F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */,
 				F6FB59A91A4F36CE000A39CD /* Images.xcassets */,
 				F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */,
 				F69E5CA71B02EA8700AFA35E /* SplashV3.png */,
 				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
-				F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */,
+				F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */,
 			);
 			path = TiperKeyboard2;
 			sourceTree = "<group>";
@@ -344,6 +356,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */,
+				F69E5CB31B02FC6200AFA35E /* CustomLayout.m in Sources */,
 				F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */,
 				F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */,
 				F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */,
@@ -487,6 +501,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -496,6 +511,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -504,6 +521,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -513,6 +531,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -566,6 +585,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -581,6 +602,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

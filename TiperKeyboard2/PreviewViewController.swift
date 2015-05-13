@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource {
     
     var collectionView : UICollectionView?
     
@@ -34,7 +34,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             colors["Next Keyboard"] = "0"
         }
         
-        let layout = UICollectionViewFlowLayout()
+        var layout = ReorderableCollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
@@ -100,6 +100,20 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         
         return size
+    }
+    
+    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
+        var keyBeingMoved = self.data[fromIndexPath.item]
+        self.data.removeAtIndex(fromIndexPath.item)
+        self.data.insert(keyBeingMoved, atIndex: toIndexPath.item)
+    }
+    
+    func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
+        return true
+    }
+    
+    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, canMoveToIndexPath toIndexPath: NSIndexPath!) -> Bool {
+        return true
     }
 }
 
