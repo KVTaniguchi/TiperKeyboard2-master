@@ -15,25 +15,17 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     var count = 0
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var keyArray = [[String:String]]()
+    var colorDictionary = [String:String]()
     let cellIdentifier = "UserDataTableViewCell"
     let defaultskey = "tiper2Keyboard"
+    let defaultColors = "tiper2Colors"
+    
+    let colors = ColorPalette.colorRef
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.topItem?.title = "Set Up Your Keyboard Keys"
-        
-        /*
-        TODO 
-        1 - add a how to screen to get user to enable the keyboard
-        2 - add an animation to the table view cells when it is saved
-            -- add a checkmark view to indicate it has been saved
-        3 - choose a color to color code the individual keys
-            -- add an edit button the left side
-            -- push to a different color picker screen
-        4 - replace all cell delegate protocols with closures
-        */
-        
+        self.navigationController?.navigationBar.topItem?.title = "Add Keys"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
         
@@ -41,6 +33,10 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             self.keyArray = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             self.count = self.keyArray.count
             self.tableView?.reloadData()
+        }
+        
+        if self.sharedDefaults?.objectForKey(defaultColors) != nil {
+            self.colorDictionary = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getSelectedRow:", name: UITextFieldTextDidBeginEditingNotification, object: nil)
@@ -61,11 +57,13 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addNewItem () {
-        self.count++
-        self.keyArray.append(["":""])
-        self.tableView?.reloadData()
-        let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
-        self.tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
+        if keyArray.count < 7 {
+            count++
+            keyArray.append(["":""])
+            tableView?.reloadData()
+            let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
+            tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
+        }
     }
     
     func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
@@ -78,34 +76,45 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.keyInputDataTextField?.tag = indexPath.row
         userDataCell.keyNameTextField?.tag = indexPath.row
         
+        weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
-            println("KEY NAME \(keyName) COLOR INDEX \(colorIndex)")
+            if weakSelf!.colorDictionary[keyName] != nil {
+                weakSelf!.colorDictionary.removeValueForKey(keyName)
+            }
+            weakSelf!.colorDictionary[keyName] = colorIndex
+            weakSelf!.sharedDefaults?.setValue(weakSelf!.colorDictionary, forKey: weakSelf!.defaultColors)
+            weakSelf!.sharedDefaults?.synchronize()
         }
         
         userDataCell.slideBeganCallback = { (tag : Int) in
-            self.selectedRow = tag
-            self.saveData()
+            weakSelf!.selectedRow = tag
+            weakSelf!.saveData()
         }
         
         userDataCell.deleteItemCallback = { (tag : Int) in
-            self.count--
-            self.keyArray.removeAtIndex(tag)
-            self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
-            self.sharedDefaults?.synchronize()
+            weakSelf!.count--
+            weakSelf!.keyArray.removeAtIndex(tag)
+            weakSelf!.sharedDefaults?.setValue(weakSelf!.keyArray, forKey:weakSelf!.defaultskey)
+            weakSelf!.sharedDefaults?.synchronize()
             
-            self.tableView?.beginUpdates()
-            self.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
-            self.tableView?.endUpdates()
-            self.tableView?.reloadData()
+            weakSelf!.tableView?.beginUpdates()
+            weakSelf!.tableView?.deleteRowsAtIndexPaths([NSIndexPath(forRow: tag, inSection: 0)], withRowAnimation: .Left)
+            weakSelf!.tableView?.endUpdates()
+            weakSelf!.tableView?.reloadData()
         }
         
         if self.keyArray.count > indexPath.row {
             let keyDictionary = self.keyArray[indexPath.row] as [String:String]
             userDataCell.keyNameTextField.text = keyDictionary.keys.array[0]
             userDataCell.keyInputDataTextField.text = keyDictionary.values.array[0]
+
+            if self.colorDictionary[userDataCell.keyNameTextField.text]?.toInt() != nil {
+                userDataCell.backgroundColor = colors[self.colorDictionary[userDataCell.keyNameTextField.text]!.toInt()!] as UIColor
+            }
+            else {
+                userDataCell.backgroundColor = UIColor.grayColor()
+            }
         }
-        
-        userDataCell.backgroundColor = colorForIndex(indexPath.row)
         
         return userDataCell
     }
@@ -127,7 +136,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         textField.placeholder = ""
         self.selectedRow = textField.tag
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
-            cell.backgroundColor = getRandomColor()
+            cell.backgroundColor = UIColor.darkGrayColor()
         }
     }
     
@@ -138,17 +147,15 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     func keyboardShown (notification:NSNotification) {
         if self.selectedRow > 2 {
             let info = notification.userInfo as! [String:AnyObject]
-            let keyboardSize = info[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue().size
-            let height = keyboardSize?.height
-            let insets = UIEdgeInsetsMake(0, 0, 130 + height!, 0)
-            self.tableView?.contentInset = insets
+            self.tableView?.contentInset = UIEdgeInsetsMake(0, -300, 305, 0)
             self.tableView?.scrollToRowAtIndexPath((NSIndexPath(forRow:self.selectedRow, inSection: 0)), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }
     
     func keyboardHidden (notification:NSNotification) {
         if self.selectedRow > 2 {
-            self.tableView?.contentInset = UIEdgeInsetsMake(self.view.frame.size.height/7/2 + 18, 0, 0, 0)
+            let offset = self.navigationController?.navigationBar.frame.size.height as CGFloat! + UIApplication.sharedApplication().statusBarFrame.height as CGFloat!
+            self.tableView?.contentInset = UIEdgeInsetsMake(offset, -300, 0, 0)
         }
         saveData()
     }
@@ -163,7 +170,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 else {
                     self.keyArray[self.selectedRow] = keyDictionary
                 }
-                self.sharedDefaults?.setValue(self.keyArray, forKey:defaultskey)
+                self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
+                self.sharedDefaults?.setValue(self.colorDictionary, forKey:self.defaultColors)
                 self.sharedDefaults?.synchronize()
             }
         }
@@ -178,13 +186,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.keyInputDataTextField?.resignFirstResponder()
             }
         }
-    }
-    
-    func getRandomColor() -> UIColor {
-        var randomRed:CGFloat = CGFloat(drand48())
-        var randomGreen:CGFloat = CGFloat(drand48())
-        var randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
     
     func colorForIndex (index : Int) -> UIColor {

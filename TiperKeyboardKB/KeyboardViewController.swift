@@ -23,9 +23,12 @@ class KeyButton : UIButton {
 class KeyboardViewController: UIInputViewController {
     
     let defaultskey = "tiper2Keyboard"
+    let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
+    var colors = [String:String]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
+    var colorRef = [UIColor]()
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -34,54 +37,200 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
-    
-        self.data.append(["Next Keyboard":"Next Keyboard"])
+        if self.sharedDefaults?.objectForKey(defaultskey) != nil {
+            self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        }
+
+        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         
-        for (index, entry) in enumerate(data) {
+        self.colorRef = KBColorPalette.colorRef
+
+        self.data.append(["Next Keyboard":"Next Keyboard"])
+        self.colors["Next Keyboard"] = "10"
+        
+        for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {
-                addKeyboardButton(key, tag: index, keyTitle: value)
+                if let var color = self.colors[key] as String! {
+                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                }
+                else {
+                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+                }
             }
         }
     }
     
-    func addKeyboardButton (keyText: String, tag: NSInteger, keyTitle: String) {
+    func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
-        keyboardButton.setTitle(keyTitle, forState: .Normal)
-        keyboardButton.keyText = keyText
+
         keyboardButton.layer.cornerRadius = 10
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
-            keyboardButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+            keyboardButton.setTitle(keyText, forState: .Normal)
+            keyboardButton.keyText = keyTitle
+            keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
+            keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
         else {
-            keyboardButton.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            var nextButton = UIButton()
+            nextButton.backgroundColor = UIColor.blueColor()
+            nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
+            
+            var deleteButton = UIButton()
+            deleteButton.backgroundColor = UIColor.purpleColor()
+            deleteButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
+            
+            keyboardButton.addSubview(nextButton)
+            keyboardButton.addSubview(deleteButton)
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Width, multiplier: 0.5, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Width, multiplier: 0.5, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
+            keyboardButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[next][delete]|", options: NSLayoutFormatOptions.AlignAllTop, metrics: nil, views: ["next":nextButton, "delete":deleteButton]))
+            keyboardButton.backgroundColor = UIColor.darkGrayColor()
         }
 
-        keyboardButton.backgroundColor = getRandomColor()
         self.view.addSubview(keyboardButton)
         
         var keyboardTopConstraint = NSLayoutConstraint()
-        if tag == 0 || tag == 5 {
-            keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0)
-        }
-        else if tag > 0 && tag < 10 {
-            let previousButton = self.buttonArray[tag - 1] as UIButton
-            keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: previousButton, attribute: .Bottom, multiplier: 1.0, constant: 0)
-        }
-        
-        var keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier: self.data.count < 6 ? 1.0 : 0.5, constant: 0)
-        
+        var keyboardWidth = NSLayoutConstraint()
+        var keyboardSideConstraint = NSLayoutConstraint()
+        var keyboardHeight = NSLayoutConstraint()
         var sideAttribute : NSLayoutAttribute?
-        if tag <= 4 {
-            sideAttribute = NSLayoutAttribute.Left
+        var topRelationalItem : UIView?
+        var topRelationalAttribute : NSLayoutAttribute?
+        var keyHeight = 0.0 as CGFloat
+        var keyWidth = 0.0 as CGFloat
+        
+        if self.data.count != 3 {
+            keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier:0.5, constant: 0)
         }
-        else if tag >= 5 {
-            sideAttribute = NSLayoutAttribute.Right
+        
+        switch self.data.count  {
+            case 2:
+                topRelationalAttribute = NSLayoutAttribute.Top
+                topRelationalItem = view
+                keyHeight = 1.0
+                if tag == 0 {
+                    sideAttribute = NSLayoutAttribute.Left
+                }
+                else {
+                    sideAttribute = NSLayoutAttribute.Right
+                }
+
+            case 3:
+                if tag == 0 {
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                    topRelationalItem = view
+                }
+                else {
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                }
+                keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier:1.0, constant: 0)
+                keyHeight = 0.333
+                sideAttribute = NSLayoutAttribute.Left
+            case 4:
+                if tag == 0 || tag == 2 {
+                    topRelationalItem = view
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                }
+                else {
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                }
+                if tag == 0 || tag == 1 {
+                    sideAttribute = NSLayoutAttribute.Left
+                }
+                else {
+                    sideAttribute = NSLayoutAttribute.Right
+                }
+                keyHeight = 0.5
+
+            case 5:
+                if tag == 0 || tag == 1 {
+                    sideAttribute = NSLayoutAttribute.Left
+                    keyHeight = 0.5
+                }
+                else {
+                    sideAttribute = NSLayoutAttribute.Right
+                    keyHeight = 0.333
+                }
+                if tag == 0 || tag == 2 {
+                    topRelationalItem = view
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                }
+                else {
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                }
+            
+            case 6:
+                if tag == 0 || tag == 3 {
+                    topRelationalItem = view
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                }
+                else {
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                }
+                if tag < 3 {
+                    sideAttribute = NSLayoutAttribute.Left
+                }
+                else {
+                    sideAttribute = NSLayoutAttribute.Right
+                }
+
+                keyHeight = 0.333
+            case 7:
+                if tag < 3 {
+                    keyHeight = 0.333
+                    sideAttribute = NSLayoutAttribute.Left
+                }
+                else {
+                    keyHeight = 0.25
+                    sideAttribute = NSLayoutAttribute.Right
+                }
+                if tag == 0 || tag == 3 {
+                    topRelationalItem = view
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                }
+                else {
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                }
+            case 8 :
+                if tag == 0 || tag == 4 {
+                    topRelationalItem = view
+                    topRelationalAttribute = NSLayoutAttribute.Top
+                }
+                else {
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                }
+                if tag < 4 {
+                    sideAttribute = NSLayoutAttribute.Left
+                }
+                else {
+                    sideAttribute = NSLayoutAttribute.Right
+                }
+    
+                keyHeight = 0.25
+            default:
+                keyHeight = 0.20
+                sideAttribute = NSLayoutAttribute.Left
+                topRelationalAttribute = NSLayoutAttribute.Top
+                topRelationalItem = view
         }
-        var keyboardSideConstraint = NSLayoutConstraint(item: keyboardButton, attribute: sideAttribute!, relatedBy: .Equal, toItem: self.view, attribute: sideAttribute! , multiplier: 1.0, constant: 0)
-        var keyboardHeight = NSLayoutConstraint(item: keyboardButton, attribute: .Height, relatedBy: .Equal, toItem: self.view, attribute: .Height, multiplier: 0.2, constant: 0)
+        
+        keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: topRelationalItem, attribute: topRelationalAttribute!, multiplier: 1.0, constant: 0)
+        keyboardSideConstraint = NSLayoutConstraint(item: keyboardButton, attribute: sideAttribute!, relatedBy: .Equal, toItem: self.view, attribute: sideAttribute! , multiplier: 1.0, constant: 0)
+        keyboardHeight = NSLayoutConstraint(item: keyboardButton, attribute: .Height, relatedBy: .Equal, toItem: self.view, attribute: .Height, multiplier: keyHeight, constant: 0)
         
         self.view.addConstraints([keyboardTopConstraint, keyboardHeight, keyboardWidth, keyboardSideConstraint])
         self.buttonArray.append(keyboardButton)
@@ -89,8 +238,17 @@ class KeyboardViewController: UIInputViewController {
     
     func keyPressed (button: KeyButton) {
         let text = button.keyText
-        let proxy = textDocumentProxy as!UITextDocumentProxy
+        let proxy = textDocumentProxy as! UITextDocumentProxy
         proxy.insertText(text!)
+    }
+    
+    func deleteWord () {
+        let proxy = textDocumentProxy as! UITextDocumentProxy
+        proxy.deleteBackward()
+        let tokens = proxy.documentContextBeforeInput.componentsSeparatedByString(" ")
+        for var index = 0; index  < count(tokens.last!.utf16); index++ {
+            proxy.deleteBackward()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,12 +267,5 @@ class KeyboardViewController: UIInputViewController {
         else {
             textColor = UIColor.blackColor()
         }
-    }
-    
-    func getRandomColor() -> UIColor{
-        var randomRed:CGFloat = CGFloat(drand48())
-        var randomGreen:CGFloat = CGFloat(drand48())
-        var randomBlue:CGFloat = CGFloat(drand48())
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
 }
