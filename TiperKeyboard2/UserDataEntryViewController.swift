@@ -37,6 +37,16 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.sharedDefaults?.objectForKey(defaultColors) != nil {
             self.colorDictionary = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+            var tempDict = [String:String]()
+            for (key, value) in self.colorDictionary {
+                for dict in self.keyArray {
+                    if dict[key] != nil {
+                        tempDict[key] = value
+                    }
+                }
+            }
+            self.sharedDefaults?.setValue(tempDict, forKey: self.defaultColors)
+            self.sharedDefaults?.synchronize()
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getSelectedRow:", name: UITextFieldTextDidBeginEditingNotification, object: nil)
