@@ -54,6 +54,9 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.addSubview(self.tableView!)
         
         self.tableView?.autoresizesSubviews = false
+        
+        var previewButton = UIButton()
+        
     }
     
     func addNewItem () {

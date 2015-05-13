@@ -10,6 +10,7 @@
 		F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
+		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
 		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
 		F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
@@ -67,6 +68,7 @@
 		F62010171AFF0B8100FB9212 /* KBColorPalete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KBColorPalete.swift; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
+		F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				F6FB59A91A4F36CE000A39CD /* Images.xcassets */,
 				F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */,
 				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
+				F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */,
 			);
 			path = TiperKeyboard2;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */,
 				F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */,
 				F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */,
+				F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */,
 				F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
