@@ -74,12 +74,17 @@ class KeyboardViewController: UIInputViewController {
         }
         else {
             var nextButton = UIButton()
-            nextButton.backgroundColor = UIColor.blueColor()
+            nextButton.backgroundColor = UIColor.darkGrayColor()
+            nextButton.setImage(UIImage(named: "globe_filled-75"), forState: UIControlState.Normal)
+            nextButton.imageEdgeInsets = UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30)
+            nextButton.layer.cornerRadius = 10
             nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
             nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
             
             var deleteButton = UIButton()
-            deleteButton.backgroundColor = UIColor.purpleColor()
+            deleteButton.backgroundColor = UIColor.lightGrayColor()
+            deleteButton.setTitle("del", forState: UIControlState.Normal)
+            deleteButton.layer.cornerRadius = 10
             deleteButton.setTranslatesAutoresizingMaskIntoConstraints(false)
             deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
             
@@ -92,7 +97,6 @@ class KeyboardViewController: UIInputViewController {
             keyboardButton.addConstraint(NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
             keyboardButton.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: keyboardButton, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 0))
             keyboardButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[next][delete]|", options: NSLayoutFormatOptions.AlignAllTop, metrics: nil, views: ["next":nextButton, "delete":deleteButton]))
-            keyboardButton.backgroundColor = UIColor.darkGrayColor()
         }
 
         self.view.addSubview(keyboardButton)
