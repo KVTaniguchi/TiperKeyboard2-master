@@ -19,6 +19,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     let colorRef = ColorPalette.colorRef
+    var rearrangeKeysCallback : ([[String:String]] -> ())?
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
@@ -106,6 +107,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         var keyBeingMoved = self.data[fromIndexPath.item]
         self.data.removeAtIndex(fromIndexPath.item)
         self.data.insert(keyBeingMoved, atIndex: toIndexPath.item)
+        self.sharedDefaults?.setValue(self.data, forKey:self.defaultskey)
+        self.sharedDefaults?.synchronize()
+        self.rearrangeKeysCallback!(self.data)
     }
     
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {

@@ -77,6 +77,12 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     func showPreview () {
         let vc = PreviewViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        weak var weakSelf = self
+        vc.rearrangeKeysCallback = { (data :[[String:String]]) in
+            weakSelf!.keyArray = data
+            weakSelf!.tableView?.reloadData()
+        }
     }
     
     func addNewItem () {
@@ -209,12 +215,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.keyInputDataTextField?.resignFirstResponder()
             }
         }
-    }
-    
-    func colorForIndex (index : Int) -> UIColor {
-        let itemCount = count - 1
-        let val = (CGFloat(index) / CGFloat(itemCount)) * 0.6
-        return UIColor(red: 0.0, green: val, blue: 1.0, alpha: 1.0)
     }
 
     override func didReceiveMemoryWarning() {
