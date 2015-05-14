@@ -21,6 +21,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     let defaultColors = "tiper2Colors"
     
     var previewButton : UIButton?
+    var defaultTextLabel : UILabel?
     
     let colors = ColorPalette.colorRef
     
@@ -76,6 +77,19 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.addSubview(previewButton!)
         
         previewButton!.hidden = self.count == 0
+        
+        defaultTextLabel = UILabel()
+        defaultTextLabel?.text = "Add keys by pressing the + Button in the upper right corner."
+        defaultTextLabel?.numberOfLines = 0
+        defaultTextLabel?.textAlignment = NSTextAlignment.Center
+        defaultTextLabel?.preferredMaxLayoutWidth = view.frame.width
+        defaultTextLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        defaultTextLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        defaultTextLabel?.hidden = self.count > 0
+        self.view.addSubview(defaultTextLabel!)
+        
+        self.view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 1.0, constant: 0))
     }
     
     func showPreview () {
@@ -209,6 +223,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 self.sharedDefaults?.synchronize()
                 
                 previewButton!.hidden = self.count == 0
+                defaultTextLabel?.hidden = self.count > 0
+                RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 2)
             }
         }
     }
