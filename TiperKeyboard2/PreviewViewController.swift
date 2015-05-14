@@ -39,7 +39,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        collectionView = UICollectionView(frame: CGRectMake(0, 70, view.frame.width, 305), collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 305), collectionViewLayout: layout)
         collectionView!.backgroundColor = UIColor.lightGrayColor()
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self

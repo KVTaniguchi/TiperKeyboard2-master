@@ -10,9 +10,9 @@
 		F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
+		F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69CDF191B042C930076C6A9 /* keyboard-75.png */; };
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
 		F69E5CA81B02EA8700AFA35E /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F69E5CA71B02EA8700AFA35E /* SplashV3.png */; };
-		F69E5CAA1B02ED7000AFA35E /* globe_filled-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69E5CA91B02ED7000AFA35E /* globe_filled-75.png */; };
 		F69E5CB31B02FC6200AFA35E /* CustomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB21B02FC6200AFA35E /* CustomLayout.m */; };
 		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
 		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
@@ -72,9 +72,9 @@
 		F62010171AFF0B8100FB9212 /* KBColorPalete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KBColorPalete.swift; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
+		F69CDF191B042C930076C6A9 /* keyboard-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard-75.png"; sourceTree = "<group>"; };
 		F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		F69E5CA71B02EA8700AFA35E /* SplashV3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV3.png; sourceTree = "<group>"; };
-		F69E5CA91B02ED7000AFA35E /* globe_filled-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "globe_filled-75.png"; sourceTree = "<group>"; };
 		F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TiperKeyboard2-Bridging-Header.h"; sourceTree = "<group>"; };
 		F69E5CB11B02FC6200AFA35E /* CustomLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLayout.h; sourceTree = "<group>"; };
 		F69E5CB21B02FC6200AFA35E /* CustomLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLayout.m; sourceTree = "<group>"; };
@@ -193,8 +193,8 @@
 			children = (
 				F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */,
 				F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */,
+				F69CDF191B042C930076C6A9 /* keyboard-75.png */,
 				F62010171AFF0B8100FB9212 /* KBColorPalete.swift */,
-				F69E5CA91B02ED7000AFA35E /* globe_filled-75.png */,
 				F6FB59C81A4F378A000A39CD /* Supporting Files */,
 			);
 			path = TiperKeyboardKB;
@@ -345,7 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F69E5CAA1B02ED7000AFA35E /* globe_filled-75.png in Resources */,
+				F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,26 @@ class KeyButton : UIButton {
     }
 }
 
+class NextKeyboardButton : UIButton {
+    var keyboardImage : UIImageView?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        keyboardImage = UIImageView(image: UIImage(named: "keyboard-75"))
+        keyboardImage?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.addSubview(keyboardImage!)
+        self.addConstraint(NSLayoutConstraint(item: keyboardImage!, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: keyboardImage!, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1.0, constant: 0))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[keyboard(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyboard":keyboardImage!]))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[keyboard(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyboard":keyboardImage!]))
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class KeyboardViewController: UIInputViewController {
     
     let defaultskey = "tiper2Keyboard"
@@ -36,6 +56,8 @@ class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.blackColor()
 
         if self.sharedDefaults?.objectForKey(defaultskey) != nil {
             self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -73,9 +95,8 @@ class KeyboardViewController: UIInputViewController {
             keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
         else {
-            var nextButton = UIButton()
+            var nextButton = NextKeyboardButton()
             nextButton.backgroundColor = UIColor.darkGrayColor()
-            nextButton.setTitle("Next", forState: UIControlState.Normal)
             nextButton.layer.cornerRadius = 10
             nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
             nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
