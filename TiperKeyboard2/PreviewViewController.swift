@@ -83,7 +83,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/2) - 2)
             }
             else {
-                size = CGSizeMake(collectionView.frame.width - 2, collectionView.frame.height/3 - 2)
+                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/3 - 2)
             }
         case 6:
             size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/3) - 2)
@@ -115,11 +115,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        return true
+        if indexPath.item < (self.data.count-1) {
+            return true
+        }
+        return false
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, canMoveToIndexPath toIndexPath: NSIndexPath!) -> Bool {
-        return true
+        if toIndexPath.item < (self.data.count - 1) {
+            return true
+        }
+        return false
     }
 }
 
