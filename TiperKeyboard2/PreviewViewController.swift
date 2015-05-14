@@ -40,7 +40,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 305), collectionViewLayout: layout)
-        collectionView!.backgroundColor = UIColor.lightGrayColor()
+        collectionView!.backgroundColor = UIColor.clearColor()
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
@@ -50,13 +50,18 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
         
-        cell.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 5
         
         let dict = data[indexPath.item]
         for (key, value) in dict {
             cell.setLabelText(value)
             let colorIndex = colors[key]
-            cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
+            if colors[key] != nil {
+                cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
+            }
+            else {
+                cell.backgroundColor = colorRef[0]
+            }
         }
         return cell
     }

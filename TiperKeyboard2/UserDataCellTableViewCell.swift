@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDataCellTableViewCell: UITableViewCell {
+class UserDataCellTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     var buttonArray = [UIButton]()
     var colors = [UIColor]()
@@ -30,7 +30,9 @@ class UserDataCellTableViewCell: UITableViewCell {
         self.selectionStyle = UITableViewCellSelectionStyle.None
         
         self.keyNameTextField = UITextField()
+        self.keyNameTextField.delegate = self
         self.keyInputDataTextField = UITextField()
+        self.keyInputDataTextField.delegate = self
         self.keyNameTextField?.textAlignment = NSTextAlignment.Center
         self.keyInputDataTextField?.textAlignment = NSTextAlignment.Center
         self.keyInputDataTextField.backgroundColor = UIColor.clearColor()
@@ -41,10 +43,11 @@ class UserDataCellTableViewCell: UITableViewCell {
         self.keyNameTextField?.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if self.keyNameTextField?.text.isEmpty == true {
-            self.keyNameTextField?.placeholder = "What you want the key to say"
+            self.keyNameTextField.attributedPlaceholder = NSAttributedString(string:"Title of this Key", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         }
+        
         if self.keyInputDataTextField?.text.isEmpty == true {
-            self.keyInputDataTextField?.placeholder = "Name of this key"
+            self.keyInputDataTextField.attributedPlaceholder = NSAttributedString(string:"Key Data", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         }
         
         self.keyNameTextField?.clearsOnBeginEditing = false
@@ -168,5 +171,15 @@ class UserDataCellTableViewCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if self.keyNameTextField?.text.isEmpty == true {
+            self.keyNameTextField.attributedPlaceholder = NSAttributedString(string:"Title of this key", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        }
+        
+        if self.keyInputDataTextField?.text.isEmpty == true {
+            self.keyInputDataTextField.attributedPlaceholder = NSAttributedString(string:"Key Data", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        }
     }
 }

@@ -20,6 +20,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
     
+    var previewButton : UIButton?
+    
     let colors = ColorPalette.colorRef
     
     override func viewDidLoad() {
@@ -65,13 +67,15 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tableView?.autoresizesSubviews = false
         
-        var previewButton = UIButton(frame: CGRectMake(0, CGRectGetMaxY(self.view.frame) - 44, view.frame.width, 44))
-        previewButton.backgroundColor = UIColor.darkGrayColor()
-        previewButton.layer.borderColor = UIColor.blackColor().CGColor
-        previewButton.layer.borderWidth = 5.0
-        previewButton.setTitle("Preview", forState: UIControlState.Normal)
-        previewButton.addTarget(self, action: "showPreview", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(previewButton)
+        previewButton = UIButton(frame: CGRectMake(0, CGRectGetMaxY(self.view.frame) - 44, view.frame.width, 44))
+        previewButton!.backgroundColor = UIColor.darkGrayColor()
+        previewButton!.layer.borderColor = UIColor.blackColor().CGColor
+        previewButton!.layer.borderWidth = 5.0
+        previewButton!.setTitle("Preview", forState: UIControlState.Normal)
+        previewButton!.addTarget(self, action: "showPreview", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(previewButton!)
+        
+        previewButton!.hidden = self.count == 0
     }
     
     func showPreview () {
@@ -142,6 +146,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
             }
             else {
                 userDataCell.backgroundColor = UIColor.grayColor()
+                colorDictionary[userDataCell.keyNameTextField.text] = "0"
             }
         }
         
@@ -202,6 +207,8 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 self.sharedDefaults?.setValue(self.keyArray, forKey:self.defaultskey)
                 self.sharedDefaults?.setValue(self.colorDictionary, forKey:self.defaultColors)
                 self.sharedDefaults?.synchronize()
+                
+                previewButton!.hidden = self.count == 0
             }
         }
     }
