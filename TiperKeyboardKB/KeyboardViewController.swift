@@ -85,7 +85,7 @@ class KeyboardViewController: UIInputViewController {
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
 
-        keyboardButton.layer.cornerRadius = 5
+        keyboardButton.layer.cornerRadius = 3
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {

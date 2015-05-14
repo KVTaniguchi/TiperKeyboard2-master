@@ -24,13 +24,13 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
     var defaultTextLabel : UILabel?
     
     let colors = ColorPalette.colorRef
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.topItem?.title = "⌘v"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveData")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
         
         if self.sharedDefaults?.objectForKey(defaultskey) != nil {
             self.keyArray = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -70,7 +70,7 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         
         previewButton = UIButton(frame: CGRectMake(0, CGRectGetMaxY(self.view.frame) - 44, view.frame.width, 44))
         previewButton!.backgroundColor = UIColor.darkGrayColor()
-        previewButton!.layer.borderColor = UIColor.blackColor().CGColor
+        previewButton!.layer.borderColor = UIColor.lightGrayColor().CGColor
         previewButton!.layer.borderWidth = 5.0
         previewButton!.setTitle("Preview", forState: UIControlState.Normal)
         previewButton!.addTarget(self, action: "showPreview", forControlEvents: UIControlEvents.TouchUpInside)
@@ -122,6 +122,10 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         userDataCell.tag = indexPath.row
         userDataCell.keyInputDataTextField?.tag = indexPath.row
         userDataCell.keyNameTextField?.tag = indexPath.row
+        
+        if userDataCell.keyNameTextField.text == "Next Keyboard" {
+            userDataCell.hidden = true
+        }
         
         weak var weakSelf = self
         userDataCell.updateColorCallback = { (keyName: String, colorIndex: String) in
@@ -208,6 +212,11 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         saveData()
     }
     
+    func saveDataButtonPressed () {
+        RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 2)
+        saveData()
+    }
+    
     func saveData () {
         if let cell = self.tableView?.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRow, inSection: 0)) as? UserDataCellTableViewCell {
             if (!cell.keyInputDataTextField.text.isEmpty && !cell.keyNameTextField.text.isEmpty) {
@@ -224,7 +233,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 previewButton!.hidden = self.count == 0
                 defaultTextLabel?.hidden = self.count > 0
-                RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 2)
             }
         }
     }

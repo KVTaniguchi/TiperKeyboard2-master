@@ -31,7 +31,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-            data.append(["Next Keyboard":"Next Keyboard"])
+            if !contains(data, {$0 == ["Next Keyboard":"Next Keyboard"]}) {
+                data.append(["Next Keyboard":"Next Keyboard"])
+            }
             colors["Next Keyboard"] = "0"
         }
         
@@ -50,7 +52,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
         
-        cell.layer.cornerRadius = 5
+        cell.layer.cornerRadius = 3
         
         let dict = data[indexPath.item]
         for (key, value) in dict {
@@ -116,10 +118,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         passingArray.removeLast()
         self.sharedDefaults?.setValue(passingArray, forKey:self.defaultskey)
         self.sharedDefaults?.synchronize()
-        self.rearrangeKeysCallback!(self.data)
+        self.rearrangeKeysCallback!(passingArray)
     }
     
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
+        if indexPath.item == 0 {
+            return true
+        }
         if indexPath.item < (self.data.count-1) {
             return true
         }
