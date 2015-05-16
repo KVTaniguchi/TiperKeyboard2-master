@@ -97,10 +97,6 @@ class UserDataEntryViewController: UIViewController, UITableViewDelegate, UITabl
         self.navigationController?.pushViewController(vc, animated: true)
         
         weak var weakSelf = self
-        vc.rearrangeKeysCallback = { (data :[[String:String]]) in
-            weakSelf!.keyArray = data
-            weakSelf!.tableView?.reloadData()
-        }
     }
     
     func addNewItem () {
