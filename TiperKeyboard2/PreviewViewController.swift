@@ -34,20 +34,36 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        
         var originalColor = cell?.backgroundColor
         
-        UIView.animateWithDuration(0.2, animations: {
-            cell?.backgroundColor = UIColor.lightGrayColor()
-        }, completion: { (value: Bool) in
+        if editKeysButton?.selected == false {
             UIView.animateWithDuration(0.2, animations: {
-                cell?.backgroundColor = originalColor
+                cell?.backgroundColor = UIColor.lightGrayColor()
+                }, completion: { (value: Bool) in
+                    UIView.animateWithDuration(0.2, animations: {
+                        cell?.backgroundColor = originalColor
+                    })
             })
-        })
-        
-        var keyDict = data[indexPath.item]
-        for (key, value) in keyDict {
-            textFieldOne?.text = value
+            var keyDict = data[indexPath.item]
+            for (key, value) in keyDict {
+                textFieldOne?.text = value
+            }
+        }
+        else {
+            UIView.animateWithDuration(0.5, animations: {
+                for textField in [self.textFieldOne, self.textFieldTwo] {
+                    textField!.alpha = 1.0
+                    textField!.userInteractionEnabled = true
+                    textField!.text = ""
+                }
+                self.textFieldTwo?.hidden = false
+                self.textFieldTwo?.placeholder = "Key Title"
+                self.textFieldOne?.placeholder = "Key Data"
+                cell!.backgroundColor = UIColor.lightTextColor()
+                cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
+            }, completion: { (value) in
+                
+            })
         }
     }
     
@@ -88,7 +104,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 305), collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
         collectionView?.contentInset = UIEdgeInsetsMake(1, 1, 1, 0)
         collectionView!.backgroundColor = UIColor.lightGrayColor()
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
@@ -118,25 +134,29 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         textFieldOne = UITextField()
         textFieldTwo = UITextField()
-        
-        textFieldOne?.borderStyle = UITextBorderStyle.Line
-        textFieldOne?.userInteractionEnabled = false
         textFieldOne?.frame = CGRectMake(20, 430, view.frame.width - 40, 44)
-        textFieldOne?.textAlignment = .Center
-        textFieldOne?.layer.borderWidth = 1.0
-        textFieldOne?.layer.borderColor = UIColor.lightGrayColor().CGColor
-        view.addSubview(textFieldOne!)
+        textFieldTwo?.frame = CGRectMake(20, CGRectGetMaxY(collectionView!.frame) + 10 + 44 + 10, view.frame.width - 40, 44)
+        textFieldTwo?.alpha = 0.0
+        textFieldTwo?.hidden = true
         
+        for textField in [textFieldOne, textFieldTwo] {
+            textField?.autocorrectionType = .No
+            textField?.borderStyle = .Line
+            textField?.userInteractionEnabled = false
+            textField?.textAlignment = .Center
+            textField?.layer.borderColor = UIColor.lightGrayColor().CGColor
+            textField?.layer.borderWidth = 1.0
+            view.addSubview(textField!)
+        }
+
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 120))
-        
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionalLabel]-100-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel!]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionalLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel!]))
         
         editKeysButton = UIButton()
         editKeysButton?.setTitle("Edit Keys", forState: .Normal)
         editKeysButton?.setTitleColor(view.tintColor, forState: .Normal)
-        editKeysButton?.showsTouchWhenHighlighted = true
         editKeysButton?.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
         editKeysButton?.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(editKeysButton!)
@@ -192,11 +212,43 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func editButtonPressed () {
-        // 1 animate textfield move to just below collecionview
-        // change textfield t0 user ineraction enabled
-        // animate in 2nd textfield
-        // change instruction label text to key editing text
-        // change edit keys title to exit and save
+        editKeysButton!.selected = !editKeysButton!.selected
+        if editKeysButton!.selected {
+            UIView.animateWithDuration(0.5, animations: {
+                self.textFieldOne!.alpha = 0
+                self.textFieldOne!.frame = CGRectMake(20, CGRectGetMaxY(self.collectionView!.frame) + 10, self.view.frame.width - 40, 44)
+                self.instructionalLabel?.alpha = 0
+                self.editKeysButton!.alpha = 0
+                }) { (value) in
+                    self.instructionalLabel?.text = "Touch a key to edit it."
+                    self.editKeysButton?.setTitle("Done", forState: .Normal)
+                    
+                    UIView.animateWithDuration(0.5, animations: {
+                            self.instructionalLabel!.alpha = 1.0
+                            self.editKeysButton!.alpha = 1.0
+                        }, completion: { (value) in })
+            }
+        }
+        else {
+            UIView.animateWithDuration(0.5, animations: {
+                    self.textFieldOne!.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
+                    self.instructionalLabel?.alpha = 0
+                    self.editKeysButton!.alpha = 0
+                    self.textFieldTwo!.alpha = 0
+                }) { (value) in
+                    self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
+                    self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
+                    self.textFieldOne?.placeholder = ""
+                    
+                    UIView.animateWithDuration(0.5, animations: {
+                        self.textFieldOne!.alpha = 1.0
+                        self.instructionalLabel!.alpha = 1.0
+                        self.editKeysButton!.alpha = 1.0
+                        }, completion: { (value) in
+                        self.collectionView?.reloadData()
+                    })
+            }
+        }
     }
     
     func addNewItem () {
@@ -231,6 +283,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             if key == "Next Keyboard" || colors[key] == nil {
                 cell.backgroundColor = UIColor.darkGrayColor()
+                cell.keyTextLabel?.textColor = UIColor.whiteColor()
             }
             else {
                 cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
@@ -321,33 +374,5 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             return true
         }
         return false
-    }
-}
-
-class PreviewCell: UICollectionViewCell {
-    
-    var keyTextLabel : UILabel?
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        keyTextLabel = UILabel()
-        keyTextLabel?.textColor = UIColor.whiteColor()
-        keyTextLabel?.numberOfLines = 0
-        keyTextLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        keyTextLabel?.preferredMaxLayoutWidth = contentView.frame.width - 2
-        keyTextLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        contentView.addSubview(keyTextLabel!)
-        
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyTextLabel":keyTextLabel!]))
-        contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel!, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-    }
-    
-    func setLabelText (text: String) {
-        keyTextLabel?.text = text
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 }
