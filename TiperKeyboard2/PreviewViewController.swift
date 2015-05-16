@@ -31,6 +31,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var editKeysButton : UIButton?
     
+    var swipeGestureRecognizer : UISwipeGestureRecognizer?
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
@@ -67,7 +69,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
+    func swipeDown () {
+        for textField in [textFieldOne, textFieldTwo] {
+            if textField!.isFirstResponder() {
+                textField!.resignFirstResponder()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
+        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
+        swipeGestureRecognizer?.direction = .Down
+        view.addGestureRecognizer(swipeGestureRecognizer!)
+        
         view.backgroundColor = UIColor.whiteColor()
         
         self.navigationController?.navigationBar.topItem?.title = "⌘v"
@@ -230,11 +244,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         else {
+            self.textFieldTwo!.alpha = 0
+            
             UIView.animateWithDuration(0.5, animations: {
                     self.textFieldOne!.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
                     self.instructionalLabel?.alpha = 0
                     self.editKeysButton!.alpha = 0
-                    self.textFieldTwo!.alpha = 0
                 }) { (value) in
                     self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
                     self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
