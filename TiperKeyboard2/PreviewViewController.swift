@@ -89,6 +89,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 305), collectionViewLayout: layout)
+        collectionView?.contentInset = UIEdgeInsetsMake(1, 1, 1, 0)
         collectionView!.backgroundColor = UIColor.lightGrayColor()
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
@@ -148,6 +149,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func checkKeyCount () {
         if data.count == 1 {
+            
+            navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
+            navigationItem.leftBarButtonItem?.enabled = false
+            
             defaultTextLabel?.hidden = false
             defaultTextLabel?.alpha = 1.0
             
@@ -165,6 +170,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         else if data.count > 1 {
             UIView.animateWithDuration(1.0, animations: { () -> Void in
+                self.navigationItem.leftBarButtonItem?.tintColor = self.view.tintColor
+                self.navigationItem.leftBarButtonItem?.enabled = true
+                
                 self.defaultTextLabel?.hidden = true
                 self.defaultTextLabel?.alpha = 0.0
                 
@@ -184,7 +192,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func editButtonPressed () {
-        
+        // 1 animate textfield move to just below collecionview
+        // change textfield t0 user ineraction enabled
+        // animate in 2nd textfield
+        // change instruction label text to key editing text
+        // change edit keys title to exit and save
     }
     
     func addNewItem () {
@@ -216,11 +228,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         for (key, value) in dict {
             cell.setLabelText(key)
             let colorIndex = colors[key]
-            if colors[key] != nil {
-                cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
+            
+            if key == "Next Keyboard" || colors[key] == nil {
+                cell.backgroundColor = UIColor.darkGrayColor()
             }
             else {
-                cell.backgroundColor = colorRef[0]
+                cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
             }
         }
         
@@ -253,7 +266,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         case 1:
             size = CGSizeMake(collectionView.frame.width - 2, collectionView.frame.height - 2)
         case 2:
-            size = CGSizeMake((collectionView.frame.width/2) - 2, collectionView.frame.height-2)
+            size = CGSizeMake((collectionView.frame.width/2) - 2, collectionView.frame.height - 2)
         case 3:
             size = CGSizeMake(collectionView.frame.width - 2, collectionView.frame.height/3 - 2)
         case 4:
