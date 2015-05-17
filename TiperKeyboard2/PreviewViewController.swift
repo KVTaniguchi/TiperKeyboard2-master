@@ -36,7 +36,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         swipeGestureRecognizer?.direction = .Down
         view.addGestureRecognizer(swipeGestureRecognizer!)
         view.backgroundColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.topItem?.title = "⌘v"
+        self.navigationController?.navigationBar.topItem?.title = "Short Key"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
         
