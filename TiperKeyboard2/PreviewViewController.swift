@@ -187,11 +187,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         colorPaletteView.alpha = 0.0
         colorPaletteView.hidden = true
         colorPaletteView.updateColorCallback = { (index) in
-            // save color chosen to colors
             var dict = self.data[self.selectedItem]
             self.colors[dict.keys.first!] = "\(index)"
             println("dict: \(dict) selected cell index: \(self.selectedItem) for color \(index) colors: \(self.colors)")
-            // reload that cell
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
         }
         view.addSubview(colorPaletteView)
