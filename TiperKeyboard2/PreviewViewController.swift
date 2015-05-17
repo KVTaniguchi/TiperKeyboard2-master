@@ -35,9 +35,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
         swipeGestureRecognizer?.direction = .Down
         view.addGestureRecognizer(swipeGestureRecognizer!)
-        
         view.backgroundColor = UIColor.whiteColor()
-        
         self.navigationController?.navigationBar.topItem?.title = "⌘v"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
@@ -66,7 +64,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             sharedDefaults?.setObject(colors, forKey: defaultColors)
             sharedDefaults?.synchronize()
         }
-        
         count = data.count
         
         var layout = ReorderableCollectionViewFlowLayout()
@@ -83,7 +80,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         defaultTextLabel = UILabel()
         instructionalLabel = UILabel()
-        
         for label in [defaultTextLabel, instructionalLabel] {
             label?.numberOfLines = 0
             label?.textAlignment = .Center
@@ -91,7 +87,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             label?.lineBreakMode = .ByWordWrapping
             label?.setTranslatesAutoresizingMaskIntoConstraints(false)
         }
-        
         defaultTextLabel?.textColor = UIColor.darkGrayColor()
         defaultTextLabel?.text = "Add keys by pressing the + Button in the upper right corner."
         defaultTextLabel?.hidden = self.count > 1
@@ -127,6 +122,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.colors[dict.keys.first!] = "\(index)"
             println("dict: \(dict) selected cell index: \(self.selectedItem) for color \(index) colors: \(self.colors)")
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
+            self.saveData()
         }
         view.addSubview(colorPaletteView)
         
@@ -186,8 +182,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.textFieldTwo?.placeholder = "What will this key type when pressed?"
                 self.textFieldOne?.placeholder = "What is the name of this key?"
                 self.instructionalLabel?.text = "Press + to add more keys.  Press Save to bind this Key."
-                cell!.backgroundColor = UIColor.lightTextColor()
-                cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
             }, completion: { (value) in
                 self.collectionView?.reloadData()
             })
@@ -318,9 +312,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
-
         cell.layer.cornerRadius = 3
-        
+        cell.layer.borderColor = UIColor.clearColor().CGColor
         let dict = data[indexPath.item]
         
         for (key, value) in dict {
@@ -358,6 +351,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 cell.backgroundColor = UIColor.lightTextColor()
                 cell.keyTextLabel?.textColor = UIColor.darkTextColor()
             }
+            cell.layer.borderColor = view.tintColor.CGColor
+            cell.layer.borderWidth = 5
         }
         
         return cell
@@ -416,12 +411,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        if indexPath.item == 0 || indexPath.item < (self.data.count-1) {
+        if indexPath.item < (self.data.count-1) {
             return true
         }
-//        if indexPath.item < (self.data.count-1) {
-//            return true
-//        }
         return false
     }
     
