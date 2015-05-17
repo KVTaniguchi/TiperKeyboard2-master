@@ -29,6 +29,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var outPutLabel : UILabel?
     var editKeysButton : UIButton?
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
+    var colorPaletteView = ColorPaletteView()
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedItem = indexPath.item
@@ -79,11 +80,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         tempData = [String:String]()
         let textField = notification.object as! UITextField
         textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-//        if textField == textFieldOne {
-//        }
-//        else if textField == textFieldTwo {
-//            
-//        }
+
         tempData[textFieldOne!.text] = textFieldTwo!.text
 
         // reload the cell at that indexpath
@@ -94,6 +91,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        colorPaletteView.frame = CGRectMake(0, 500, view.frame.width, 44)
+        colorPaletteView.updateColorCallback = { (index) in
+            
+        }
+        view.addSubview(colorPaletteView)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         
         swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
