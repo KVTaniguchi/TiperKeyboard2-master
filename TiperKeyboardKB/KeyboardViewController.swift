@@ -66,9 +66,6 @@ class KeyboardViewController: UIInputViewController {
         self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         
         self.colorRef = KBColorPalette.colorRef
-
-        self.data.append(["Next Keyboard":"Next Keyboard"])
-        self.colors["Next Keyboard"] = "10"
         
         for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {

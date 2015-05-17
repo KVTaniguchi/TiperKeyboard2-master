@@ -8,33 +8,30 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource {
+class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate {
     
     var collectionView : UICollectionView?
     
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
+    var tempData = [String:String]()
     var count = 0
-    var selectedRow = 0
+    var selectedItem = 0
     var colors = [String:String]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     let colorRef = ColorPalette.colorRef
-    
     var textFieldOne : UITextField?
     var textFieldTwo : UITextField?
-    
     var defaultTextLabel : UILabel?
     var instructionalLabel : UILabel?
     var outPutLabel : UILabel?
-    
     var editKeysButton : UIButton?
-    
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        selectedItem = indexPath.item
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
         var originalColor = cell?.backgroundColor
         
@@ -59,12 +56,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     textField!.text = ""
                 }
                 self.textFieldTwo?.hidden = false
-                self.textFieldTwo?.placeholder = "Key Title"
-                self.textFieldOne?.placeholder = "Key Data"
+                self.textFieldTwo?.placeholder = "What is the name of this key?"
+                self.textFieldOne?.placeholder = "What will this key type when pressed?"
+                self.instructionalLabel?.text = "Press Save to Bind this Key."
                 cell!.backgroundColor = UIColor.lightTextColor()
                 cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
             }, completion: { (value) in
-                
+                self.collectionView?.reloadData()
             })
         }
     }
@@ -77,7 +75,27 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
+    func textChanged (notification:NSNotification) {
+        tempData = [String:String]()
+        let textField = notification.object as! UITextField
+        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
+//        if textField == textFieldOne {
+//        }
+//        else if textField == textFieldTwo {
+//            
+//        }
+        tempData[textFieldOne!.text] = textFieldTwo!.text
+
+        // reload the cell at that indexpath
+        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+        data.insert(tempData, atIndex: selectedItem)
+        data.removeAtIndex(selectedItem + 1)
+        println("\(data) *****  \(selectedItem)")
+    }
+    
     override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
+        
         swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
         swipeGestureRecognizer?.direction = .Down
         view.addGestureRecognizer(swipeGestureRecognizer!)
@@ -154,6 +172,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         textFieldTwo?.hidden = true
         
         for textField in [textFieldOne, textFieldTwo] {
+            textField?.delegate = self
             textField?.autocorrectionType = .No
             textField?.borderStyle = .Line
             textField?.userInteractionEnabled = false
@@ -288,10 +307,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
-        
+
         cell.layer.cornerRadius = 3
         
         let dict = data[indexPath.item]
+        
         for (key, value) in dict {
             cell.setLabelText(key)
             let colorIndex = colors[key]
@@ -316,6 +336,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.alpha = 0.0
         }
 
+        if indexPath.item == selectedItem {
+            cell.backgroundColor = UIColor.lightGrayColor()
+        }
         
         return cell
     }
