@@ -51,6 +51,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         else {
             UIView.animateWithDuration(0.5, animations: {
+                self.colorPaletteView.alpha = 1.0
+                self.colorPaletteView.hidden = false
                 for textField in [self.textFieldOne, self.textFieldTwo] {
                     textField!.alpha = 1.0
                     textField!.userInteractionEnabled = true
@@ -92,12 +94,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        colorPaletteView.frame = CGRectMake(0, 500, view.frame.width, 44)
-        colorPaletteView.updateColorCallback = { (index) in
-            
-        }
-        view.addSubview(colorPaletteView)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         
@@ -186,6 +182,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             textField?.layer.borderWidth = 1.0
             view.addSubview(textField!)
         }
+        
+        colorPaletteView.frame = CGRectMake(0, CGRectGetMaxY(textFieldTwo!.frame) + 20, view.frame.width, view.frame.width/6)
+        colorPaletteView.alpha = 0.0
+        colorPaletteView.hidden = true
+        colorPaletteView.updateColorCallback = { (index) in
+            // save color chosen to colors
+            var dict = self.data[self.selectedItem]
+            self.colors[dict.keys.first!] = "\(index)"
+            println("dict: \(dict) selected cell index: \(self.selectedItem) for color \(index) colors: \(self.colors)")
+            // reload that cell
+            self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
+        }
+        view.addSubview(colorPaletteView)
 
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 120))
@@ -253,13 +262,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         editKeysButton!.selected = !editKeysButton!.selected
         if editKeysButton!.selected {
             UIView.animateWithDuration(0.5, animations: {
-                self.textFieldOne!.alpha = 0
+                for view in [self.colorPaletteView, self.textFieldOne!, self.textFieldTwo!, self.editKeysButton!, self.instructionalLabel!] {
+                    view.alpha = 0.0
+                }
+    
                 self.textFieldOne!.frame = CGRectMake(20, CGRectGetMaxY(self.collectionView!.frame) + 10, self.view.frame.width - 40, 44)
-                self.instructionalLabel?.alpha = 0
-                self.editKeysButton!.alpha = 0
-                }) { (value) in
-                    self.instructionalLabel?.text = "Touch a key to edit it."
-                    self.editKeysButton?.setTitle("Done", forState: .Normal)
+                    }) { (value) in
+                        self.instructionalLabel?.text = "Touch a key to edit it."
+                        self.editKeysButton?.setTitle("Done", forState: .Normal)
                     
                     UIView.animateWithDuration(0.5, animations: {
                             self.instructionalLabel!.alpha = 1.0
@@ -269,24 +279,29 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         else {
             self.textFieldTwo!.alpha = 0
-            
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animateWithDuration(0.2, animations: {
+                self.colorPaletteView.alpha = 0.0
+            }, completion: { (value) in
+                UIView.animateWithDuration(0.5, animations: {
                     self.textFieldOne!.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
                     self.instructionalLabel?.alpha = 0
                     self.editKeysButton!.alpha = 0
-                }) { (value) in
-                    self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
-                    self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
-                    self.textFieldOne?.placeholder = ""
-                    
-                    UIView.animateWithDuration(0.5, animations: {
-                        self.textFieldOne!.alpha = 1.0
-                        self.instructionalLabel!.alpha = 1.0
-                        self.editKeysButton!.alpha = 1.0
-                        }, completion: { (value) in
-                        self.collectionView?.reloadData()
-                    })
-            }
+                    }) { (value) in
+                        self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
+                        self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
+                        self.textFieldOne?.placeholder = ""
+                        
+                        UIView.animateWithDuration(0.5, animations: {
+                            self.textFieldOne!.alpha = 1.0
+                            self.instructionalLabel!.alpha = 1.0
+                            self.editKeysButton!.alpha = 1.0
+                            self.colorPaletteView.alpha = 0.0
+                            self.colorPaletteView.hidden = true
+                            }, completion: { (value) in
+                                self.collectionView?.reloadData()
+                        })
+                }
+            })
         }
     }
     
@@ -342,8 +357,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
 
         if indexPath.item == selectedItem && editKeysButton?.selected == true {
-            cell.backgroundColor = UIColor.lightTextColor()
-            cell.keyTextLabel?.textColor = UIColor.darkTextColor()
+            // change the current color if a key for this object exists
+            var dict = self.data[self.selectedItem]
+            var key = dict.keys.first!
+            if colors[key] != nil {
+                cell.backgroundColor = colorRef[colors[key]!.toInt()!]
+                cell.keyTextLabel?.textColor = UIColor.lightTextColor()
+            }
+            else {
+                cell.backgroundColor = UIColor.lightTextColor()
+                cell.keyTextLabel?.textColor = UIColor.darkTextColor()
+            }
         }
         
         return cell
