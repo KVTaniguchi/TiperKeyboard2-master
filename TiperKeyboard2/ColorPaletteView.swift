@@ -11,7 +11,7 @@ import UIKit
 class ColorPaletteView: UIView {
     
     var buttonArray = [UIButton]()
-    var colors = ColorPalette.colorRef
+    let colors = ColorPalette.colorRef
     var updateColorCallback : ((colorIndex: Int) -> ())?
     
     override init(frame: CGRect) {

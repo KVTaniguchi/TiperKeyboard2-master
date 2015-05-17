@@ -59,9 +59,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     textField!.text = ""
                 }
                 self.textFieldTwo?.hidden = false
-                self.textFieldTwo?.placeholder = "What is the name of this key?"
-                self.textFieldOne?.placeholder = "What will this key type when pressed?"
-                self.instructionalLabel?.text = "Press Save to Bind this Key."
+                self.textFieldTwo?.placeholder = "What will this key type when pressed?"
+                self.textFieldOne?.placeholder = "What is the name of this key?"
+                self.instructionalLabel?.text = "Press + to add more keys.  Press Save to bind this Key."
                 cell!.backgroundColor = UIColor.lightTextColor()
                 cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
             }, completion: { (value) in
@@ -85,11 +85,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         tempData[textFieldOne!.text] = textFieldTwo!.text
 
-        // reload the cell at that indexpath
         collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
         data.insert(tempData, atIndex: selectedItem)
         data.removeAtIndex(selectedItem + 1)
-        println("\(data) *****  \(selectedItem)")
     }
     
     override func viewDidLoad() {
@@ -122,6 +120,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             sharedDefaults?.setValue(tempDict, forKey:defaultColors)
             sharedDefaults?.synchronize()
+            println("colors temp dict \(tempDict) \n data: \(data)")
         }
         else {
             data.append(["Next Keyboard":"Next Keyboard"])
@@ -257,6 +256,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func editButtonPressed () {
+        textFieldTwo!.text = ""
+        textFieldOne?.text = ""
+        tempData.removeAll(keepCapacity: false)
         editKeysButton!.selected = !editKeysButton!.selected
         if editKeysButton!.selected {
             UIView.animateWithDuration(0.5, animations: {
@@ -277,6 +279,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         else {
             self.textFieldTwo!.alpha = 0
+            self.textFieldOne?.userInteractionEnabled = false
             UIView.animateWithDuration(0.2, animations: {
                 self.colorPaletteView.alpha = 0.0
             }, completion: { (value) in
@@ -355,7 +358,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
 
         if indexPath.item == selectedItem && editKeysButton?.selected == true {
-            // change the current color if a key for this object exists
             var dict = self.data[self.selectedItem]
             var key = dict.keys.first!
             if colors[key] != nil {
@@ -416,12 +418,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
-        var keyBeingMoved = self.data[fromIndexPath.item]
-        self.data.removeAtIndex(fromIndexPath.item)
-        self.data.insert(keyBeingMoved, atIndex: toIndexPath.item)
-        var passingArray = data as [[String:String]]
-        passingArray.removeLast()
-        self.sharedDefaults?.setValue(passingArray, forKey:self.defaultskey)
+        let keyBeingMoved = data[fromIndexPath.item]
+        data.removeAtIndex(fromIndexPath.item)
+        data.insert(keyBeingMoved, atIndex: toIndexPath.item)
+        self.sharedDefaults?.setValue(data, forKey:defaultskey)
         self.sharedDefaults?.synchronize()
     }
     
