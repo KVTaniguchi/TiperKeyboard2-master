@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashV3.png" translatesAutoresizingMaskIntoConstraints="NO" id="77K-3g-Kkg">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SplashV2.png" translatesAutoresizingMaskIntoConstraints="NO" id="77K-3g-Kkg">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                 </imageView>
             </subviews>
@@ -27,6 +27,6 @@
         </view>
     </objects>
     <resources>
-        <image name="SplashV3.png" width="640" height="1136"/>
+        <image name="SplashV2.png" width="640" height="1136"/>
     </resources>
 </document>

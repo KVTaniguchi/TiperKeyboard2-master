@@ -55,7 +55,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             sharedDefaults?.setValue(tempDict, forKey:defaultColors)
             sharedDefaults?.synchronize()
-            println("colors temp dict \(tempDict) \n data: \(data)")
         }
         else {
             data.append(["Next Keyboard":"Next Keyboard"])
@@ -120,7 +119,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         colorPaletteView.updateColorCallback = { (index) in
             var dict = self.data[self.selectedItem]
             self.colors[dict.keys.first!] = "\(index)"
-            println("dict: \(dict) selected cell index: \(self.selectedItem) for color \(index) colors: \(self.colors)")
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
             self.saveData()
         }
