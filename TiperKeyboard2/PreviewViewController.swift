@@ -336,8 +336,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             cell.alpha = 0.0
         }
 
-        if indexPath.item == selectedItem {
-            cell.backgroundColor = UIColor.lightGrayColor()
+        if indexPath.item == selectedItem && editKeysButton?.selected == true {
+            cell.backgroundColor = UIColor.lightTextColor()
+            cell.keyTextLabel?.textColor = UIColor.darkTextColor()
         }
         
         return cell
