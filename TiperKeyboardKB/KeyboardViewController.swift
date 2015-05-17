@@ -86,8 +86,8 @@ class KeyboardViewController: UIInputViewController {
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
-            keyboardButton.setTitle(keyText, forState: .Normal)
-            keyboardButton.keyText = keyTitle
+            keyboardButton.setTitle(keyTitle, forState: .Normal)
+            keyboardButton.keyText = keyText
             keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
             keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
