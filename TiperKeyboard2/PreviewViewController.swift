@@ -201,9 +201,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         let textField = notification.object as! UITextField
         textField.clearButtonMode = UITextFieldViewMode.WhileEditing
         tempData[textFieldOne!.text] = textFieldTwo!.text
-        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
         data.insert(tempData, atIndex: selectedItem)
         data.removeAtIndex(selectedItem + 1)
+        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
     }
     
     func checkKeyCount () {
