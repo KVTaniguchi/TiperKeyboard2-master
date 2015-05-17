@@ -1,17 +1,13 @@
-//
 //  PreviewViewController.swift
 //  TiperKeyboard2
-//
 //  Created by Kevin Taniguchi on 5/10/15.
 //  Copyright (c) 2015 Kevin Taniguchi. All rights reserved.
-//
 
 import UIKit
 
 class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate {
     
     var collectionView : UICollectionView?
-    
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
@@ -31,65 +27,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedItem = indexPath.item
-        var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        var originalColor = cell?.backgroundColor
-        
-        if editKeysButton?.selected == false {
-            UIView.animateWithDuration(0.2, animations: {
-                cell?.backgroundColor = UIColor.lightGrayColor()
-                }, completion: { (value: Bool) in
-                    UIView.animateWithDuration(0.2, animations: {
-                        cell?.backgroundColor = originalColor
-                    })
-            })
-            var keyDict = data[indexPath.item]
-            for (key, value) in keyDict {
-                textFieldOne?.text = value
-            }
-        }
-        else {
-            UIView.animateWithDuration(0.5, animations: {
-                self.colorPaletteView.alpha = 1.0
-                self.colorPaletteView.hidden = false
-                for textField in [self.textFieldOne, self.textFieldTwo] {
-                    textField!.alpha = 1.0
-                    textField!.userInteractionEnabled = true
-                    textField!.text = ""
-                }
-                self.textFieldTwo?.hidden = false
-                self.textFieldTwo?.placeholder = "What will this key type when pressed?"
-                self.textFieldOne?.placeholder = "What is the name of this key?"
-                self.instructionalLabel?.text = "Press + to add more keys.  Press Save to bind this Key."
-                cell!.backgroundColor = UIColor.lightTextColor()
-                cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
-            }, completion: { (value) in
-                self.collectionView?.reloadData()
-            })
-        }
-    }
-    
-    func swipeDown () {
-        for textField in [textFieldOne, textFieldTwo] {
-            if textField!.isFirstResponder() {
-                textField!.resignFirstResponder()
-            }
-        }
-    }
-    
-    func textChanged (notification:NSNotification) {
-        tempData = [String:String]()
-        let textField = notification.object as! UITextField
-        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-
-        tempData[textFieldOne!.text] = textFieldTwo!.text
-
-        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
-        data.insert(tempData, atIndex: selectedItem)
-        data.removeAtIndex(selectedItem + 1)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,7 +41,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.navigationController?.navigationBar.topItem?.title = "⌘v"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
-
+        
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
@@ -192,7 +129,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
         }
         view.addSubview(colorPaletteView)
-
+        
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 120))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionalLabel]-100-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel!]))
@@ -211,26 +148,84 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         checkKeyCount()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        textFieldOne?.text = ""
+        textFieldTwo?.text = ""
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        selectedItem = indexPath.item
+        var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
+        var originalColor = cell?.backgroundColor
+        
+        if editKeysButton?.selected == false {
+            UIView.animateWithDuration(0.2, animations: {
+                cell?.backgroundColor = UIColor.lightGrayColor()
+                }, completion: { (value: Bool) in
+                    UIView.animateWithDuration(0.2, animations: {
+                        cell?.backgroundColor = originalColor
+                    })
+            })
+            var keyDict = data[indexPath.item]
+            for (key, value) in keyDict {
+                textFieldOne?.text = value
+            }
+        }
+        else {
+            UIView.animateWithDuration(0.5, animations: {
+                self.colorPaletteView.alpha = 1.0
+                self.colorPaletteView.hidden = false
+                for textField in [self.textFieldOne, self.textFieldTwo] {
+                    textField!.alpha = 1.0
+                    textField!.userInteractionEnabled = true
+                    textField!.text = ""
+                }
+                self.textFieldTwo?.hidden = false
+                self.textFieldTwo?.placeholder = "What will this key type when pressed?"
+                self.textFieldOne?.placeholder = "What is the name of this key?"
+                self.instructionalLabel?.text = "Press + to add more keys.  Press Save to bind this Key."
+                cell!.backgroundColor = UIColor.lightTextColor()
+                cell!.keyTextLabel?.textColor = UIColor.darkGrayColor()
+            }, completion: { (value) in
+                self.collectionView?.reloadData()
+            })
+        }
+    }
+    
+    func swipeDown () {
+        for textField in [textFieldOne, textFieldTwo] {
+            if textField!.isFirstResponder() {
+                textField!.resignFirstResponder()
+            }
+        }
+    }
+    
+    func textChanged (notification:NSNotification) {
+        tempData = [String:String]()
+        let textField = notification.object as! UITextField
+        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
+        tempData[textFieldOne!.text] = textFieldTwo!.text
+        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+        data.insert(tempData, atIndex: selectedItem)
+        data.removeAtIndex(selectedItem + 1)
+    }
+    
     func checkKeyCount () {
         if data.count == 1 {
-            
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
             defaultTextLabel?.hidden = false
             defaultTextLabel?.alpha = 1.0
             
-            editKeysButton?.hidden = true
-            editKeysButton?.alpha = 0.0
-            
-            textFieldOne?.hidden = true
-            textFieldOne?.alpha = 0.0
-            
-            instructionalLabel?.hidden = true
-            instructionalLabel?.alpha = 0.0
+            for view in [editKeysButton!, textFieldOne!, instructionalLabel!, collectionView!] {
+                view.alpha = 0.0
+                view.hidden = true
+            }
             
             self.collectionView?.backgroundColor = UIColor.clearColor()
-            collectionView?.alpha = 0.0
         }
         else if data.count > 1 {
             UIView.animateWithDuration(1.0, animations: { () -> Void in
@@ -240,23 +235,18 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.defaultTextLabel?.hidden = true
                 self.defaultTextLabel?.alpha = 0.0
                 
-                self.editKeysButton?.hidden = false
-                self.editKeysButton?.alpha = 1.0
-                
-                self.textFieldOne?.hidden = false
-                self.textFieldOne?.alpha = 1.0
-                
-                self.instructionalLabel?.hidden = false
-                self.instructionalLabel?.alpha = 1.0
+                for view in [self.editKeysButton!, self.textFieldOne!, self.instructionalLabel!, self.collectionView!] {
+                    view.alpha = 1.0
+                    view.hidden = false
+                }
                 
                 self.collectionView?.backgroundColor = UIColor.lightGrayColor()
-                self.collectionView?.alpha = 1.0
             })
         }
     }
     
     func editButtonPressed () {
-        textFieldTwo!.text = ""
+        textFieldTwo?.text = ""
         textFieldOne?.text = ""
         tempData.removeAll(keepCapacity: false)
         editKeysButton!.selected = !editKeysButton!.selected
@@ -426,12 +416,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        if indexPath.item == 0 {
+        if indexPath.item == 0 || indexPath.item < (self.data.count-1) {
             return true
         }
-        if indexPath.item < (self.data.count-1) {
-            return true
-        }
+//        if indexPath.item < (self.data.count-1) {
+//            return true
+//        }
         return false
     }
     
