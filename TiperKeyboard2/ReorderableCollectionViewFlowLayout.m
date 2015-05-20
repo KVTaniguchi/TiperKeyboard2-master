@@ -454,7 +454,6 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
     NSArray *layoutAttributesForElementsInRect = [super layoutAttributesForElementsInRect:rect];
     
     for (UICollectionViewLayoutAttributes *layoutAttributes in layoutAttributesForElementsInRect) {
-        NSLog(@"FRAME %@", NSStringFromCGRect(layoutAttributes.frame));
         switch (layoutAttributes.representedElementCategory) {
             case UICollectionElementCategoryCell: {
                 [self applyLayoutAttributes:layoutAttributes];

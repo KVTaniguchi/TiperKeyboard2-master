@@ -24,9 +24,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var instructionalLabel : UILabel?
     var outPutLabel : UILabel?
     var editKeysButton : UIButton?
+    var deleteKeysButton : UIButton?
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,6 +138,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         editKeysButton?.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(editKeysButton!)
         
+        deleteKeysButton = UIButton()
+        deleteKeysButton?.setTitle("Delete", forState: .Normal)
+        deleteKeysButton?.setTitleColor(view.tintColor, forState: .Normal)
+        deleteKeysButton?.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
+        deleteKeysButton?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        deleteKeysButton?.alpha = 0.0
+        view.addSubview(deleteKeysButton!)
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton!]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton!]))
+        
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[edit]-40-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton!]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[edit]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton!]))
         
@@ -149,6 +160,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         textFieldOne?.text = ""
         textFieldTwo?.text = ""
+    }
+    
+    func deleteButtonPressed () {
+        if data.count > 2 {
+            data.removeAtIndex(selectedItem)
+            saveData()
+            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+            if data.count == 1 {
+                UIView.animateWithDuration(1.0, animations: {
+                    self.deleteKeysButton?.alpha = 0.0
+                })
+            }
+        }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -174,6 +198,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 return
             }
             UIView.animateWithDuration(0.5, animations: {
+                if self.data.count > 2 {
+                    self.deleteKeysButton?.alpha = 1.0
+                }
+
                 self.colorPaletteView.alpha = 1.0
                 self.colorPaletteView.hidden = false
                 for textField in [self.textFieldOne, self.textFieldTwo] {
@@ -182,10 +210,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     textField!.text = ""
                 }
                 self.textFieldTwo?.hidden = false
+
+            }, completion: { (value) in
                 self.textFieldTwo?.placeholder = "What will this key type when pressed?"
                 self.textFieldOne?.placeholder = "What is the name of this key?"
-                self.instructionalLabel?.text = "Press + to add more keys.  Press Save to bind this Key."
-            }, completion: { (value) in
+                self.instructionalLabel?.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
                 self.collectionView?.reloadData()
             })
         }
@@ -269,6 +298,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.textFieldOne?.userInteractionEnabled = false
             UIView.animateWithDuration(0.2, animations: {
                 self.colorPaletteView.alpha = 0.0
+                self.deleteKeysButton?.alpha = 0.0
             }, completion: { (value) in
                 UIView.animateWithDuration(0.5, animations: {
                     self.textFieldOne!.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
