@@ -228,7 +228,6 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
 }
 
 #pragma mark - Target/Action methods
-
 // Tight loop, allocate memory sparely, even if they are stack allocation.
 - (void)handleScroll:(CADisplayLink *)displayLink {
     ScrollingDirection direction = (ScrollingDirection)[displayLink._userInfo[kScrollingDirectionKey] integerValue];
@@ -293,7 +292,6 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
     self.currentView.center = S_CGPointAdd(self.currentViewCenter, self.panTranslationInCollectionView);
     self.collectionView.contentOffset = S_CGPointAdd(contentOffset, translation);
 }
-
 
 - (void)handleLongPressGesture:(UILongPressGestureRecognizer *)gestureRecognizer {
     switch(gestureRecognizer.state) {
@@ -452,11 +450,11 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
 }
 
 #pragma mark - UICollectionViewLayout overridden methods
-
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray *layoutAttributesForElementsInRect = [super layoutAttributesForElementsInRect:rect];
     
     for (UICollectionViewLayoutAttributes *layoutAttributes in layoutAttributesForElementsInRect) {
+        NSLog(@"FRAME %@", NSStringFromCGRect(layoutAttributes.frame));
         switch (layoutAttributes.representedElementCategory) {
             case UICollectionElementCategoryCell: {
                 [self applyLayoutAttributes:layoutAttributes];
@@ -466,7 +464,6 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
             } break;
         }
     }
-    
     return layoutAttributesForElementsInRect;
 }
 
@@ -481,7 +478,7 @@ static NSString * const kCollectionViewKeyPath = @"collectionView";
             // Do nothing...
         } break;
     }
-    
+
     return layoutAttributes;
 }
 

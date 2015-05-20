@@ -27,6 +27,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,15 +67,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         count = data.count
         
         var layout = ReorderableCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1.0
+        layout.minimumInteritemSpacing = 0.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
-        collectionView?.contentInset = UIEdgeInsetsMake(1, 1, 1, 0)
         collectionView!.backgroundColor = UIColor.lightGrayColor()
+        collectionView?.contentInset = UIEdgeInsets(top: -260/4, left: 0, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
+        collectionView!.contentSize = CGSizeMake(view.frame.width, 260)
         view.addSubview(collectionView!)
         
         defaultTextLabel = UILabel()
@@ -91,7 +93,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         defaultTextLabel?.hidden = self.count > 1
         view.addSubview(defaultTextLabel!)
         
-        instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
+        instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
         instructionalLabel?.textColor = UIColor.darkGrayColor()
         view.addSubview(instructionalLabel!)
         
@@ -168,6 +170,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         else {
+            if indexPath.item == (data.count - 1) {
+                return
+            }
             UIView.animateWithDuration(0.5, animations: {
                 self.colorPaletteView.alpha = 1.0
                 self.colorPaletteView.hidden = false
@@ -270,7 +275,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     self.instructionalLabel?.alpha = 0
                     self.editKeysButton!.alpha = 0
                     }) { (value) in
-                        self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it."
+                        self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
                         self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
                         self.textFieldOne?.placeholder = ""
                         
@@ -292,8 +297,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         if data.count < 8 {
             count++
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-            collectionView?.reloadData()
             checkKeyCount()
+            collectionView?.reloadData()
         }
     }
     
@@ -360,10 +365,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         return data.count
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(-65, 0, 0, 0)
-    }
-    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var size = CGSizeZero
         switch data.count {
@@ -392,7 +393,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4 - 2)
             }
         case 8:
-            size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4 - 2)
+            size = CGSizeMake(collectionView.frame.width/2 - 3, collectionView.frame.height/4 - 3)
         default:
             println("2")
         }
