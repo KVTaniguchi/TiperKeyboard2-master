@@ -201,9 +201,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 if self.data.count > 2 {
                     self.deleteKeysButton?.alpha = 1.0
                 }
+                
+                self.colorPaletteView.alpha = 0.0
+                self.colorPaletteView.hidden = true
 
-                self.colorPaletteView.alpha = 1.0
-                self.colorPaletteView.hidden = false
                 for textField in [self.textFieldOne, self.textFieldTwo] {
                     textField!.alpha = 1.0
                     textField!.userInteractionEnabled = true
@@ -229,6 +230,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func textChanged (notification:NSNotification) {
+        self.colorPaletteView.alpha = 1.0
+        self.colorPaletteView.hidden = false
         tempData = [String:String]()
         let textField = notification.object as! UITextField
         textField.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -349,6 +352,21 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.layer.borderColor = UIColor.clearColor().CGColor
         let dict = data[indexPath.item]
         
+        if indexPath.item == selectedItem && editKeysButton?.selected == true {
+            var dict = self.data[self.selectedItem]
+            var key = dict.keys.first!
+            if colors[key] != nil {
+                cell.backgroundColor = colorRef[colors[key]!.toInt()!]
+                cell.keyTextLabel?.textColor = UIColor.lightTextColor()
+            }
+            else {
+                cell.backgroundColor = UIColor.lightTextColor()
+                cell.keyTextLabel?.textColor = UIColor.darkTextColor()
+            }
+            cell.layer.borderColor = view.tintColor.CGColor
+            cell.layer.borderWidth = 5
+        }
+        
         for (key, value) in dict {
             cell.setLabelText(key)
             let colorIndex = colors[key]
@@ -371,21 +389,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         else {
             cell.hidden = true
             cell.alpha = 0.0
-        }
-
-        if indexPath.item == selectedItem && editKeysButton?.selected == true {
-            var dict = self.data[self.selectedItem]
-            var key = dict.keys.first!
-            if colors[key] != nil {
-                cell.backgroundColor = colorRef[colors[key]!.toInt()!]
-                cell.keyTextLabel?.textColor = UIColor.lightTextColor()
-            }
-            else {
-                cell.backgroundColor = UIColor.lightTextColor()
-                cell.keyTextLabel?.textColor = UIColor.darkTextColor()
-            }
-            cell.layer.borderColor = view.tintColor.CGColor
-            cell.layer.borderWidth = 5
         }
         
         return cell
