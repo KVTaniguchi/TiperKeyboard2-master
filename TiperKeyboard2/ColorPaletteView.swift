@@ -17,7 +17,7 @@ class ColorPaletteView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var metrics = ["width": (UIScreen.mainScreen().bounds.width/5)]
+        var metrics = ["width": ((UIScreen.mainScreen().bounds.width - 40)/5)]
         
         for index in 0...9 {
             var colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton

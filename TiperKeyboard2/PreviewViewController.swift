@@ -115,7 +115,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             view.addSubview(textField!)
         }
         
-        colorPaletteView.frame = CGRectMake(0, CGRectGetMaxY(textFieldTwo!.frame) + 20, view.frame.width, view.frame.width/6)
+        
+        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo!.frame) + 10, view.frame.width - 40, view.frame.width/5)
         colorPaletteView.alpha = 0.0
         colorPaletteView.hidden = true
         colorPaletteView.updateColorCallback = { (index) in
