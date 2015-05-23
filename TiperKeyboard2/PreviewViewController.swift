@@ -34,9 +34,64 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
+    func keyboardShown (notification : NSNotification) {
+        println("kb shown")
+        if UIScreen.mainScreen().bounds.height < 600 {
+            // adjust insets
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+                scrollView.contentInset = contentInsets
+                scrollView.scrollIndicatorInsets = contentInsets
+                var aRect = view.frame
+                aRect.size.height -= keyboardSize.height
+                scrollView.scrollRectToVisible(textFieldTwo.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardHidden (notif : NSNotification) {
+        println("kb hidden")
+        
+        if UIScreen.mainScreen().bounds.height < 600 {
+            // adjust insets
+            let contentInsets = UIEdgeInsetsZero
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+        }
+    }
+    
+    
+//    - (void)keyboardWasShown:(NSNotification*)aNotification
+//    {
+//    NSDictionary* info = [aNotification userInfo];
+//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    
+//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+//    scrollView.contentInset = contentInsets;
+//    scrollView.scrollIndicatorInsets = contentInsets;
+//    
+//    // If active text field is hidden by keyboard, scroll it so it's visible
+//    // Your app might not need or want this behavior.
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+//    if (!CGRectContainsPoint(aRect, activeField.frame.origin) ) {
+//    [self.scrollView scrollRectToVisible:activeField.frame animated:YES];
+//    }
+//    }
+//    
+//    // Called when the UIKeyboardWillHideNotification is sent
+//    - (void)keyboardWillBeHidden:(NSNotification*)aNotification
+//    {
+//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+//    scrollView.contentInset = contentInsets;
+//    scrollView.scrollIndicatorInsets = contentInsets;
+//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
         
         swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
         swipeGestureRecognizer?.direction = .Down
@@ -72,7 +127,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         count = data.count
         
         scrollView.frame = view.bounds
-        scrollView.contentSize = CGSizeMake(view.frame.width, UIScreen.mainScreen().bounds.height < 600 ? UIScreen.mainScreen().bounds.height + 260 : UIScreen.mainScreen().bounds.height)
+        scrollView.contentSize = view.bounds.size
 //        view.addSubview(scrollView)
         
         var layout = ReorderableCollectionViewFlowLayout()
