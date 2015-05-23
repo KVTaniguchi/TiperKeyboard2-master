@@ -67,7 +67,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         count = data.count
         
         var layout = ReorderableCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0.0
+        layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
@@ -155,6 +155,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[question]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["question":questionButton]))
         
         checkKeyCount()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        colorPaletteView.alpha = 0.0
     }
     
     override func viewDidAppear(animated: Bool) {
