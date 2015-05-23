@@ -106,11 +106,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
         instructionalLabel.textColor = UIColor.darkGrayColor()
         view.addSubview(instructionalLabel)
-
-        textFieldTwo.alpha = 0.0
-        textFieldTwo.hidden = true
-        textFieldOne.alpha = 0.0
-        textFieldOne.hidden = true
         
         for textField in [textFieldOne, textFieldTwo, textFieldThree] {
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -124,10 +119,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             view.addSubview(textField)
         }
         
-//        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo.frame) + 10, view.frame.width - 40, view.frame.width/5)
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        colorPaletteView.alpha = 0.0
-        colorPaletteView.hidden = true
+        for view in [textFieldTwo, textFieldOne, colorPaletteView] {
+            view.alpha = 0.0
+            view.hidden = true
+        }
+
         colorPaletteView.updateColorCallback = { (index) in
             var dict = self.data[self.selectedItem]
             self.colors[dict.keys.first!] = "\(index)"
