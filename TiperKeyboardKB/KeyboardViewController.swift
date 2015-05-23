@@ -258,6 +258,14 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func keyPressed (button: KeyButton) {
+        var originalColor = button.backgroundColor
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            button.backgroundColor = UIColor.lightGrayColor()
+        }) { (value) in
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                button.backgroundColor = originalColor
+            })
+        }
         let text = button.keyText
         let proxy = textDocumentProxy as! UITextDocumentProxy
         proxy.insertText(text!)
