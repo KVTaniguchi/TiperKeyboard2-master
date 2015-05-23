@@ -18,13 +18,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     let colorRef = ColorPalette.colorRef
-    var textFieldOne : UITextField?
-    var textFieldTwo : UITextField?
-    var defaultTextLabel : UILabel?
-    var instructionalLabel : UILabel?
-    var outPutLabel : UILabel?
-    var editKeysButton : UIButton?
-    var deleteKeysButton : UIButton?
+    var textFieldOne = UITextField()
+    var textFieldTwo = UITextField()
+    var defaultTextLabel = UILabel()
+    var instructionalLabel = UILabel()
+    var editKeysButton = UIButton()
+    var deleteKeysButton = UIButton()
+    var questionButton = UIButton()
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
@@ -71,52 +71,47 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
         collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
-        collectionView!.backgroundColor = UIColor.lightGrayColor()
-        collectionView?.contentInset = UIEdgeInsets(top: -260/4, left: 0, bottom: 0, right: 0)
+        collectionView!.backgroundColor = UIColor.clearColor()
+        collectionView?.contentInset = UIEdgeInsets(top: -260/4, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
         collectionView!.contentSize = CGSizeMake(view.frame.width, 260)
         view.addSubview(collectionView!)
         
-        defaultTextLabel = UILabel()
-        instructionalLabel = UILabel()
         for label in [defaultTextLabel, instructionalLabel] {
-            label?.numberOfLines = 0
-            label?.textAlignment = .Center
-            label?.preferredMaxLayoutWidth = view.frame.width
-            label?.lineBreakMode = .ByWordWrapping
-            label?.setTranslatesAutoresizingMaskIntoConstraints(false)
+            label.numberOfLines = 0
+            label.textAlignment = .Center
+            label.preferredMaxLayoutWidth = view.frame.width
+            label.lineBreakMode = .ByWordWrapping
+            label.setTranslatesAutoresizingMaskIntoConstraints(false)
         }
-        defaultTextLabel?.textColor = UIColor.darkGrayColor()
-        defaultTextLabel?.text = "Add keys by pressing the + Button in the upper right corner."
-        defaultTextLabel?.hidden = self.count > 1
-        view.addSubview(defaultTextLabel!)
+        defaultTextLabel.textColor = UIColor.darkGrayColor()
+        defaultTextLabel.text = "Add keys by pressing the + Button in the upper right corner."
+        defaultTextLabel.hidden = self.count > 1
+        view.addSubview(defaultTextLabel)
         
-        instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
-        instructionalLabel?.textColor = UIColor.darkGrayColor()
-        view.addSubview(instructionalLabel!)
-        
-        textFieldOne = UITextField()
-        textFieldTwo = UITextField()
-        textFieldOne?.frame = CGRectMake(20, 430, view.frame.width - 40, 44)
-        textFieldTwo?.frame = CGRectMake(20, CGRectGetMaxY(collectionView!.frame) + 10 + 44 + 10, view.frame.width - 40, 44)
-        textFieldTwo?.alpha = 0.0
-        textFieldTwo?.hidden = true
+        instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
+        instructionalLabel.textColor = UIColor.darkGrayColor()
+        view.addSubview(instructionalLabel)
+
+        textFieldOne.frame = CGRectMake(20, 430, view.frame.width - 40, 44)
+        textFieldTwo.frame = CGRectMake(20, CGRectGetMaxY(collectionView!.frame) + 10 + 44 + 10, view.frame.width - 40, 44)
+        textFieldTwo.alpha = 0.0
+        textFieldTwo.hidden = true
         
         for textField in [textFieldOne, textFieldTwo] {
-            textField?.delegate = self
-            textField?.autocorrectionType = .No
-            textField?.borderStyle = .Line
-            textField?.userInteractionEnabled = false
-            textField?.textAlignment = .Center
-            textField?.layer.borderColor = UIColor.lightGrayColor().CGColor
-            textField?.layer.borderWidth = 1.0
-            view.addSubview(textField!)
+            textField.delegate = self
+            textField.autocorrectionType = .No
+            textField.borderStyle = .Line
+            textField.userInteractionEnabled = false
+            textField.textAlignment = .Center
+            textField.layer.borderColor = UIColor.lightGrayColor().CGColor
+            textField.layer.borderWidth = 1.0
+            view.addSubview(textField)
         }
         
-        
-        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo!.frame) + 10, view.frame.width - 40, view.frame.width/5)
+        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo.frame) + 10, view.frame.width - 40, view.frame.width/5)
         colorPaletteView.alpha = 0.0
         colorPaletteView.hidden = true
         colorPaletteView.updateColorCallback = { (index) in
@@ -127,31 +122,29 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         view.addSubview(colorPaletteView)
         
-        view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: defaultTextLabel!, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 120))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionalLabel]-100-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel!]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionalLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel!]))
+        view.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 120))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionalLabel]-100-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionalLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel]))
         
-        editKeysButton = UIButton()
-        editKeysButton?.setTitle("Edit Keys", forState: .Normal)
-        editKeysButton?.setTitleColor(view.tintColor, forState: .Normal)
-        editKeysButton?.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
-        editKeysButton?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(editKeysButton!)
+        editKeysButton.setTitle("Edit Keys", forState: .Normal)
+        editKeysButton.setTitleColor(view.tintColor, forState: .Normal)
+        editKeysButton.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
+        editKeysButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(editKeysButton)
         
-        deleteKeysButton = UIButton()
-        deleteKeysButton?.setTitle("Delete", forState: .Normal)
-        deleteKeysButton?.setTitleColor(view.tintColor, forState: .Normal)
-        deleteKeysButton?.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
-        deleteKeysButton?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        deleteKeysButton?.alpha = 0.0
-        view.addSubview(deleteKeysButton!)
+        deleteKeysButton.setTitle("Delete", forState: .Normal)
+        deleteKeysButton.setTitleColor(view.tintColor, forState: .Normal)
+        deleteKeysButton.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
+        deleteKeysButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        deleteKeysButton.alpha = 0.0
+        view.addSubview(deleteKeysButton)
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton!]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton!]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton]))
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[edit]-40-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton!]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[edit]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton!]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[edit]-40-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[edit]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton]))
         
         checkKeyCount()
     }
@@ -159,8 +152,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        textFieldOne?.text = ""
-        textFieldTwo?.text = ""
+        textFieldOne.text = ""
+        textFieldTwo.text = ""
     }
     
     func deleteButtonPressed () {
@@ -170,7 +163,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
             if data.count == 1 {
                 UIView.animateWithDuration(1.0, animations: {
-                    self.deleteKeysButton?.alpha = 0.0
+                    self.deleteKeysButton.alpha = 0.0
                 })
             }
         }
@@ -181,9 +174,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
         var originalColor = cell?.backgroundColor
         
-        if editKeysButton?.selected == false {
+        if editKeysButton.selected == false {
             UIView.animateWithDuration(0.2, animations: {
-                cell?.backgroundColor = UIColor.lightGrayColor()
+                cell?.backgroundColor = UIColor.darkGrayColor()
                 }, completion: { (value: Bool) in
                     UIView.animateWithDuration(0.2, animations: {
                         cell?.backgroundColor = originalColor
@@ -191,7 +184,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             })
             var keyDict = data[indexPath.item]
             for (key, value) in keyDict {
-                textFieldOne?.text = value
+                textFieldOne.text = value
             }
         }
         else {
@@ -200,32 +193,32 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             UIView.animateWithDuration(0.5, animations: {
                 if self.data.count > 2 {
-                    self.deleteKeysButton?.alpha = 1.0
+                    self.deleteKeysButton.alpha = 1.0
                 }
                 
                 self.colorPaletteView.alpha = 0.0
                 self.colorPaletteView.hidden = true
 
                 for textField in [self.textFieldOne, self.textFieldTwo] {
-                    textField!.alpha = 1.0
-                    textField!.userInteractionEnabled = true
-                    textField!.text = ""
+                    textField.alpha = 1.0
+                    textField.userInteractionEnabled = true
+                    textField.text = ""
                 }
-                self.textFieldTwo?.hidden = false
+                self.textFieldTwo.hidden = false
 
             }, completion: { (value) in
-                self.textFieldTwo?.placeholder = "What will this key type when pressed?"
-                self.textFieldOne?.placeholder = "What is the name of this key?"
-                self.instructionalLabel?.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
-                self.collectionView?.reloadData()
+                self.textFieldTwo.placeholder = "What will this key type when pressed?"
+                self.textFieldOne.placeholder = "What is the name of this key?"
+                self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
+                self.collectionView!.reloadData()
             })
         }
     }
     
     func swipeDown () {
         for textField in [textFieldOne, textFieldTwo] {
-            if textField!.isFirstResponder() {
-                textField!.resignFirstResponder()
+            if textField.isFirstResponder() {
+                textField.resignFirstResponder()
             }
         }
     }
@@ -236,7 +229,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         tempData = [String:String]()
         let textField = notification.object as! UITextField
         textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        tempData[textFieldOne!.text] = textFieldTwo!.text
+        tempData[textFieldOne.text] = textFieldTwo.text
         data.insert(tempData, atIndex: selectedItem)
         data.removeAtIndex(selectedItem + 1)
         collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
@@ -247,10 +240,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
-            defaultTextLabel?.hidden = false
-            defaultTextLabel?.alpha = 1.0
+            defaultTextLabel.hidden = false
+            defaultTextLabel.alpha = 1.0
             
-            for view in [editKeysButton!, textFieldOne!, instructionalLabel!, collectionView!] {
+            for view in [editKeysButton, textFieldOne, instructionalLabel, collectionView!] {
                 view.alpha = 0.0
                 view.hidden = true
             }
@@ -262,61 +255,59 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.navigationItem.leftBarButtonItem?.tintColor = self.view.tintColor
                 self.navigationItem.leftBarButtonItem?.enabled = true
                 
-                self.defaultTextLabel?.hidden = true
-                self.defaultTextLabel?.alpha = 0.0
+                self.defaultTextLabel.hidden = true
+                self.defaultTextLabel.alpha = 0.0
                 
-                for view in [self.editKeysButton!, self.textFieldOne!, self.instructionalLabel!, self.collectionView!] {
+                for view in [self.editKeysButton, self.textFieldOne, self.instructionalLabel, self.collectionView!] {
                     view.alpha = 1.0
                     view.hidden = false
                 }
-                
-                self.collectionView?.backgroundColor = UIColor.lightGrayColor()
             })
         }
     }
     
     func editButtonPressed () {
-        textFieldTwo?.text = ""
-        textFieldOne?.text = ""
+        textFieldTwo.text = ""
+        textFieldOne.text = ""
         tempData.removeAll(keepCapacity: false)
-        editKeysButton!.selected = !editKeysButton!.selected
-        if editKeysButton!.selected {
+        editKeysButton.selected = !editKeysButton.selected
+        if editKeysButton.selected {
             UIView.animateWithDuration(0.5, animations: {
-                for view in [self.colorPaletteView, self.textFieldOne!, self.textFieldTwo!, self.editKeysButton!, self.instructionalLabel!] {
+                for view in [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.editKeysButton, self.instructionalLabel] {
                     view.alpha = 0.0
                 }
     
-                self.textFieldOne!.frame = CGRectMake(20, CGRectGetMaxY(self.collectionView!.frame) + 10, self.view.frame.width - 40, 44)
+                self.textFieldOne.frame = CGRectMake(20, CGRectGetMaxY(self.collectionView!.frame) + 10, self.view.frame.width - 40, 44)
                     }) { (value) in
-                        self.instructionalLabel?.text = "Touch a key to edit it."
-                        self.editKeysButton?.setTitle("Done", forState: .Normal)
+                        self.instructionalLabel.text = "Touch a key to edit it."
+                        self.editKeysButton.setTitle("Done", forState: .Normal)
                     
                     UIView.animateWithDuration(0.5, animations: {
-                            self.instructionalLabel!.alpha = 1.0
-                            self.editKeysButton!.alpha = 1.0
+                            self.instructionalLabel.alpha = 1.0
+                            self.editKeysButton.alpha = 1.0
                         }, completion: { (value) in })
             }
         }
         else {
-            self.textFieldTwo!.alpha = 0
-            self.textFieldOne?.userInteractionEnabled = false
+            self.textFieldTwo.alpha = 0
+            self.textFieldOne.userInteractionEnabled = false
             UIView.animateWithDuration(0.2, animations: {
                 self.colorPaletteView.alpha = 0.0
-                self.deleteKeysButton?.alpha = 0.0
+                self.deleteKeysButton.alpha = 0.0
             }, completion: { (value) in
                 UIView.animateWithDuration(0.5, animations: {
-                    self.textFieldOne!.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
-                    self.instructionalLabel?.alpha = 0
-                    self.editKeysButton!.alpha = 0
+                    self.textFieldOne.frame = CGRectMake(20, 430, self.view.frame.width - 40, 44)
+                    self.instructionalLabel.alpha = 0
+                    self.editKeysButton.alpha = 0
                     }) { (value) in
-                        self.instructionalLabel?.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
-                        self.editKeysButton?.setTitle("Edit keys", forState: .Normal)
-                        self.textFieldOne?.placeholder = ""
+                        self.instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
+                        self.editKeysButton.setTitle("Edit keys", forState: .Normal)
+                        self.textFieldOne.placeholder = ""
                         
                         UIView.animateWithDuration(0.5, animations: {
-                            self.textFieldOne!.alpha = 1.0
-                            self.instructionalLabel!.alpha = 1.0
-                            self.editKeysButton!.alpha = 1.0
+                            self.textFieldOne.alpha = 1.0
+                            self.instructionalLabel.alpha = 1.0
+                            self.editKeysButton.alpha = 1.0
                             self.colorPaletteView.alpha = 0.0
                             self.colorPaletteView.hidden = true
                             }, completion: { (value) in
@@ -351,17 +342,18 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
         cell.layer.cornerRadius = 3
         cell.layer.borderColor = UIColor.clearColor().CGColor
+        cell.backgroundColor = UIColor.lightGrayColor()
         let dict = data[indexPath.item]
         
-        if indexPath.item == selectedItem && editKeysButton?.selected == true {
+        if indexPath.item == selectedItem && editKeysButton.selected == true {
             var dict = self.data[self.selectedItem]
             var key = dict.keys.first!
             if colors[key] != nil {
-                cell.backgroundColor = colorRef[colors[key]!.toInt()!]
+                cell.circleView?.backgroundColor = colorRef[colors[key]!.toInt()!]
                 cell.keyTextLabel?.textColor = UIColor.lightTextColor()
             }
             else {
-                cell.backgroundColor = UIColor.lightTextColor()
+                cell.circleView?.backgroundColor = UIColor.lightTextColor()
                 cell.keyTextLabel?.textColor = UIColor.darkTextColor()
             }
             cell.layer.borderColor = view.tintColor.CGColor
@@ -373,11 +365,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             let colorIndex = colors[key]
             
             if key == "Next Keyboard" || colors[key] == nil {
-                cell.backgroundColor = UIColor.darkGrayColor()
+                cell.circleView?.backgroundColor = UIColor.darkGrayColor()
                 cell.keyTextLabel?.textColor = UIColor.whiteColor()
             }
             else {
-                cell.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
+                cell.circleView?.backgroundColor = colorRef[colorIndex!.toInt()!] as UIColor!
             }
         }
         

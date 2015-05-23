@@ -11,20 +11,27 @@ import UIKit
 class PreviewCell: UICollectionViewCell {
     
     var keyTextLabel : UILabel?
+    var circleView : UIView?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         keyTextLabel = UILabel()
         keyTextLabel?.textColor = UIColor.whiteColor()
-        keyTextLabel?.numberOfLines = 0
-        keyTextLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        keyTextLabel?.numberOfLines = 2
+        keyTextLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         keyTextLabel?.preferredMaxLayoutWidth = contentView.frame.width - 2
         keyTextLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
         contentView.addSubview(keyTextLabel!)
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyTextLabel":keyTextLabel!]))
+        circleView = UIView()
+        circleView?.layer.cornerRadius = 10
+        circleView?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        contentView.addSubview(circleView!)
+        
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel][circle(20)]-5-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel!, "circle":circleView!]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel!, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[circle(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["circle":circleView!]))
     }
     
     func setLabelText (text: String) {
