@@ -8,6 +8,10 @@ import UIKit
 class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate {
     
     var scrollView = UIScrollView()
+    
+    var expandedVConstraints = []
+    var compactVConstraints = []
+    
     var collectionView : UICollectionView?
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
@@ -68,7 +72,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         count = data.count
         
         scrollView.frame = view.bounds
-        scrollView.contentSize = CGSizeMake(view.frame.width, 600)
+        scrollView.contentSize = CGSizeMake(view.frame.width, UIScreen.mainScreen().bounds.height < 600 ? UIScreen.mainScreen().bounds.height + 260 : UIScreen.mainScreen().bounds.height)
 //        view.addSubview(scrollView)
         
         var layout = ReorderableCollectionViewFlowLayout()
@@ -120,7 +124,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             view.addSubview(textField)
         }
         
-        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo.frame) + 10, view.frame.width - 40, view.frame.width/5)
+//        colorPaletteView.frame = CGRectMake(view.center.x - ((view.frame.width - 40)/2), CGRectGetMaxY(textFieldTwo.frame) + 10, view.frame.width - 40, view.frame.width/5)
+        colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
         colorPaletteView.alpha = 0.0
         colorPaletteView.hidden = true
         colorPaletteView.updateColorCallback = { (index) in
@@ -153,12 +158,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[question]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["question":questionButton]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[question]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["question":questionButton]))
         
-        var metrics = ["topMargin":(self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)]
-        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel]
+        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260,"topMargin":(self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)]
+        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView]
 
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cv(260)]-[tfOne(44)]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[tfOne(44)]-[tfTwo(44)]-[tfThree(44)]-[instrLab]-[edit]-20-|", options: NSLayoutFormatOptions.AlignAllLeft | NSLayoutFormatOptions.AlignAllRight, metrics: metrics, views:views))
+        
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-topMargin-[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
+        
+        compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[cv(260)]-[tfThree(44)]-[instrLab]-[edit]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
+        view.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionalLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel]))
+        for myView in [textFieldThree, textFieldTwo, textFieldOne, instructionalLabel, editKeysButton, colorPaletteView] {
+            view.addConstraint(NSLayoutConstraint(item: myView, attribute: .Left, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))
+            view.addConstraint(NSLayoutConstraint(item: myView, attribute: .Right, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))
+        }
         
         checkKeyCount()
     }
@@ -216,6 +228,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             if indexPath.item == (data.count - 1) {
                 return
             }
+            instructionalLabel.alpha = 0.0
+            self.view.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
+            self.view.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
+            self.textFieldTwo.placeholder = "What will this key type when pressed?"
+            self.textFieldOne.placeholder = "What is the name of this key?"
+            self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
             UIView.animateWithDuration(0.5, animations: {
                 if self.data.count > 2 {
                     self.deleteKeysButton.alpha = 1.0
@@ -232,11 +250,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
                 self.textFieldThree.alpha = 0.0
                 self.textFieldThree.hidden = true
+                self.instructionalLabel.alpha = 1.0
 
             }, completion: { (value) in
-                self.textFieldTwo.placeholder = "What will this key type when pressed?"
-                self.textFieldOne.placeholder = "What is the name of this key?"
-                self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
                 self.collectionView!.reloadData()
             })
         }
@@ -296,6 +312,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func editButtonPressed () {
         textFieldTwo.text = ""
         textFieldOne.text = ""
+        textFieldThree.text = ""
         tempData.removeAll(keepCapacity: false)
         editKeysButton.selected = !editKeysButton.selected
         if editKeysButton.selected {
@@ -319,6 +336,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 for view in [self.colorPaletteView, self.deleteKeysButton, self.textFieldOne, self.textFieldTwo] {
                     view.alpha = 0.0
                 }
+                self.view.removeConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
+                self.view.addConstraints(self.compactVConstraints as! [NSLayoutConstraint])
                 
             }, completion: { (value) in
                 UIView.animateWithDuration(0.5, animations: {

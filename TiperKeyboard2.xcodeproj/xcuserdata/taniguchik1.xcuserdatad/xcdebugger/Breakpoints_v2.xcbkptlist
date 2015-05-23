@@ -10,13 +10,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TiperKeyboard2/PreviewViewController.swift"
-            timestampString = "454096864.363279"
+            timestampString = "454101149.554038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "editButtonPressed()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.(editButtonPressed (TiperKeyboard2.PreviewViewController) -&gt; () -&gt; ()).(closure #4)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "454098355.520836"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "347"
+                  endingLineNumber = "347"
+                  offsetFromSymbolStart = "652">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.(editButtonPressed (TiperKeyboard2.PreviewViewController) -&gt; () -&gt; ()).(closure #4).(closure #2)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "454098355.520976"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "347"
+                  endingLineNumber = "347"
+                  offsetFromSymbolStart = "1676">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TiperKeyboard2/PreviewViewController.swift"
-            timestampString = "454096830.278969"
+            timestampString = "454101149.554038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
             landmarkName = "editButtonPressed()"
             landmarkType = "5">
          </BreakpointContent>
