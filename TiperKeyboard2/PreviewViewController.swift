@@ -127,24 +127,32 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[instructionalLabel]-100-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instructionalLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["instructionalLabel":instructionalLabel]))
         
+        for button in [editKeysButton, deleteKeysButton, questionButton] {
+            button.setTitleColor(view.tintColor, forState: .Normal)
+            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            view.addSubview(button)
+        }
+        
         editKeysButton.setTitle("Edit Keys", forState: .Normal)
-        editKeysButton.setTitleColor(view.tintColor, forState: .Normal)
         editKeysButton.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
-        editKeysButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(editKeysButton)
         
         deleteKeysButton.setTitle("Delete", forState: .Normal)
-        deleteKeysButton.setTitleColor(view.tintColor, forState: .Normal)
         deleteKeysButton.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
-        deleteKeysButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         deleteKeysButton.alpha = 0.0
-        view.addSubview(deleteKeysButton)
+        
+        questionButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 40)
+        questionButton.setTitle("?", forState: .Normal)
+        questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
+        questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delete]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["delete":deleteKeysButton]))
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[edit]-40-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[edit]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["edit":editKeysButton]))
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[question]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["question":questionButton]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[question]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["question":questionButton]))
         
         checkKeyCount()
     }
@@ -154,6 +162,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         textFieldOne.text = ""
         textFieldTwo.text = ""
+    }
+    
+    func questionButtonPressed () {
+        let infoView = InformationViewController()
+        navigationController?.pushViewController(infoView, animated: true)
     }
     
     func deleteButtonPressed () {
