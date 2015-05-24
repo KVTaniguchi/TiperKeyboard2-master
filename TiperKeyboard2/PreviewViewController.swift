@@ -37,6 +37,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.isFirstResponder() == true {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
     func keyboardShown (notification : NSNotification) {
         if UIScreen.mainScreen().bounds.height < 600 {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
@@ -47,7 +54,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func keyboardHidden (notif : NSNotification) {
-        if editKeysButton.selected == false {
+        if editKeysButton.selected == false  && UIScreen.mainScreen().bounds.height < 600 {
             scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
             scrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
             scrollView.contentSize = view.bounds.size
@@ -177,10 +184,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         editKeysButton.setTitle("Edit Keys", forState: .Normal)
         editKeysButton.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
-        
         deleteKeysButton.setTitle("Delete", forState: .Normal)
         deleteKeysButton.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
-
         questionButton.setTitle("?", forState: .Normal)
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
@@ -206,6 +211,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewWillAppear(animated)
         
         colorPaletteView.alpha = 0.0
+        scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -213,6 +219,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         textFieldOne.text = ""
         textFieldTwo.text = ""
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+         saveData()
     }
     
     func questionButtonPressed () {
@@ -232,6 +242,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 })
             }
         }
+        navigationItem.rightBarButtonItem?.tintColor = view.tintColor
+        navigationItem.rightBarButtonItem?.enabled = true
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -263,7 +275,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             textFieldTwo.placeholder = "What will this key type when pressed?"
             textFieldOne.placeholder = "What is the name of this key?"
             instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
-            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
+            if UIScreen.mainScreen().bounds.height < 600 {
+                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
+            }
+            else {
+                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
+            }
+
             UIView.animateWithDuration(0.5, animations: {
                 if self.data.count > 2 {
                     self.deleteKeysButton.alpha = 1.0
@@ -290,15 +308,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func textChanged (notification:NSNotification) {
-        self.colorPaletteView.alpha = 1.0
-        self.colorPaletteView.hidden = false
-        tempData = [String:String]()
-        let textField = notification.object as! UITextField
-        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-        tempData[textFieldOne.text] = textFieldTwo.text
-        data.insert(tempData, atIndex: selectedItem)
-        data.removeAtIndex(selectedItem + 1)
-        collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+        if self.navigationController?.topViewController == self {
+            colorPaletteView.alpha = 1.0
+            colorPaletteView.hidden = false
+            tempData = [String:String]()
+            let textField = notification.object as! UITextField
+            textField.clearButtonMode = UITextFieldViewMode.WhileEditing
+            tempData[textFieldOne.text] = textFieldTwo.text
+            data.insert(tempData, atIndex: selectedItem)
+            data.removeAtIndex(selectedItem + 1)
+            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+        }
     }
     
     func checkKeyCount () {
@@ -314,7 +334,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 view.hidden = true
             }
             
-            self.collectionView?.backgroundColor = UIColor.clearColor()
+            collectionView?.backgroundColor = UIColor.clearColor()
         }
         else if data.count > 1 {
             UIView.animateWithDuration(1.0, animations: { () -> Void in
@@ -383,6 +403,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
             collectionView?.reloadData()
+        }
+        if data.count == 8 {
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+            navigationItem.rightBarButtonItem?.enabled = false
         }
     }
     

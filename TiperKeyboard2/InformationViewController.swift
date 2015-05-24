@@ -14,7 +14,7 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
     var settingsInstructionLabel = UILabel()
     let introLabel = UILabel()
     let instructionText = "1. Press the Home Button\n2. Open the Settings App.\n3. Tap General.\n4. Tap Keyboard.\n5. Tap Keyboards.\n6. Tap Add New Keyboard.\n7. Tap Short Key under Third Party Keyboards.\n8. Tap Short Key - Short Key.\n9. Toggle Allow Full Access.\n10. Press home and reopen Short Key."
-    let trialRunText = "Once you have enabled Short Key as a Third Party Keyboard in settings, press the Globe next to the Space Bar and Select Short Key to try out Short Key."
+    let trialRunText = "After enabling Short Key as a Third Party Keyboard in settings, press the Globe next to the Space Bar and select Short Key."
     
     override func viewDidLoad() {
         super.viewDidLoad()
