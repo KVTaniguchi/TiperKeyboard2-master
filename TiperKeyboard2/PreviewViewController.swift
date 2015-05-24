@@ -9,11 +9,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var scrollView = UIScrollView()
     var containerView = UIView()
-    
     var expandedVConstraints = []
     var expandedHConstraints = []
     var compactVConstraints = []
-    
     var collectionView : UICollectionView?
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
