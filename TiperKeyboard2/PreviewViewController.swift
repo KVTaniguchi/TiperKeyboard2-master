@@ -5,7 +5,7 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate {
+class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate{
     
     var scrollView = UIScrollView()
     var containerView = UIView()
@@ -21,6 +21,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var tempData = [String:String]()
     var count = 0
     var selectedItem = 0
+    var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
@@ -38,65 +39,38 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func keyboardShown (notification : NSNotification) {
         if UIScreen.mainScreen().bounds.height < 600 {
-            // adjust insets
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-                scrollView.contentInset = contentInsets
-                scrollView.scrollIndicatorInsets = contentInsets
-                var aRect = view.frame
-                aRect.size.height -= keyboardSize.height
-                scrollView.scrollRectToVisible(textFieldTwo.frame, animated: true)
+                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + keyboardSize.height)
+                scrollView.setContentOffset(CGPointMake(0.0, textFieldTwo.frame.origin.y - keyboardSize.height), animated: true)
             }
         }
     }
     
     func keyboardHidden (notif : NSNotification) {
-        
-        if UIScreen.mainScreen().bounds.height < 600 {
-            // adjust insets
-            let contentInsets = UIEdgeInsetsZero
-            scrollView.contentInset = contentInsets
-            scrollView.scrollIndicatorInsets = contentInsets
-            scrollView.scrollRectToVisible(collectionView!.frame, animated: true)
+        if editKeysButton.selected == false {
+            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
+            scrollView.setContentOffset(CGPointMake(0.0, 0.0), animated: true)
+            scrollView.contentSize = view.bounds.size
+        }
+        else {
+            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
         }
     }
     
-    
-//    - (void)keyboardWasShown:(NSNotification*)aNotification
-//    {
-//    NSDictionary* info = [aNotification userInfo];
-//    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-//    
-//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
-//    scrollView.contentInset = contentInsets;
-//    scrollView.scrollIndicatorInsets = contentInsets;
-//    
-//    // If active text field is hidden by keyboard, scroll it so it's visible
-//    // Your app might not need or want this behavior.
-//    CGRect aRect = self.view.frame;
-//    aRect.size.height -= kbSize.height;
-//    if (!CGRectContainsPoint(aRect, activeField.frame.origin) ) {
-//    [self.scrollView scrollRectToVisible:activeField.frame animated:YES];
-//    }
-//    }
-//    
-//    // Called when the UIKeyboardWillHideNotification is sent
-//    - (void)keyboardWillBeHidden:(NSNotification*)aNotification
-//    {
-//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-//    scrollView.contentInset = contentInsets;
-//    scrollView.scrollIndicatorInsets = contentInsets;
-//    }
-    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        for textField in [textFieldOne, textFieldTwo] {
+            if textField.isFirstResponder() {
+                textField.resignFirstResponder()
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
-        
-        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
-        swipeGestureRecognizer?.direction = .Down
-        view.addGestureRecognizer(swipeGestureRecognizer!)
+
         view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.topItem?.title = "Short Key"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
@@ -128,7 +102,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         count = data.count
         
         scrollView.frame = view.bounds
-//        scrollView.contentSize = view.bounds.size
+        scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
+        scrollView.delegate = self
         view.addSubview(scrollView)
         
         containerView.frame = scrollView.bounds
@@ -176,6 +151,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             textField.textAlignment = .Center
             textField.layer.borderColor = UIColor.lightGrayColor().CGColor
             textField.layer.borderWidth = 1.0
+            textField.returnKeyType = UIReturnKeyType.Done
             containerView.addSubview(textField)
         }
         
@@ -209,7 +185,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
-        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260,"topMargin":(self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)]
+        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260]
         var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton]
 
         expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
@@ -281,12 +257,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 return
             }
             instructionalLabel.alpha = 0.0
-            self.containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
-            self.containerView.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
-            self.containerView.addConstraints(self.expandedHConstraints as! [NSLayoutConstraint])
-            self.textFieldTwo.placeholder = "What will this key type when pressed?"
-            self.textFieldOne.placeholder = "What is the name of this key?"
-            self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
+            containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
+            containerView.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
+            containerView.addConstraints(self.expandedHConstraints as! [NSLayoutConstraint])
+            textFieldTwo.placeholder = "What will this key type when pressed?"
+            textFieldOne.placeholder = "What is the name of this key?"
+            instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
+            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
             UIView.animateWithDuration(0.5, animations: {
                 if self.data.count > 2 {
                     self.deleteKeysButton.alpha = 1.0
@@ -309,14 +286,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }, completion: { (value) in
                 self.collectionView!.reloadData()
             })
-        }
-    }
-    
-    func swipeDown () {
-        for textField in [textFieldOne, textFieldTwo] {
-            if textField.isFirstResponder() {
-                textField.resignFirstResponder()
-            }
         }
     }
     
@@ -364,6 +333,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func editButtonPressed () {
+        scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
         textFieldTwo.text = ""
         textFieldOne.text = ""
         textFieldThree.text = ""
@@ -386,6 +356,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         else {
+            scrollView.setContentOffset(CGPointMake(0.0, -(self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
             for view in [self.colorPaletteView, self.deleteKeysButton, self.textFieldOne, self.textFieldTwo, self.editKeysButton, self.questionButton, self.instructionalLabel] {
                 view.alpha = 0.0
             }
