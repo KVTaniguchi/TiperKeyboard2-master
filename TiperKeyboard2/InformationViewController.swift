@@ -67,7 +67,15 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         settingsInstructionLabel.text = trialRunText
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        dismissKeyBoard()
+    }
+    
     func swipeDown () {
+        dismissKeyBoard()
+    }
+    
+    func dismissKeyBoard () {
         if previewTextField.isFirstResponder() {
             previewTextField.resignFirstResponder()
             settingsInstructionLabel.text = instructionText
