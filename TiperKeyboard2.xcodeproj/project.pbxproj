@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6021A291B07C69A007C0C21 /* PreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6021A281B07C69A007C0C21 /* PreviewCell.swift */; };
 		F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */; };
+		F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */; };
+		F60CF3011B09365800E7EFE0 /* SplashV2.png in Resources */ = {isa = PBXBuildFile; fileRef = F60CF3001B09365800E7EFE0 /* SplashV2.png */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
+		F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F616577D1B12AA67005D0BFF /* keyboard-75.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
+		F62E48C81B1018840074012E /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62E48C71B1018840074012E /* InformationViewController.swift */; };
 		F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69CDF191B042C930076C6A9 /* keyboard-75.png */; };
 		F69CDF1D1B0452120076C6A9 /* RKDropdownAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F69CDF1C1B0452120076C6A9 /* RKDropdownAlert.m */; };
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
-		F69E5CA81B02EA8700AFA35E /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F69E5CA71B02EA8700AFA35E /* SplashV3.png */; };
 		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
-		F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
-		F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
 		F6FB59B91A4F36CE000A39CD /* TiperKeyboard2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59B81A4F36CE000A39CD /* TiperKeyboard2Tests.swift */; };
 		F6FB59CB1A4F378A000A39CD /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
 		F6FB59CE1A4F378A000A39CD /* TiperKeyboardKB.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */; };
-		F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,16 +67,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F6021A281B07C69A007C0C21 /* PreviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCell.swift; sourceTree = "<group>"; };
 		F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPaletteView.swift; sourceTree = "<group>"; };
+		F60CF3001B09365800E7EFE0 /* SplashV2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV2.png; sourceTree = "<group>"; };
 		F60DFF1D1AFEED2E00019FAB /* forward-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-7.png"; sourceTree = "<group>"; };
+		F616577D1B12AA67005D0BFF /* keyboard-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard-75.png"; sourceTree = "<group>"; };
 		F62010171AFF0B8100FB9212 /* KBColorPalete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KBColorPalete.swift; sourceTree = "<group>"; };
+		F62E48C71B1018840074012E /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
 		F69CDF191B042C930076C6A9 /* keyboard-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard-75.png"; sourceTree = "<group>"; };
 		F69CDF1B1B0452120076C6A9 /* RKDropdownAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDropdownAlert.h; sourceTree = "<group>"; };
 		F69CDF1C1B0452120076C6A9 /* RKDropdownAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDropdownAlert.m; sourceTree = "<group>"; };
 		F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
-		F69E5CA71B02EA8700AFA35E /* SplashV3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV3.png; sourceTree = "<group>"; };
 		F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TiperKeyboard2-Bridging-Header.h"; sourceTree = "<group>"; };
 		F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
@@ -91,8 +95,6 @@
 		F6FB59C61A4F378A000A39CD /* TiperKeyboardKB.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TiperKeyboardKB.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59C91A4F378A000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
-		F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataEntryViewController.swift; sourceTree = "<group>"; };
-		F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataCellTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,17 +147,19 @@
 			children = (
 				F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */,
 				F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */,
-				F6FB59D51A4F3955000A39CD /* UserDataEntryViewController.swift */,
-				F6FB59D71A4F3F79000A39CD /* UserDataCellTableViewCell.swift */,
 				F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */,
 				F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */,
+				F6021A281B07C69A007C0C21 /* PreviewCell.swift */,
+				F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */,
+				F62E48C71B1018840074012E /* InformationViewController.swift */,
 				F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */,
 				F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */,
 				F69CDF1B1B0452120076C6A9 /* RKDropdownAlert.h */,
 				F69CDF1C1B0452120076C6A9 /* RKDropdownAlert.m */,
 				F6FB59A91A4F36CE000A39CD /* Images.xcassets */,
 				F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */,
-				F69E5CA71B02EA8700AFA35E /* SplashV3.png */,
+				F60CF3001B09365800E7EFE0 /* SplashV2.png */,
+				F616577D1B12AA67005D0BFF /* keyboard-75.png */,
 				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
 				F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */,
 			);
@@ -329,8 +333,9 @@
 			files = (
 				F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */,
 				F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */,
+				F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */,
+				F60CF3011B09365800E7EFE0 /* SplashV2.png in Resources */,
 				F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */,
-				F69E5CA81B02EA8700AFA35E /* SplashV3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,12 +362,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */,
-				F6FB59D61A4F3955000A39CD /* UserDataEntryViewController.swift in Sources */,
-				F6FB59D81A4F3F79000A39CD /* UserDataCellTableViewCell.swift in Sources */,
 				F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */,
 				F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */,
 				F69CDF1D1B0452120076C6A9 /* RKDropdownAlert.m in Sources */,
+				F6021A291B07C69A007C0C21 /* PreviewCell.swift in Sources */,
+				F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */,
 				F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */,
+				F62E48C81B1018840074012E /* InformationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,9 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6A1C0211AC7397000EEC008 /* UserDataCellTableViewCell.swift in Sources */,
 				F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */,
-				F6A1C01F1AC7396700EEC008 /* UserDataEntryViewController.swift in Sources */,
 				F6FB59B91A4F36CE000A39CD /* TiperKeyboard2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -66,9 +66,6 @@ class KeyboardViewController: UIInputViewController {
         self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         
         self.colorRef = KBColorPalette.colorRef
-
-        self.data.append(["Next Keyboard":"Next Keyboard"])
-        self.colors["Next Keyboard"] = "10"
         
         for (index, entry) in enumerate(self.data) {
             for (key, value) in entry {
@@ -89,8 +86,8 @@ class KeyboardViewController: UIInputViewController {
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
-            keyboardButton.setTitle(keyText, forState: .Normal)
-            keyboardButton.keyText = keyTitle
+            keyboardButton.setTitle(keyTitle, forState: .Normal)
+            keyboardButton.keyText = keyText
             keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
             keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
         }
@@ -261,6 +258,14 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func keyPressed (button: KeyButton) {
+        var originalColor = button.backgroundColor
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            button.backgroundColor = UIColor.lightGrayColor()
+        }) { (value) in
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                button.backgroundColor = originalColor
+            })
+        }
         let text = button.keyText
         let proxy = textDocumentProxy as! UITextDocumentProxy
         proxy.insertText(text!)

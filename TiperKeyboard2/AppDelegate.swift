@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         self.mainNavigationController = UINavigationController()
-        var userDataEntryViewController = UserDataEntryViewController()
-        self.mainNavigationController?.pushViewController(userDataEntryViewController, animated: true)
+        var previewViewController = PreviewViewController()
+        self.mainNavigationController?.pushViewController(previewViewController, animated: true)
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = self.mainNavigationController
