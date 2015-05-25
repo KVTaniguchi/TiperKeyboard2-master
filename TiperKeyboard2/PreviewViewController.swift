@@ -21,7 +21,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var selectedItem = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
-    var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     let colorRef = ColorPalette.colorRef
     var textFieldOne = UITextField()
@@ -32,7 +31,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var editKeysButton = UIButton()
     var deleteKeysButton = UIButton()
     var questionButton = UIButton()
-    var swipeGestureRecognizer : UISwipeGestureRecognizer?
     var colorPaletteView = ColorPaletteView()
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -184,12 +182,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
-        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260]
+        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 10 : 50]
         var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton]
 
         expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
-        compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfThree(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
+        compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
@@ -243,14 +241,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedItem = indexPath.item
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        var originalColor = cell?.backgroundColor
+        var originalColor = cell?.contentView.backgroundColor
         
         if editKeysButton.selected == false {
             UIView.animateWithDuration(0.2, animations: {
-                cell?.backgroundColor = UIColor.darkGrayColor()
+                cell?.contentView.backgroundColor = UIColor.darkGrayColor()
                 }, completion: { (value: Bool) in
                     UIView.animateWithDuration(0.2, animations: {
-                        cell?.backgroundColor = originalColor
+                        cell?.contentView.backgroundColor = originalColor
                     })
             })
             var keyDict = data[indexPath.item]
