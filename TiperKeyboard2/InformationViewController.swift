@@ -37,6 +37,7 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(introLabel)
         
         previewTextField.autocorrectionType = .No
+        previewTextField.clearButtonMode = .Always
         previewTextField.textAlignment = .Center
         previewTextField.backgroundColor = UIColor.lightGrayColor()
         previewTextField.placeholder = "Tap to try out Short Key"

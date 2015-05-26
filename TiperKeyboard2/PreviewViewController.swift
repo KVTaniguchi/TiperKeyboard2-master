@@ -32,6 +32,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var deleteKeysButton = UIButton()
     var questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
+    let sizeBucket = SizeBucket()
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.isFirstResponder() == true {
@@ -450,39 +451,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        var size = CGSizeZero
-        switch data.count {
-        case 1:
-            size = CGSizeMake(collectionView.frame.width - 2, collectionView.frame.height - 2)
-        case 2:
-            size = CGSizeMake((collectionView.frame.width/2) - 2, collectionView.frame.height - 2)
-        case 3:
-            size = CGSizeMake(collectionView.frame.width - 2, collectionView.frame.height/3 - 2)
-        case 4:
-            size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/2) - 2)
-        case 5:
-            if indexPath.item < 2 {
-                size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/2) - 2)
-            }
-            else {
-                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/3 - 2)
-            }
-        case 6:
-            size = CGSizeMake((collectionView.frame.width/2) - 2, (collectionView.frame.height/3) - 2)
-        case 7:
-            if indexPath.item < 3 {
-                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/3 - 2)
-            }
-            else {
-                size = CGSizeMake(collectionView.frame.width/2 - 2, collectionView.frame.height/4 - 2)
-            }
-        case 8:
-            size = CGSizeMake(collectionView.frame.width/2 - 3, collectionView.frame.height/4 - 3)
-        default:
-            println("2")
-        }
-        
-        return size
+        return sizeBucket.getSizes(collectionView.frame, count: data.count, indexPath: indexPath)
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
