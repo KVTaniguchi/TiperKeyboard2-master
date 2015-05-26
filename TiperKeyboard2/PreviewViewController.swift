@@ -110,14 +110,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = .Horizontal
-        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
+//        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
-        collectionView!.contentSize = CGSizeMake(view.frame.width, 260)
+        collectionView!.contentSize = CGSizeMake(view.frame.width - 30, 260)
         containerView.addSubview(collectionView!)
         
         defaultTextLabel.text = "Add keys by pressing the + Button in the upper right corner."
@@ -142,11 +143,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
             textField.delegate = self
             textField.autocorrectionType = .No
-            textField.borderStyle = .Line
+            textField.borderStyle = UITextBorderStyle.None
             textField.userInteractionEnabled = false
             textField.textAlignment = .Center
-            textField.layer.borderColor = UIColor.lightGrayColor().CGColor
-            textField.layer.borderWidth = 1.0
+//            textField.layer.borderColor = UIColor.lightGrayColor().CGColor
+//            textField.layer.borderWidth = 1.0
             textField.returnKeyType = UIReturnKeyType.Done
             containerView.addSubview(textField)
         }
@@ -187,7 +188,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-padding-[instrLab]-padding-[edit]-padding-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         for myView in [textFieldThree, textFieldTwo, textFieldOne, editKeysButton, colorPaletteView] {
             containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Left, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))
             containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Right, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))
