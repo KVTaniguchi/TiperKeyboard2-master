@@ -9,28 +9,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     var scrollView = UIScrollView()
     var containerView = UIView()
-    var expandedVConstraints = []
-    var expandedHConstraints = []
-    var compactVConstraints = []
+    var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
     var collectionView : UICollectionView?
-    let defaultskey = "tiper2Keyboard"
-    let defaultColors = "tiper2Colors"
+    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
     var data = [[String:String]]()
     var tempData = [String:String]()
-    var count = 0
-    var selectedItem = 0
+    var count = 0, selectedItem = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     let colorRef = ColorPalette.colorRef
-    var textFieldOne = UITextField()
-    var textFieldTwo = UITextField()
-    var textFieldThree = UITextField()
-    var defaultTextLabel = UILabel()
-    var instructionalLabel = UILabel()
-    var editKeysButton = UIButton()
-    var deleteKeysButton = UIButton()
-    var questionButton = UIButton()
+    var textFieldOne = UITextField(), textFieldTwo = UITextField(), textFieldThree = UITextField()
+    var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
+    var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
     let sizeBucket = SizeBucket()
     
