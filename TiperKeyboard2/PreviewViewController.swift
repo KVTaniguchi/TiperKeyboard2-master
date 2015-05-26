@@ -110,7 +110,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = .Horizontal
-//        collectionView = UICollectionView(frame: CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, view.frame.width, 260), collectionViewLayout: layout)
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
         collectionView!.backgroundColor = UIColor.clearColor()
@@ -146,8 +145,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             textField.borderStyle = UITextBorderStyle.None
             textField.userInteractionEnabled = false
             textField.textAlignment = .Center
-//            textField.layer.borderColor = UIColor.lightGrayColor().CGColor
-//            textField.layer.borderWidth = 1.0
             textField.returnKeyType = UIReturnKeyType.Done
             containerView.addSubview(textField)
         }
