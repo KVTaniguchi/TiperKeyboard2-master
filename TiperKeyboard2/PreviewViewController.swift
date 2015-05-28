@@ -72,9 +72,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
 
         view.backgroundColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.topItem?.title = "Short Key"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
+        navigationController?.navigationBar.topItem?.title = "Short Key"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -408,6 +410,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
         cell.layer.borderColor = UIColor.clearColor().CGColor
+        cell.addDepth()
         let dict = data[indexPath.item]
         
         if indexPath.item == selectedItem && editKeysButton.selected == true {

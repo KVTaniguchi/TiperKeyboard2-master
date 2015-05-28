@@ -78,6 +78,13 @@ class PreviewCell: UICollectionViewCell {
         }
     }
     
+    func addDepth () {
+        let border = CALayer()
+        border.backgroundColor = UIColor.darkGrayColor().CGColor
+        border.frame = CGRectMake(3, contentView.frame.height - 0.5, contentView.frame.width - 6.5, 0.5)
+        contentView.layer.addSublayer(border)
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
