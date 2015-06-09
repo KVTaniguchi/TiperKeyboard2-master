@@ -32,6 +32,23 @@ class PreviewCell: UICollectionViewCell {
         circleView?.setTranslatesAutoresizingMaskIntoConstraints(false)
         contentView.addSubview(circleView!)
         
+        // Set vertical effect
+        let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+        verticalMotionEffect.minimumRelativeValue = -10
+        verticalMotionEffect.maximumRelativeValue = 10
+        
+        // Set horizontal effect
+        let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+        horizontalMotionEffect.minimumRelativeValue = -10
+        horizontalMotionEffect.maximumRelativeValue = 10
+        
+        // Create group to combine both
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [horizontalMotionEffect, verticalMotionEffect]
+        
+        // Add both effects to your view
+        circleView?.addMotionEffect(group)
+        
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel][circle(20)]-5-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel!, "circle":circleView!]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel!, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[circle(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["circle":circleView!]))
@@ -59,6 +76,13 @@ class PreviewCell: UICollectionViewCell {
             imageView?.hidden = true
             keyTextLabel?.text = text
         }
+    }
+    
+    func addDepth () {
+        let border = CALayer()
+        border.backgroundColor = UIColor.darkGrayColor().CGColor
+        border.frame = CGRectMake(3, contentView.frame.height - 0.5, contentView.frame.width - 6.5, 0.5)
+        contentView.layer.addSublayer(border)
     }
     
     required init(coder aDecoder: NSCoder) {
