@@ -166,7 +166,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addSubview(colorPaletteView)
         
         for button in [editKeysButton, deleteKeysButton, questionButton] {
-            button.setTitleColor(view.tintColor, forState: .Normal)
+            button.backgroundColor = view.tintColor
+            button.layer.cornerRadius = 5
+            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             button.setTranslatesAutoresizingMaskIntoConstraints(false)
             containerView.addSubview(button)
         }
@@ -188,7 +190,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        for myView in [textFieldThree, textFieldTwo, textFieldOne, editKeysButton, colorPaletteView] {
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        for myView in [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView] {
             containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Left, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))
             containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Right, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))
         }
