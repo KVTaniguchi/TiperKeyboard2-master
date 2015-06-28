@@ -104,7 +104,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
         
         [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
-            textField.backgroundColor = UIColor.lightGrayColor()
+            textField.backgroundColor = UIColor.darkGrayColor()
+            textField.textColor = UIColor.whiteColor()
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
             textField.delegate = self
             textField.autocorrectionType = .No
