@@ -267,7 +267,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             UIView.animateWithDuration(0.5, animations: {
                 [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
                 }) { (value) in
-                    self.instructionalLabel.text = "Touch a key to edit it."
+                    self.instructionalLabel.text = "Touch a key to edit it"
                     self.editKeysButton.setTitle("Done", forState: .Normal)
                     
                     UIView.animateWithDuration(0.5, animations: {
@@ -333,12 +333,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             if indexPath.item == (data.count - 1) {
                 return
             }
+            
             instructionalLabel.alpha = 0.0
             containerView.removeConstraints(compactVConstraints as! [NSLayoutConstraint])
             containerView.addConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.addConstraints(expandedHConstraints as! [NSLayoutConstraint])
-            textFieldTwo.placeholder = "What will this key type when pressed?"
             textFieldOne.placeholder = "What is the name of this key?"
+            textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+            textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+            
             instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
             if UIScreen.mainScreen().bounds.height < 600 {
                 scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
@@ -377,7 +380,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
         cell.layer.borderColor = UIColor.clearColor().CGColor
-        cell.addDepth()
         let dict = data[indexPath.item]
         
         if indexPath.item == selectedItem && editKeysButton.selected == true {
