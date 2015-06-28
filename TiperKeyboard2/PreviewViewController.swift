@@ -126,20 +126,21 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         defaultTextLabel.hidden = count > 1
         instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
         
-        for label in [defaultTextLabel, instructionalLabel] {
+        [defaultTextLabel, instructionalLabel].map { label -> UILabel in
             label.numberOfLines = 0
             label.textColor = UIColor.darkGrayColor()
             label.textAlignment = .Center
-            label.preferredMaxLayoutWidth = view.frame.width
+            label.preferredMaxLayoutWidth = self.view.frame.width
             label.lineBreakMode = .ByWordWrapping
             label.setTranslatesAutoresizingMaskIntoConstraints(false)
-            containerView.addSubview(label)
+            self.containerView.addSubview(label)
+            return label
         }
         
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .CenterX, relatedBy: .Equal, toItem:containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
         
-        for textField in [textFieldOne, textFieldTwo, textFieldThree] {
+        [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
             textField.backgroundColor = UIColor.lightGrayColor()
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
             textField.delegate = self
@@ -148,7 +149,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             textField.userInteractionEnabled = false
             textField.textAlignment = .Center
             textField.returnKeyType = UIReturnKeyType.Done
-            containerView.addSubview(textField)
+            self.containerView.addSubview(textField)
+            return textField
         }
         
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -165,12 +167,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         containerView.addSubview(colorPaletteView)
         
-        for button in [editKeysButton, deleteKeysButton, questionButton] {
-            button.backgroundColor = view.tintColor
+        [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
+            button.backgroundColor = self.view.tintColor
             button.layer.cornerRadius = 5
             button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             button.setTranslatesAutoresizingMaskIntoConstraints(false)
-            containerView.addSubview(button)
+            self.containerView.addSubview(button)
+            return button
         }
         
         editKeysButton.setTitle("Edit Keys", forState: .Normal)
@@ -355,9 +358,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         editKeysButton.selected = !editKeysButton.selected
         if editKeysButton.selected {
             UIView.animateWithDuration(0.5, animations: {
-                for view in [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton] {
-                    view.alpha = 0.0
-                }
+                [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
                     }) { (value) in
                         self.instructionalLabel.text = "Touch a key to edit it."
                         self.editKeysButton.setTitle("Done", forState: .Normal)
@@ -371,9 +372,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
-            for view in [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel] {
-                view.alpha = 0.0
-            }
+            [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
+            
             containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
             containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
@@ -381,9 +381,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             editKeysButton.setTitle("Edit keys", forState: .Normal)
             collectionView?.reloadData()
             UIView.animateWithDuration(0.4, animations: {
-                for view in [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel] {
-                    view.alpha = 1.0
-                }
+                [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
                 self.textFieldThree.hidden = false
                 self.colorPaletteView.alpha = 0.0
                 self.colorPaletteView.hidden = true
