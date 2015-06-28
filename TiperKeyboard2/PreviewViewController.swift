@@ -11,58 +11,20 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var containerView = UIView()
     var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
     var collectionView : UICollectionView?
-    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
     var data = [[String:String]]()
     var tempData = [String:String]()
     var count = 0, selectedItem = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
-    let colorRef = ColorPalette.colorRef
     var textFieldOne = UITextField(), textFieldTwo = UITextField(), textFieldThree = UITextField()
     var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
+    
+    let colorRef = ColorPalette.colorRef
+    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
     let sizeBucket = SizeBucket()
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.isFirstResponder() == true {
-            textField.resignFirstResponder()
-        }
-        return true
-    }
-    
-    func keyboardShown (notification : NSNotification) {
-        if UIScreen.mainScreen().bounds.height < 600 {
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + keyboardSize.height)
-                scrollView.setContentOffset(CGPointMake(0.0, textFieldTwo.frame.origin.y - keyboardSize.height), animated: true)
-            }
-        }
-    }
-    
-    func keyboardHidden (notif : NSNotification) {
-        if editKeysButton.selected == false  && UIScreen.mainScreen().bounds.height < 600 {
-            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
-        }
-        else {
-            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
-        }
-    }
-    
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        for textField in [textFieldOne, textFieldTwo] {
-            if textField.isFirstResponder() {
-                textField.resignFirstResponder()
-            }
-        }
-    }
-    
-    func clearText () {
-        for textField in [textFieldOne, textFieldThree, textFieldThree] {
-            textField.text = ""
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +46,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             
             var tempDict = [String:String]()
             for (key, value) in colors {
-                for dict in data {
+                data.map { dict -> [String:String] in
                     if dict[key] != nil {
                         tempDict[key] = value
                     }
+                    return dict
                 }
             }
             
@@ -154,10 +117,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        for view in [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton] {
-            view.alpha = 0.0
-            view.hidden = true
-        }
+        
+        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
+        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
 
         colorPaletteView.updateColorCallback = { (index) in
             var dict = self.data[self.selectedItem]
@@ -168,9 +130,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addSubview(colorPaletteView)
         
         [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
-            button.backgroundColor = self.view.tintColor
             button.layer.cornerRadius = 5
-            button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            button.setTitleColor(self.view.tintColor, forState: .Normal)
             button.setTranslatesAutoresizingMaskIntoConstraints(false)
             self.containerView.addSubview(button)
             return button
@@ -195,10 +156,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        for myView in [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView] {
-            containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Left, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))
-            containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Right, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))
-        }
+        
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
         
         checkKeyCount()
     }
@@ -224,6 +184,58 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
          saveData()
     }
     
+    // MARK Notifications
+    func keyboardHidden (notif : NSNotification) {
+        if editKeysButton.selected == false  && UIScreen.mainScreen().bounds.height < 600 {
+            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
+        }
+        else {
+            scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
+        }
+    }
+    
+    func textChanged (notification:NSNotification) {
+        if self.navigationController?.topViewController == self {
+            colorPaletteView.alpha = 1.0
+            colorPaletteView.hidden = false
+            tempData = [String:String]()
+            let textField = notification.object as! UITextField
+            textField.clearButtonMode = UITextFieldViewMode.WhileEditing
+            tempData[textFieldOne.text] = textFieldTwo.text
+            data.insert(tempData, atIndex: selectedItem)
+            data.removeAtIndex(selectedItem + 1)
+            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+        }
+    }
+    
+    func checkKeyCount () {
+        if data.count == 1 {
+            navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
+            navigationItem.leftBarButtonItem?.enabled = false
+            
+            defaultTextLabel.hidden = false
+            defaultTextLabel.alpha = 1.0
+            
+            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.alpha = 0.0}
+            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.hidden = true}
+            
+            collectionView?.backgroundColor = UIColor.clearColor()
+        }
+        else if data.count > 1 {
+            UIView.animateWithDuration(1.0, animations: {
+                self.navigationItem.leftBarButtonItem?.tintColor = self.view.tintColor
+                self.navigationItem.leftBarButtonItem?.enabled = true
+                
+                self.defaultTextLabel.hidden = true
+                self.defaultTextLabel.alpha = 0.0
+                
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.alpha = 1.0}
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.hidden = false}
+            })
+        }
+    }
+    
+    // MARK Actions
     func questionButtonPressed () {
         let infoView = InformationViewController()
         navigationController?.pushViewController(infoView, animated: true)
@@ -245,6 +257,59 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         navigationItem.rightBarButtonItem?.enabled = true
     }
     
+    func editButtonPressed () {
+        scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
+        clearText()
+        tempData.removeAll(keepCapacity: false)
+        editKeysButton.selected = !editKeysButton.selected
+        if editKeysButton.selected {
+            UIView.animateWithDuration(0.5, animations: {
+                [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
+                }) { (value) in
+                    self.instructionalLabel.text = "Touch a key to edit it."
+                    self.editKeysButton.setTitle("Done", forState: .Normal)
+                    
+                    UIView.animateWithDuration(0.5, animations: {
+                        self.instructionalLabel.alpha = 1.0
+                        self.editKeysButton.alpha = 1.0
+                        self.questionButton.alpha = 1.0
+                        }, completion: { (value) in })
+            }
+        }
+        else {
+            scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
+            [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
+            
+            containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
+            containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
+            containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
+            instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
+            editKeysButton.setTitle("Edit keys", forState: .Normal)
+            collectionView?.reloadData()
+            UIView.animateWithDuration(0.4, animations: {
+                [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
+                self.textFieldThree.hidden = false
+                self.colorPaletteView.alpha = 0.0
+                self.colorPaletteView.hidden = true
+                }, completion: { (value) in })
+        }
+    }
+    
+    func addNewItem () {
+        if data.count < 8 {
+            count++
+            data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
+            checkKeyCount()
+            collectionView?.reloadData()
+        }
+    }
+    
+    func saveDataButtonPressed () {
+        RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 1)
+        saveData()
+    }
+    
+    // MARK Collectionview methods
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedItem = indexPath.item
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
@@ -280,7 +345,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             else {
                 scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
             }
-
+            
             UIView.animateWithDuration(0.5, animations: {
                 if self.data.count > 2 {
                     self.deleteKeysButton.alpha = 1.0
@@ -289,124 +354,23 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 
                 self.colorPaletteView.alpha = 0.0
                 self.colorPaletteView.hidden = true
-
-                for textField in [self.textFieldOne, self.textFieldTwo] {
+                
+                [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
                     textField.alpha = 1.0
                     textField.hidden = false
                     textField.userInteractionEnabled = true
                     textField.text = ""
+                    return textField
                 }
+                
                 self.textFieldThree.alpha = 0.0
                 self.textFieldThree.hidden = true
                 self.instructionalLabel.alpha = 1.0
-
-            }, completion: { (value) in
-                self.collectionView!.reloadData()
+                
+                }, completion: { (value) in
+                    self.collectionView!.reloadData()
             })
         }
-    }
-    
-    func textChanged (notification:NSNotification) {
-        if self.navigationController?.topViewController == self {
-            colorPaletteView.alpha = 1.0
-            colorPaletteView.hidden = false
-            tempData = [String:String]()
-            let textField = notification.object as! UITextField
-            textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-            tempData[textFieldOne.text] = textFieldTwo.text
-            data.insert(tempData, atIndex: selectedItem)
-            data.removeAtIndex(selectedItem + 1)
-            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
-        }
-    }
-    
-    func checkKeyCount () {
-        if data.count == 1 {
-            navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
-            navigationItem.leftBarButtonItem?.enabled = false
-            
-            defaultTextLabel.hidden = false
-            defaultTextLabel.alpha = 1.0
-            
-            for view in [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton] {
-                view.alpha = 0.0
-                view.hidden = true
-            }
-            
-            collectionView?.backgroundColor = UIColor.clearColor()
-        }
-        else if data.count > 1 {
-            UIView.animateWithDuration(1.0, animations: {
-                self.navigationItem.leftBarButtonItem?.tintColor = self.view.tintColor
-                self.navigationItem.leftBarButtonItem?.enabled = true
-                
-                self.defaultTextLabel.hidden = true
-                self.defaultTextLabel.alpha = 0.0
-                
-                for view in [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton] {
-                    view.alpha = 1.0
-                    view.hidden = false
-                }
-            })
-        }
-    }
-    
-    func editButtonPressed () {
-        scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
-        clearText()
-        tempData.removeAll(keepCapacity: false)
-        editKeysButton.selected = !editKeysButton.selected
-        if editKeysButton.selected {
-            UIView.animateWithDuration(0.5, animations: {
-                [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
-                    }) { (value) in
-                        self.instructionalLabel.text = "Touch a key to edit it."
-                        self.editKeysButton.setTitle("Done", forState: .Normal)
-                    
-                    UIView.animateWithDuration(0.5, animations: {
-                            self.instructionalLabel.alpha = 1.0
-                            self.editKeysButton.alpha = 1.0
-                            self.questionButton.alpha = 1.0
-                        }, completion: { (value) in })
-            }
-        }
-        else {
-            scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
-            [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
-            
-            containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
-            containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
-            instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
-            editKeysButton.setTitle("Edit keys", forState: .Normal)
-            collectionView?.reloadData()
-            UIView.animateWithDuration(0.4, animations: {
-                [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
-                self.textFieldThree.hidden = false
-                self.colorPaletteView.alpha = 0.0
-                self.colorPaletteView.hidden = true
-            }, completion: { (value) in })
-        }
-    }
-    
-    func addNewItem () {
-        if data.count < 8 {
-            count++
-            data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-            checkKeyCount()
-            collectionView?.reloadData()
-        }
-    }
-    
-    func saveDataButtonPressed () {
-        RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 1)
-        saveData()
-    }
-    
-    func saveData () {
-        sharedDefaults?.setValue(data, forKey:defaultskey)
-        sharedDefaults?.setValue(colors, forKey:defaultColors)
-        sharedDefaults?.synchronize()
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -467,5 +431,46 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return true
         }
         return false
+    }
+    
+    
+    // MARK Scroll view delegate methods
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        for textField in [textFieldOne, textFieldTwo] {
+            if textField.isFirstResponder() {
+                textField.resignFirstResponder()
+            }
+        }
+    }
+    
+    // MARK Convenience
+    func clearText () {
+        [textFieldOne, textFieldThree, textFieldThree].map{$0.text = ""}
+    }
+    
+    func saveData () {
+        sharedDefaults?.setValue(data, forKey:defaultskey)
+        sharedDefaults?.setValue(colors, forKey:defaultColors)
+        sharedDefaults?.synchronize()
+    }
+    
+    // MARK Textfield delegate methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.isFirstResponder() == true {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    // MARK keyboard notifications
+    
+    func keyboardShown (notification : NSNotification) {
+        if UIScreen.mainScreen().bounds.height < 600 {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + keyboardSize.height)
+                scrollView.setContentOffset(CGPointMake(0.0, textFieldTwo.frame.origin.y - keyboardSize.height), animated: true)
+            }
+        }
     }
 }
