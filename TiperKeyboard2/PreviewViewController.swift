@@ -59,9 +59,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func clearText () {
-        for textField in [textFieldOne, textFieldThree, textFieldThree] {
-            textField.text = ""
-        }
+        [textFieldOne, textFieldThree, textFieldThree].map{$0.text = ""}
     }
 
     override func viewDidLoad() {
@@ -84,10 +82,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             
             var tempDict = [String:String]()
             for (key, value) in colors {
-                for dict in data {
+                data.map { dict -> [String:String] in
                     if dict[key] != nil {
                         tempDict[key] = value
                     }
+                    return dict
                 }
             }
             
@@ -154,10 +153,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        for view in [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton] {
-            view.alpha = 0.0
-            view.hidden = true
-        }
+        
+        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
+        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
 
         colorPaletteView.updateColorCallback = { (index) in
             var dict = self.data[self.selectedItem]
@@ -195,10 +193,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        for myView in [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView] {
-            containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Left, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))
-            containerView.addConstraint(NSLayoutConstraint(item: myView, attribute: .Right, relatedBy: .Equal, toItem: instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))
-        }
+        
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
         
         checkKeyCount()
     }
@@ -289,13 +286,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 
                 self.colorPaletteView.alpha = 0.0
                 self.colorPaletteView.hidden = true
-
-                for textField in [self.textFieldOne, self.textFieldTwo] {
+                
+                [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
                     textField.alpha = 1.0
                     textField.hidden = false
                     textField.userInteractionEnabled = true
                     textField.text = ""
+                    return textField
                 }
+                
                 self.textFieldThree.alpha = 0.0
                 self.textFieldThree.hidden = true
                 self.instructionalLabel.alpha = 1.0
@@ -328,10 +327,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             defaultTextLabel.hidden = false
             defaultTextLabel.alpha = 1.0
             
-            for view in [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton] {
-                view.alpha = 0.0
-                view.hidden = true
-            }
+            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.alpha = 0.0}
+            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.hidden = true}
             
             collectionView?.backgroundColor = UIColor.clearColor()
         }
@@ -343,10 +340,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 self.defaultTextLabel.hidden = true
                 self.defaultTextLabel.alpha = 0.0
                 
-                for view in [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton] {
-                    view.alpha = 1.0
-                    view.hidden = false
-                }
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.alpha = 1.0}
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.hidden = false}
             })
         }
     }
