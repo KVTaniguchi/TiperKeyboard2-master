@@ -158,8 +158,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
-        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
-        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Leading, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Leading, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Trailing, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Trailing, multiplier: 1.0, constant: 0))}
         
         checkKeyCount()
     }

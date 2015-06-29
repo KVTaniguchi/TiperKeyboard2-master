@@ -36,7 +36,7 @@ class ColorPaletteView: UIView {
                 let previousButton = self.buttonArray[index - 1]
                 self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
                 if index == 9 || index == 4 {
-                    self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0))
+                    self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0))
                 }
             }
             
