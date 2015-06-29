@@ -24,12 +24,12 @@ class PreviewCell: UICollectionViewCell {
         keyTextLabel?.numberOfLines = 2
         keyTextLabel?.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         keyTextLabel?.preferredMaxLayoutWidth = contentView.frame.width - 2
-        keyTextLabel?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        keyTextLabel?.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(keyTextLabel!)
         
         circleView = UIView()
         circleView?.layer.cornerRadius = 10
-        circleView?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        circleView?.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(circleView!)
         
         // Set vertical effect
@@ -51,16 +51,16 @@ class PreviewCell: UICollectionViewCell {
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel][circle(20)]-5-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel!, "circle":circleView!]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel!, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[circle(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["circle":circleView!]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[circle(20)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["circle":circleView!]))
         
         imageView = UIImageView(image: UIImage(named: "keyboard-75"))
-        imageView?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        imageView?.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView!)
         imageView?.hidden = true
         contentView.addConstraint(NSLayoutConstraint(item: imageView!, attribute: .CenterX, relatedBy: .Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         contentView.addConstraint(NSLayoutConstraint(item: imageView!, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView!]))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView!]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView!]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView!]))
     }
     
     func setLabelText (text: String) {

@@ -27,12 +27,12 @@ class NextKeyboardButton : UIButton {
         super.init(frame: frame)
         
         keyboardImage = UIImageView(image: UIImage(named: "keyboard-75"))
-        keyboardImage?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        keyboardImage?.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(keyboardImage!)
         self.addConstraint(NSLayoutConstraint(item: keyboardImage!, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1.0, constant: 0))
         self.addConstraint(NSLayoutConstraint(item: keyboardImage!, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[keyboard(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyboard":keyboardImage!]))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[keyboard(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["keyboard":keyboardImage!]))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[keyboard(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["keyboard":keyboardImage!]))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[keyboard(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["keyboard":keyboardImage!]))
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -67,9 +67,9 @@ class KeyboardViewController: UIInputViewController {
         
         self.colorRef = KBColorPalette.colorRef
         
-        for (index, entry) in enumerate(self.data) {
+        for (index, entry) in self.data.enumerate() {
             for (key, value) in entry {
-                if let var color = self.colors[key] as String! {
+                if let color = self.colors[key] as String! {
                     self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
                 }
                 else {
@@ -80,29 +80,29 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
-        let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
+        let keyboardButton = KeyButton(type: UIButtonType.Custom)
 
         keyboardButton.layer.cornerRadius = 3
-        keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        keyboardButton.translatesAutoresizingMaskIntoConstraints = false
         
         if keyTitle != "Next Keyboard" {
             keyboardButton.setTitle(keyTitle, forState: .Normal)
             keyboardButton.keyText = keyText
             keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
-            keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
+            keyboardButton.backgroundColor = self.colorRef[Int(colorIndex)!] as UIColor!
         }
         else {
-            var nextButton = NextKeyboardButton()
+            let nextButton = NextKeyboardButton()
             nextButton.backgroundColor = UIColor.darkGrayColor()
             nextButton.layer.cornerRadius = 10
-            nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            nextButton.translatesAutoresizingMaskIntoConstraints = false
             nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
             
-            var deleteButton = UIButton()
+            let deleteButton = UIButton()
             deleteButton.backgroundColor = UIColor.lightGrayColor()
             deleteButton.setTitle("del", forState: UIControlState.Normal)
             deleteButton.layer.cornerRadius = 10
-            deleteButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            deleteButton.translatesAutoresizingMaskIntoConstraints = false
             deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
             
             keyboardButton.addSubview(nextButton)
@@ -126,7 +126,6 @@ class KeyboardViewController: UIInputViewController {
         var topRelationalItem : UIView?
         var topRelationalAttribute : NSLayoutAttribute?
         var keyHeight = 0.0 as CGFloat
-        var keyWidth = 0.0 as CGFloat
         
         if self.data.count != 3 {
             keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier:0.5, constant: 0)
@@ -258,7 +257,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func keyPressed (button: KeyButton) {
-        var originalColor = button.backgroundColor
+        let originalColor = button.backgroundColor
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             button.backgroundColor = UIColor.lightGrayColor()
         }) { (value) in
@@ -267,15 +266,15 @@ class KeyboardViewController: UIInputViewController {
             })
         }
         let text = button.keyText
-        let proxy = textDocumentProxy as! UITextDocumentProxy
+        let proxy = textDocumentProxy as UITextDocumentProxy
         proxy.insertText(text!)
     }
     
     func deleteWord () {
-        let proxy = textDocumentProxy as! UITextDocumentProxy
+        let proxy = textDocumentProxy as UITextDocumentProxy
         proxy.deleteBackward()
-        let tokens = proxy.documentContextBeforeInput.componentsSeparatedByString(" ")
-        for var index = 0; index  < count(tokens.last!.utf16); index++ {
+        let tokens = proxy.documentContextBeforeInput!.componentsSeparatedByString(" ")
+        for var index = 0; index  < tokens.last!.utf16.count; index++ {
             proxy.deleteBackward()
         }
     }
@@ -284,17 +283,17 @@ class KeyboardViewController: UIInputViewController {
         super.didReceiveMemoryWarning()
     }
 
-    override func textWillChange(textInput: UITextInput) {
+    override func textWillChange(textInput: UITextInput?) {
     }
 
-    override func textDidChange(textInput: UITextInput) {
-        var textColor: UIColor
-        var proxy = self.textDocumentProxy as! UITextDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.Dark {
-            textColor = UIColor.whiteColor()
-        }
-        else {
-            textColor = UIColor.blackColor()
-        }
+    override func textDidChange(textInput: UITextInput?) {
+//        var textColor =
+//        let proxy = self.textDocumentProxy as UITextDocumentProxy
+//        if proxy.keyboardAppearance == UIKeyboardAppearance.Dark {
+//            textColor = UIColor.whiteColor()
+//        }
+//        else {
+//            textColor = UIColor.blackColor()
+//        }
     }
 }

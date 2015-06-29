@@ -17,14 +17,14 @@ class ColorPaletteView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var metrics = ["width": ((UIScreen.mainScreen().bounds.width - 40)/5)]
+        let metrics = ["width": ((UIScreen.mainScreen().bounds.width - 40)/5)]
         
         for index in 0...9 {
-            var colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-            colorButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+            var colorButton = UIButton(type: .Custom)
+            colorButton = UIButton(type: .Custom)
             colorButton.tag = index
             colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
-            colorButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+            colorButton.translatesAutoresizingMaskIntoConstraints = false
             colorButton.backgroundColor = colors[index]
             buttonArray.append(colorButton)
             self.addSubview(colorButton)
@@ -48,7 +48,7 @@ class ColorPaletteView: UIView {
             }
             
             self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0.5, constant: 0))
-            self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(width)]", options: NSLayoutFormatOptions(0), metrics: metrics, views:["colorButton":colorButton]))
+            self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(width)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:["colorButton":colorButton]))
         }
     }
 

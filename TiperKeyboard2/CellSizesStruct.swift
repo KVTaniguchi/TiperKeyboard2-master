@@ -39,7 +39,7 @@ public struct SizeBucket {
         case 8:
             size = CGSizeMake(collectionView.width/2 - 3, collectionView.height/4 - 3)
         default:
-            println("2")
+            print("2")
         }
         
         return size

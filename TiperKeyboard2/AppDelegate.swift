@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         self.mainNavigationController = UINavigationController()
-        var previewViewController = PreviewViewController()
+        let previewViewController = PreviewViewController()
         self.mainNavigationController?.pushViewController(previewViewController, animated: true)
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

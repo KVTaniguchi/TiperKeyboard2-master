@@ -13,6 +13,7 @@
 		F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */; };
 		F60CF3011B09365800E7EFE0 /* SplashV2.png in Resources */ = {isa = PBXBuildFile; fileRef = F60CF3001B09365800E7EFE0 /* SplashV2.png */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
+		F60F02931B40DF50006738B7 /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F60F02921B40DF50006738B7 /* SplashV3.png */; };
 		F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F616577D1B12AA67005D0BFF /* keyboard-75.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
 		F62E48C81B1018840074012E /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62E48C71B1018840074012E /* InformationViewController.swift */; };
@@ -74,6 +75,7 @@
 		F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPaletteView.swift; sourceTree = "<group>"; };
 		F60CF3001B09365800E7EFE0 /* SplashV2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV2.png; sourceTree = "<group>"; };
 		F60DFF1D1AFEED2E00019FAB /* forward-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-7.png"; sourceTree = "<group>"; };
+		F60F02921B40DF50006738B7 /* SplashV3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV3.png; sourceTree = "<group>"; };
 		F616577D1B12AA67005D0BFF /* keyboard-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard-75.png"; sourceTree = "<group>"; };
 		F62010171AFF0B8100FB9212 /* KBColorPalete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KBColorPalete.swift; sourceTree = "<group>"; };
 		F62E48C71B1018840074012E /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				F6FB59A91A4F36CE000A39CD /* Images.xcassets */,
 				F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */,
 				F60CF3001B09365800E7EFE0 /* SplashV2.png */,
+				F60F02921B40DF50006738B7 /* SplashV3.png */,
 				F616577D1B12AA67005D0BFF /* keyboard-75.png */,
 				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
 				F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */,
@@ -279,7 +282,8 @@
 		F6FB59951A4F36CE000A39CD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Kevin Taniguchi";
 				TargetAttributes = {
 					F6FB599C1A4F36CE000A39CD = {
@@ -339,6 +343,7 @@
 				F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */,
 				F60CF3011B09365800E7EFE0 /* SplashV2.png in Resources */,
 				F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */,
+				F60F02931B40DF50006738B7 /* SplashV3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +451,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -517,6 +523,7 @@
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
@@ -537,6 +544,7 @@
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
@@ -558,6 +566,7 @@
 				);
 				INFOPLIST_FILE = TiperKeyboard2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
 			};
@@ -573,6 +582,7 @@
 				);
 				INFOPLIST_FILE = TiperKeyboard2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
 			};
@@ -591,6 +601,7 @@
 				INFOPLIST_FILE = TiperKeyboardKB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -609,6 +620,7 @@
 				INFOPLIST_FILE = TiperKeyboardKB/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;

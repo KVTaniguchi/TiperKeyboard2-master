@@ -71,12 +71,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.frame = scrollView.bounds
         scrollView.addSubview(containerView)
         
-        var layout = ReorderableCollectionViewFlowLayout()
+        let layout = ReorderableCollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
@@ -95,7 +95,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             label.textAlignment = .Center
             label.preferredMaxLayoutWidth = self.view.frame.width
             label.lineBreakMode = .ByWordWrapping
-            label.setTranslatesAutoresizingMaskIntoConstraints(false)
+            label.translatesAutoresizingMaskIntoConstraints = false
             self.containerView.addSubview(label)
             return label
         }
@@ -106,7 +106,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
             textField.backgroundColor = UIColor.darkGrayColor()
             textField.textColor = UIColor.whiteColor()
-            textField.setTranslatesAutoresizingMaskIntoConstraints(false)
+            textField.translatesAutoresizingMaskIntoConstraints = false
             textField.delegate = self
             textField.autocorrectionType = .No
             textField.borderStyle = UITextBorderStyle.None
@@ -117,13 +117,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return textField
         }
         
-        colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
         
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
 
         colorPaletteView.updateColorCallback = { (index) in
-            var dict = self.data[self.selectedItem]
+            let dict = self.data[self.selectedItem]
             self.colors[dict.keys.first!] = "\(index)"
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
             self.saveData()
@@ -133,7 +133,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
             button.layer.cornerRadius = 5
             button.setTitleColor(self.view.tintColor, forState: .Normal)
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             self.containerView.addSubview(button)
             return button
         }
@@ -146,16 +146,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
-        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 10 : 30]
-        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton]
+        let metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 10 : 30]
+        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton]
 
-        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-padding-[instrLab]-padding-[edit]-padding-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
         [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
@@ -202,7 +202,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-            tempData[textFieldOne.text] = textFieldTwo.text
+            tempData[textFieldOne.text!] = textFieldTwo.text
             data.insert(tempData, atIndex: selectedItem)
             data.removeAtIndex(selectedItem + 1)
             collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
@@ -313,8 +313,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     // MARK Collectionview methods
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedItem = indexPath.item
-        var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        var originalColor = cell?.contentView.backgroundColor
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
+        let originalColor = cell?.contentView.backgroundColor
         
         if editKeysButton.selected == false {
             UIView.animateWithDuration(0.2, animations: {
@@ -324,8 +324,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                         cell?.contentView.backgroundColor = originalColor
                     })
             })
-            var keyDict = data[indexPath.item]
-            for (key, value) in keyDict {
+            let keyDict = data[indexPath.item]
+            for (_, value) in keyDict {
                 textFieldThree.text = value
             }
         }
@@ -387,10 +387,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             cell.layer.borderWidth = 5
         }
         
-        for (key, value) in dict {
+        for (key, _) in dict {
             cell.setLabelText(key)
             let colorIndex = colors[key]
-            cell.circleView?.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
+            cell.circleView?.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[Int(colorIndex!)!] as UIColor!
         }
         
         if data.count > 1 {
@@ -422,7 +422,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         saveData()
     }
     
-    func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         if indexPath.item < (data.count-1) {
             return true
         }
