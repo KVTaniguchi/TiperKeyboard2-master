@@ -390,7 +390,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         for (key, value) in dict {
             cell.setLabelText(key)
             let colorIndex = colors[key]
-            cell.circleView?.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
+            cell.circleView.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
         }
         
         if data.count > 1 {
