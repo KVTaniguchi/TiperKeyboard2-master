@@ -348,9 +348,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             // set new index one greater than the current one
             allData["\(currentIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
-//            println(allData)
-//            collectionView?.reloadData()
-            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: currentIndex + 1, inSection: 0)])
+            println(allData)
+            collectionView?.reloadData()
+//            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: currentIndex + 1, inSection: 0)])
             collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
 //            currentKBCollectionView().addNewKey()
 //            let newCell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0)) as! ContainedKBCollectionViewCell
@@ -409,7 +409,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 })
         }
-        cell.updateAllDataWithData = { data in self.allData["\(indexPath.item)"] = data }
+        cell.updateAllDataWithData = { data in
+            self.allData["\(indexPath.item)"] = data
+        }
         
         return cell
     }
@@ -429,6 +431,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 textField.resignFirstResponder()
             }
         }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        addNewItem()
     }
     
     // MARK Convenience

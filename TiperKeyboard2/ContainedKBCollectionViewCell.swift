@@ -65,7 +65,7 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     
     func configureKBCellWithData (data : [[String:String]], isEditing: Bool) {
         keyData = data
-        println("CURENT KB Data : \(keyData)")
+//        println("CURENT KB Data : \(keyData)")
         editingEnabled = isEditing
         collectionView?.reloadData()
     }
