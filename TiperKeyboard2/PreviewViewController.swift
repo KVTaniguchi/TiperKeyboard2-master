@@ -5,13 +5,16 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate{
+class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate{
     
     var scrollView = UIScrollView()
     var containerView = UIView()
     var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
     var collectionView : UICollectionView?
+    var pagingIndicator  = UIPageControl()
     var data = [[String:String]]()
+    var allData = [String  : [[String:String]]]()
+    var allColors = [[String:String]]()
     var tempData = [String:String]()
     var count = 0, selectedItem = 0
     var lastContentOffSet : CGFloat = 0.0
@@ -23,7 +26,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var colorPaletteView = ColorPaletteView()
     
     let colorRef = ColorPalette.colorRef
-    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
+    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultsAllKBKey = "tiper2KeyboardAllKB", defaultsAllColorsKey = "tiper2KBAllColors"
     let sizeBucket = SizeBucket()
 
     override func viewDidLoad() {
@@ -40,29 +43,44 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
-        if sharedDefaults?.objectForKey(defaultskey) != nil {
-            data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
-            colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-            
-            var tempDict = [String:String]()
-            for (key, value) in colors {
-                data.map { dict -> [String:String] in
-                    if dict[key] != nil {
-                        tempDict[key] = value
-                    }
-                    return dict
-                }
-            }
-            
-            sharedDefaults?.setValue(tempDict, forKey:defaultColors)
-            sharedDefaults?.synchronize()
+        // convert to allData 
+        
+        // all data : array of
+        if sharedDefaults?.objectForKey(defaultsAllKBKey) != nil {
+            allData = sharedDefaults?.objectForKey(defaultsAllKBKey) as! [String : [[String:String]]]!
+            allColors = sharedDefaults?.objectForKey(defaultsAllColorsKey) as! [[String:String]]
         }
         else {
-            data.append(["Next Keyboard":"This key changes keyboards"])
-            colors["Next Keyboard"] = "0"
+            if sharedDefaults?.objectForKey(defaultskey) != nil {
+              // For legacy users, add the extra keyboards for free
+              
+                data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+                colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+                count = data.count
+                var tempDict = [String:String]()
+                for (key, value) in colors {
+                    data.map { dict -> [String:String] in
+                        if dict[key] != nil {
+                            tempDict[key] = value
+                        }
+                        return dict
+                    }
+                }
+                
+                sharedDefaults?.setValue(tempDict, forKey:defaultColors)
+                sharedDefaults?.synchronize()
+            }
+            else {
+                // for new users add the in app purchases option
+                data.append(["Next Keyboard":"This key changes keyboards"])
+                colors["Next Keyboard"] = "0"
+//                saveData()
+            }
+            
+            allData["0"] = data
+            allColors.append(colors)
             saveData()
         }
-        count = data.count
         
         scrollView.frame = view.bounds
         scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
@@ -79,9 +97,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
-        collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
+        collectionView!.registerClass(ContainedKBCollectionViewCell.self, forCellWithReuseIdentifier: "allKBCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
+        collectionView?.pagingEnabled = true
         collectionView!.contentSize = CGSizeMake(view.frame.width - 30, 260)
         containerView.addSubview(collectionView!)
         
@@ -199,39 +218,36 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         if self.navigationController?.topViewController == self {
             colorPaletteView.alpha = 1.0
             colorPaletteView.hidden = false
-            tempData = [String:String]()
+//            tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-            tempData[textFieldOne.text] = textFieldTwo.text
-            data.insert(tempData, atIndex: selectedItem)
-            data.removeAtIndex(selectedItem + 1)
-            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+//            tempData[textFieldOne.text] = textFieldTwo.text
+//            data.insert(tempData, atIndex: selectedItem)
+//            data.removeAtIndex(selectedItem + 1)
+//            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
         }
     }
     
     func checkKeyCount () {
-        if data.count == 1 {
+        if count == 0 {
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
             defaultTextLabel.hidden = false
             defaultTextLabel.alpha = 1.0
             
-            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.alpha = 0.0}
-            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton].map{$0.hidden = true}
-            
-            collectionView?.backgroundColor = UIColor.clearColor()
+            [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.alpha = 0.0}
+            [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.hidden = true}
         }
-        else if data.count > 1 {
+        else {
             UIView.animateWithDuration(1.0, animations: {
                 self.navigationItem.leftBarButtonItem?.tintColor = self.view.tintColor
                 self.navigationItem.leftBarButtonItem?.enabled = true
                 
                 self.defaultTextLabel.hidden = true
-                self.defaultTextLabel.alpha = 0.0
                 
-                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.alpha = 1.0}
-                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton].map{$0.hidden = false}
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.alpha = 1.0}
+                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.hidden = false}
             })
         }
     }
@@ -243,19 +259,33 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func deleteButtonPressed () {
-        if data.count > 2 {
-            data.removeAtIndex(selectedItem)
-            saveData()
-            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+//        if data.count > 2 {
+//            data.removeAtIndex(selectedItem)
+//            saveData()
+//            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+//            if data.count == 1 {
+//                UIView.animateWithDuration(1.0, animations: {
+//                    self.deleteKeysButton.alpha = 0.0
+//                    self.deleteKeysButton.hidden = true
+//                })
+//            }
+//        }
+        let currentPath = collectionView?.indexPathsForVisibleItems().first as! NSIndexPath
+        if allData["\(currentPath.item)"]!.count > 1 {
+            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
+            navigationItem.rightBarButtonItem?.enabled = true
+            
+            currentKBCollectionView().keyData.removeAtIndex(selectedItem)
+            currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
             if data.count == 1 {
                 UIView.animateWithDuration(1.0, animations: {
                     self.deleteKeysButton.alpha = 0.0
                     self.deleteKeysButton.hidden = true
                 })
             }
+            
+            saveData()
         }
-        navigationItem.rightBarButtonItem?.tintColor = view.tintColor
-        navigationItem.rightBarButtonItem?.enabled = true
     }
     
     func editButtonPressed () {
@@ -263,6 +293,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         clearText()
         tempData.removeAll(keepCapacity: false)
         editKeysButton.selected = !editKeysButton.selected
+        
+        currentKBCollectionView().editingEnabled = true
+        
         if editKeysButton.selected {
             UIView.animateWithDuration(0.5, animations: {
                 [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
@@ -297,11 +330,32 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if data.count < 8 {
+        if currentKBCollectionView().keyData.count < 8 {
+            currentKBCollectionView().addNewKey()
             count++
-            data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
-            collectionView?.reloadData()
+        }
+        else {
+            // else add an item to the current CV
+            // check index key of current CV's data
+            let currentIndex = (collectionView?.indexPathsForVisibleItems().first as! NSIndexPath).item
+            // check if there are more indexes greater than the current
+            
+            // shift all subsequent indexes up one
+            
+            // maybe check if the current index is the last in the allData keys
+            allData.keys.filter{$0.toInt()! > currentIndex}.map{"\($0.toInt()! + 1)"}
+            
+            // set new index one greater than the current one
+            allData["\(currentIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
+//            println(allData)
+//            collectionView?.reloadData()
+            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: currentIndex + 1, inSection: 0)])
+            collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+//            currentKBCollectionView().addNewKey()
+//            let newCell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0)) as! ContainedKBCollectionViewCell
+//            newCell.addNewKey()
+            // save
         }
     }
     
@@ -310,55 +364,37 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         saveData()
     }
     
-    // MARK Collectionview methods
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        selectedItem = indexPath.item
-        var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        var originalColor = cell?.contentView.backgroundColor
-        
-        if editKeysButton.selected == false {
-            UIView.animateWithDuration(0.2, animations: {
-                cell?.contentView.backgroundColor = UIColor.darkGrayColor()
-                }, completion: { (value: Bool) in
-                    UIView.animateWithDuration(0.2, animations: {
-                        cell?.contentView.backgroundColor = originalColor
-                    })
-            })
-            var keyDict = data[indexPath.item]
-            for (key, value) in keyDict {
-                textFieldThree.text = value
-            }
-        }
-        else {
-            if indexPath.item == (data.count - 1) {
-                return
-            }
-            
-            instructionalLabel.alpha = 0.0
-            containerView.removeConstraints(compactVConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(expandedVConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(expandedHConstraints as! [NSLayoutConstraint])
-            textFieldOne.placeholder = "What is the name of this key?"
-            textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
-            textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
-            
-            instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("allKBCell", forIndexPath: indexPath) as! ContainedKBCollectionViewCell
+        let kbData = allData["\(indexPath.item)"]
+        data = kbData!
+        cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected)
+        cell.animateCallbackWithData = { amount in
+            self.instructionalLabel.alpha = 0.0
+            self.containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
+            self.containerView.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
+            self.containerView.addConstraints(self.expandedHConstraints as! [NSLayoutConstraint])
+            self.textFieldOne.placeholder = "What is the name of this key?"
+            self.textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+            self.textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+
+            self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
             if UIScreen.mainScreen().bounds.height < 600 {
-                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height + 44)
+                self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 44)
             }
             else {
-                scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
+                self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
             }
-            
+
             UIView.animateWithDuration(0.5, animations: {
-                if self.data.count > 2 {
+                if amount > 2 {
                     self.deleteKeysButton.alpha = 1.0
                     self.deleteKeysButton.hidden = false
                 }
-                
+
                 self.colorPaletteView.alpha = 0.0
                 self.colorPaletteView.hidden = true
-                
+
                 [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
                     textField.alpha = 1.0
                     textField.hidden = false
@@ -371,71 +407,20 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 self.textFieldThree.hidden = true
                 self.instructionalLabel.alpha = 1.0
                 
-                }, completion: { (value) in
-                    self.collectionView!.reloadData()
-            })
+                })
         }
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buttonCell", forIndexPath: indexPath) as! PreviewCell
-        cell.layer.borderColor = UIColor.clearColor().CGColor
-        let dict = data[indexPath.item]
-        
-        if indexPath.item == selectedItem && editKeysButton.selected == true {
-            cell.layer.borderColor = view.tintColor.CGColor
-            cell.layer.borderWidth = 5
-        }
-        
-        for (key, value) in dict {
-            cell.setLabelText(key)
-            let colorIndex = colors[key]
-            cell.circleView.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
-        }
-        
-        if data.count > 1 {
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                cell.hidden = false
-                cell.alpha = 1.0
-            })
-        }
-        else {
-            cell.hidden = true
-            cell.alpha = 0.0
-        }
+        cell.updateAllDataWithData = { data in self.allData["\(indexPath.item)"] = data }
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return allData.count
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return sizeBucket.getSizes(collectionView.frame, count: data.count, indexPath: indexPath)
+        return CGSizeMake(view.frame.size.width - 30, 260)
     }
-    
-    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
-        let keyBeingMoved = data[fromIndexPath.item]
-        data.removeAtIndex(fromIndexPath.item)
-        data.insert(keyBeingMoved, atIndex: toIndexPath.item)
-        saveData()
-    }
-    
-    func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        if indexPath.item < (data.count-1) {
-            return true
-        }
-        return false
-    }
-    
-    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, canMoveToIndexPath toIndexPath: NSIndexPath!) -> Bool {
-        if toIndexPath.item < (data.count - 1) {
-            return true
-        }
-        return false
-    }
-    
     
     // MARK Scroll view delegate methods
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -452,9 +437,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func saveData () {
-        sharedDefaults?.setValue(data, forKey:defaultskey)
-        sharedDefaults?.setValue(colors, forKey:defaultColors)
+        sharedDefaults?.setValue(allColors, forKey: defaultsAllColorsKey)
+        sharedDefaults?.setValue(allData, forKey: defaultsAllKBKey)
         sharedDefaults?.synchronize()
+    }
+    
+    func currentKBCollectionView () -> ContainedKBCollectionViewCell {
+        return collectionView?.cellForItemAtIndexPath(collectionView?.indexPathsForVisibleItems().first as! NSIndexPath) as! ContainedKBCollectionViewCell
     }
     
     // MARK Textfield delegate methods

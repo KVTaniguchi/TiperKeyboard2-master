@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>C29B9C1F-28ED-41FF-AA34-13FE5C916C73</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>TiperKeyboard2</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>FAE538808401233BEC32228CBE4DD54A3EC4FC72</key>
 		<string>github.com:KVTaniguchi/TiperKeyboard2-master.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TiperKeyboard2.xcodeproj/project.xcworkspace</string>
+	<string>TiperKeyboard2.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>FAE538808401233BEC32228CBE4DD54A3EC4FC72</key>
