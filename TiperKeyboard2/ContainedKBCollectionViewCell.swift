@@ -70,6 +70,10 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        var previousCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0))
+        previousCell?.layer.borderColor = UIColor.clearColor().CGColor
+        
         selectedItem = indexPath.item
         var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
         var originalColor = cell?.contentView.backgroundColor
@@ -93,7 +97,8 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
             }
             animateCallbackWithData?(count: keyData.count)
             // highlight the cell in some way
-            
+            cell?.layer.borderColor = contentView.tintColor.CGColor
+            cell?.layer.borderWidth = 5.0
         }
     }
     
