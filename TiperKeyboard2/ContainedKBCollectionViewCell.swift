@@ -18,9 +18,9 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     let colorRef = ColorPalette.colorRef
     let sizeBucket = SizeBucket()
     var count = 0
-    
     var animateCallbackWithData : ( (count : Int) -> () )?
     var updateAllDataWithData: ( (data : [[String:String]]) -> () )?
+    var updateTextField: ( (text : String) -> () )?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,7 +65,6 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     
     func configureKBCellWithData (data : [[String:String]], isEditing: Bool) {
         keyData = data
-//        println("CURENT KB Data : \(keyData)")
         editingEnabled = isEditing
         collectionView?.reloadData()
     }
@@ -85,16 +84,16 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
             })
             var keyDict = keyData[indexPath.item]
             for (key, value) in keyDict {
-//                textFieldThree.text = value
+                updateTextField?(text: value)
             }
         }
         else {
             if indexPath.item == (keyData.count - 1) {
                 return
             }
-            
-            // this should be packaged into a method inside the preview controller
             animateCallbackWithData?(count: keyData.count)
+            // highlight the cell in some way
+            
         }
     }
     
@@ -117,8 +116,7 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         if keyData.count < 8 {
             count++
             keyData.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-            collectionView?.reloadData()
-            // update the allData in previewcontroller
+            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             updateAllDataWithData?(data: keyData)
         }
     }
@@ -137,17 +135,6 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
             cell.setLabelText(key)
             let colorIndex = colors[key]
             cell.circleView.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
-        }
-        
-        if keyData.count > 1 {
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
-                cell.hidden = false
-                cell.alpha = 1.0
-            })
-        }
-        else {
-            cell.hidden = true
-            cell.alpha = 0.0
         }
         
         return cell

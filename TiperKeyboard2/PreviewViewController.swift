@@ -16,7 +16,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var allData = [String  : [[String:String]]]()
     var allColors = [[String:String]]()
     var tempData = [String:String]()
-    var count = 0, selectedItem = 0
+    var count = 0, selectedItem = 0, currentIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
@@ -229,13 +229,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func checkKeyCount () {
+//        println("COUNT IS \(count)")
         if count == 0 {
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
             defaultTextLabel.hidden = false
             defaultTextLabel.alpha = 1.0
-            
+            collectionView?.alpha = 0.0
             [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.alpha = 0.0}
             [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.hidden = true}
         }
@@ -245,7 +246,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.navigationItem.leftBarButtonItem?.enabled = true
                 
                 self.defaultTextLabel.hidden = true
-                
+                self.collectionView?.alpha = 1.0
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.alpha = 1.0}
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.hidden = false}
             })
@@ -293,7 +294,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         clearText()
         tempData.removeAll(keepCapacity: false)
         editKeysButton.selected = !editKeysButton.selected
-        
         currentKBCollectionView().editingEnabled = true
         
         if editKeysButton.selected {
@@ -332,30 +332,21 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func addNewItem () {
         if currentKBCollectionView().keyData.count < 8 {
             currentKBCollectionView().addNewKey()
-            count++
+            count = currentKBCollectionView().keyData.count
             checkKeyCount()
         }
-        else {
-            // else add an item to the current CV
-            // check index key of current CV's data
-            let currentIndex = (collectionView?.indexPathsForVisibleItems().first as! NSIndexPath).item
-            // check if there are more indexes greater than the current
-            
-            // shift all subsequent indexes up one
-            
-            // maybe check if the current index is the last in the allData keys
-            allData.keys.filter{$0.toInt()! > currentIndex}.map{"\($0.toInt()! + 1)"}
-            
-            // set new index one greater than the current one
+        else if allData.count < 5 {
+            println("CURRENT INDEX IS : \(currentIndex)")
+            var mutatingData = allData
+            for (key, value) in allData {
+                if key.toInt()! > currentIndex {
+                    mutatingData["\(key.toInt()! + 1)"] = value
+                }
+            }
+            allData = mutatingData
             allData["\(currentIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
-            println(allData)
             collectionView?.reloadData()
-//            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: currentIndex + 1, inSection: 0)])
             collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
-//            currentKBCollectionView().addNewKey()
-//            let newCell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0)) as! ContainedKBCollectionViewCell
-//            newCell.addNewKey()
-            // save
         }
     }
     
@@ -409,8 +400,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 })
         }
+        
         cell.updateAllDataWithData = { data in
             self.allData["\(indexPath.item)"] = data
+        }
+        
+        cell.updateTextField = { text in
+            self.textFieldThree.text = text
         }
         
         return cell
@@ -422,6 +418,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSizeMake(view.frame.size.width - 30, 260)
+    }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        currentIndex = indexPath.item
     }
     
     // MARK Scroll view delegate methods
@@ -449,11 +449,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func currentKBCollectionView () -> ContainedKBCollectionViewCell {
-        return collectionView?.cellForItemAtIndexPath(collectionView?.indexPathsForVisibleItems().first as! NSIndexPath) as! ContainedKBCollectionViewCell
+        return collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentIndex, inSection: 0)) as! ContainedKBCollectionViewCell
     }
     
     // MARK Textfield delegate methods
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.isFirstResponder() == true {
             textField.resignFirstResponder()
@@ -462,7 +461,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     // MARK keyboard notifications
-    
     func keyboardShown (notification : NSNotification) {
         if UIScreen.mainScreen().bounds.height < 600 {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
