@@ -15,7 +15,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var data = [[String:String]]()
     var allData = [String  : [[String:String]]]()
     var allColors = [[String:String]]()
-    var tempData = [String:String]()
+//    var tempData = [String:String]()
     var count = 0, selectedItem = 0, currentIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
@@ -123,7 +123,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
         
         [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
-            textField.backgroundColor = UIColor.darkGrayColor()
+//            textField.backgroundColor = UIColor.darkGrayColor()
             textField.textColor = UIColor.whiteColor()
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
             textField.delegate = self
@@ -135,6 +135,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.containerView.addSubview(textField)
             return textField
         }
+        
+        textFieldThree.backgroundColor = UIColor.redColor()
+        textFieldTwo.backgroundColor = UIColor.blueColor()
+        textFieldOne.backgroundColor = UIColor.orangeColor()
         
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
@@ -225,6 +229,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 //            data.insert(tempData, atIndex: selectedItem)
 //            data.removeAtIndex(selectedItem + 1)
 //            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+            if textField == textFieldOne {
+                currentKBCollectionView().updateCellTextWithText(textField.text)
+            }
         }
     }
     
@@ -291,8 +298,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func editButtonPressed () {
         scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
-        clearText()
-        tempData.removeAll(keepCapacity: false)
+//        tempData.removeAll(keepCapacity: false)
         editKeysButton.selected = !editKeysButton.selected
         currentKBCollectionView().editingEnabled = true
         
@@ -311,9 +317,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         else {
+            var currentData = allData["\(currentIndex)"]!
+            currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
+            allData["\(currentIndex)"] = currentData
+            currentKBCollectionView().keyData = currentData
+//            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
+            println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
+            println("ALL DATA \(allData)")
+            println("Current keyb data : \(currentKBCollectionView().keyData)")
+            
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
             [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
-            
             containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
             containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
@@ -327,6 +341,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.colorPaletteView.hidden = true
                 }, completion: { (value) in })
         }
+        
+        clearText()
     }
     
     func addNewItem () {

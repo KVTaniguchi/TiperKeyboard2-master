@@ -70,7 +70,6 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
         var previousCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0))
         previousCell?.layer.borderColor = UIColor.clearColor().CGColor
         
@@ -124,6 +123,11 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
             collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             updateAllDataWithData?(data: keyData)
         }
+    }
+    
+    func updateCellTextWithText(text : String) {
+        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
+        cell.setLabelText(text)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
