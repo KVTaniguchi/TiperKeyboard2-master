@@ -15,7 +15,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var data = [[String:String]]()
     var allData = [String  : [[String:String]]]()
     var allColors = [[String:String]]()
-//    var tempData = [String:String]()
     var count = 0, selectedItem = 0, currentKBIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
@@ -42,13 +41,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        
-        // convert to allData 
-        
-        // all data : array of
+
         if sharedDefaults?.objectForKey(defaultsAllKBKey) != nil {
             allData = sharedDefaults?.objectForKey(defaultsAllKBKey) as! [String : [[String:String]]]!
             allColors = sharedDefaults?.objectForKey(defaultsAllColorsKey) as! [[String:String]]
+            count = allData["0"]!.count
         }
         else {
             if sharedDefaults?.objectForKey(defaultskey) != nil {
@@ -74,7 +71,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 // for new users add the in app purchases option
                 data.append(["Next Keyboard":"This key changes keyboards"])
                 colors["Next Keyboard"] = "0"
-//                saveData()
             }
             
             allData["0"] = data
@@ -222,16 +218,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         if self.navigationController?.topViewController == self {
             colorPaletteView.alpha = 1.0
             colorPaletteView.hidden = false
-//            tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-            
             updateAndSaveData()
-            
-//            tempData[textFieldOne.text] = textFieldTwo.text
-//            data.insert(tempData, atIndex: selectedItem)
-//            data.removeAtIndex(selectedItem + 1)
-//            collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
             if textField == textFieldOne {
                 currentKBCollectionView().updateCellTextWithText(textField.text)
             }
@@ -239,7 +228,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func checkKeyCount () {
-//        println("COUNT IS \(count)")
         if count == 0 {
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
@@ -301,7 +289,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func editButtonPressed () {
         scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
-//        tempData.removeAll(keepCapacity: false)
         editKeysButton.selected = !editKeysButton.selected
         currentKBCollectionView().editingEnabled = true
         
@@ -321,23 +308,18 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         else {
             updateAndSaveData()
-//            var currentData = allData["\(currentKBIndex)"]!
-//            currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
-//            allData["\(currentKBIndex)"] = currentData
-//            currentKBCollectionView().keyData = currentData
-////            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
-//            println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
-//            println("ALL DATA \(allData)")
-//            println("Current keyb data : \(currentKBCollectionView().keyData)")
             
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
             [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
             containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
             containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
+            
             instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
             editKeysButton.setTitle("Edit keys", forState: .Normal)
+            
             collectionView?.reloadData()
+            
             UIView.animateWithDuration(0.4, animations: {
                 [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
                 self.textFieldThree.hidden = false
@@ -446,6 +428,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         currentKBIndex = indexPath.item
+        
+        if allData["\(indexPath.item)"]?.count < 8 || indexPath.item + 1 == allData.count {
+            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
+            navigationItem.rightBarButtonItem?.enabled = true
+        }
+        else {
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+            navigationItem.rightBarButtonItem?.enabled = false
+        }
     }
     
     // MARK Scroll view delegate methods
@@ -468,11 +459,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         allData["\(currentKBIndex)"] = currentData
         currentKBCollectionView().keyData = currentData
         saveData()
-        //            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
-//        println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
-//        println("ALL DATA \(allData)")
-//        println("Current keyb data : \(currentKBCollectionView().keyData)")
-        println("update and save data")
     }
     
     func clearText () {
