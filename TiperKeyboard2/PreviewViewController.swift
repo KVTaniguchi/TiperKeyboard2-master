@@ -23,7 +23,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
-    
     let colorRef = ColorPalette.colorRef
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultsAllKBKey = "tiper2KeyboardAllKB", defaultsAllColorsKey = "tiper2KBAllColors"
     let sizeBucket = SizeBucket()
@@ -363,7 +362,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected)
         cell.animateCallbackWithData = { amount in
             self.updateAndSaveData()
-            // if the keyboard isn't showing
+            
             if self.editKeysButton.selected == true {
                 self.instructionalLabel.alpha = 0.0
                 self.containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
@@ -401,7 +400,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     self.textFieldThree.alpha = 0.0
                     self.textFieldThree.hidden = true
                     self.instructionalLabel.alpha = 1.0
-                    
                 })
             }
             
