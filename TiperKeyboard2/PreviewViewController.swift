@@ -16,7 +16,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var allData = [String  : [[String:String]]]()
     var allColors = [[String:String]]()
 //    var tempData = [String:String]()
-    var count = 0, selectedItem = 0, currentIndex = 0
+    var count = 0, selectedItem = 0, currentKBIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
@@ -225,6 +225,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 //            tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
+            
+            updateAndSaveData()
+            
 //            tempData[textFieldOne.text] = textFieldTwo.text
 //            data.insert(tempData, atIndex: selectedItem)
 //            data.removeAtIndex(selectedItem + 1)
@@ -317,14 +320,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         else {
-            var currentData = allData["\(currentIndex)"]!
-            currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
-            allData["\(currentIndex)"] = currentData
-            currentKBCollectionView().keyData = currentData
-//            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
-            println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
-            println("ALL DATA \(allData)")
-            println("Current keyb data : \(currentKBCollectionView().keyData)")
+            updateAndSaveData()
+//            var currentData = allData["\(currentKBIndex)"]!
+//            currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
+//            allData["\(currentKBIndex)"] = currentData
+//            currentKBCollectionView().keyData = currentData
+////            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
+//            println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
+//            println("ALL DATA \(allData)")
+//            println("Current keyb data : \(currentKBCollectionView().keyData)")
             
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
             [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
@@ -352,17 +356,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             checkKeyCount()
         }
         else if allData.count < 5 {
-            println("CURRENT INDEX IS : \(currentIndex)")
             var mutatingData = allData
             for (key, value) in allData {
-                if key.toInt()! > currentIndex {
+                if key.toInt()! > currentKBIndex {
                     mutatingData["\(key.toInt()! + 1)"] = value
                 }
             }
             allData = mutatingData
-            allData["\(currentIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
+            allData["\(currentKBIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
             collectionView?.reloadData()
-            collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+            collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentKBIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         }
     }
     
@@ -377,44 +380,49 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         data = kbData!
         cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected)
         cell.animateCallbackWithData = { amount in
-            self.instructionalLabel.alpha = 0.0
-            self.containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
-            self.containerView.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
-            self.containerView.addConstraints(self.expandedHConstraints as! [NSLayoutConstraint])
-            self.textFieldOne.placeholder = "What is the name of this key?"
-            self.textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
-            self.textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
-
-            self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
-            if UIScreen.mainScreen().bounds.height < 600 {
-                self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 44)
-            }
-            else {
-                self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
-            }
-
-            UIView.animateWithDuration(0.5, animations: {
-                if amount > 2 {
-                    self.deleteKeysButton.alpha = 1.0
-                    self.deleteKeysButton.hidden = false
+            self.updateAndSaveData()
+            // if the keyboard isn't showing
+            if self.editKeysButton.selected == true {
+                self.instructionalLabel.alpha = 0.0
+                self.containerView.removeConstraints(self.compactVConstraints as! [NSLayoutConstraint])
+                self.containerView.addConstraints(self.expandedVConstraints as! [NSLayoutConstraint])
+                self.containerView.addConstraints(self.expandedHConstraints as! [NSLayoutConstraint])
+                self.textFieldOne.placeholder = "What is the name of this key?"
+                self.textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+                self.textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
+                
+                self.instructionalLabel.text = "Press + to add keys.  Press Save to bind.  Press delete to remove a key."
+                if UIScreen.mainScreen().bounds.height < 600 {
+                    self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 44)
                 }
-
-                self.colorPaletteView.alpha = 0.0
-                self.colorPaletteView.hidden = true
-
-                [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
-                    textField.alpha = 1.0
-                    textField.hidden = false
-                    textField.userInteractionEnabled = true
-                    textField.text = ""
-                    return textField
+                else {
+                    self.scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
                 }
                 
-                self.textFieldThree.alpha = 0.0
-                self.textFieldThree.hidden = true
-                self.instructionalLabel.alpha = 1.0
-                
+                UIView.animateWithDuration(0.5, animations: {
+                    if amount > 2 {
+                        self.deleteKeysButton.alpha = 1.0
+                        self.deleteKeysButton.hidden = false
+                    }
+                    
+                    self.colorPaletteView.alpha = 0.0
+                    self.colorPaletteView.hidden = true
+                    
+                    [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
+                        textField.alpha = 1.0
+                        textField.hidden = false
+                        textField.userInteractionEnabled = true
+                        textField.text = ""
+                        return textField
+                    }
+                    
+                    self.textFieldThree.alpha = 0.0
+                    self.textFieldThree.hidden = true
+                    self.instructionalLabel.alpha = 1.0
+                    
                 })
+            }
+            
         }
         
         cell.updateAllDataWithData = { data in
@@ -437,7 +445,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        currentIndex = indexPath.item
+        currentKBIndex = indexPath.item
     }
     
     // MARK Scroll view delegate methods
@@ -454,6 +462,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     // MARK Convenience
+    func updateAndSaveData () {
+        var currentData = allData["\(currentKBIndex)"]!
+        currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
+        allData["\(currentKBIndex)"] = currentData
+        currentKBCollectionView().keyData = currentData
+        saveData()
+        //            currentKBCollectionView().updateCellTextWithText(textFieldOne.text)
+//        println("ONE : \(textFieldOne.text) TWO \(textFieldTwo.text) THREE \(textFieldThree.text)")
+//        println("ALL DATA \(allData)")
+//        println("Current keyb data : \(currentKBCollectionView().keyData)")
+        println("update and save data")
+    }
+    
     func clearText () {
         [textFieldOne, textFieldThree, textFieldThree].map{$0.text = ""}
     }
@@ -465,7 +486,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func currentKBCollectionView () -> ContainedKBCollectionViewCell {
-        return collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentIndex, inSection: 0)) as! ContainedKBCollectionViewCell
+        return collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: currentKBIndex, inSection: 0)) as! ContainedKBCollectionViewCell
     }
     
     // MARK Textfield delegate methods

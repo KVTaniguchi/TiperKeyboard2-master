@@ -2,4 +2,198 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459131665.085885"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
+            landmarkName = "addNewItem()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/ContainedKBCollectionViewCell.swift"
+            timestampString = "459128715.69334"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/ContainedKBCollectionViewCell.swift"
+            timestampString = "459128716.842252"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "collectionView(_:didSelectItemAtIndexPath:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.ContainedKBCollectionViewCell.collectionView (TiperKeyboard2.ContainedKBCollectionViewCell)(ObjectiveC.UICollectionView, didSelectItemAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ()"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/ContainedKBCollectionViewCell.swift"
+                  timestampString = "459133366.533068"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "1336">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.ContainedKBCollectionViewCell.(collectionView (TiperKeyboard2.ContainedKBCollectionViewCell) -&gt; (ObjectiveC.UICollectionView, didSelectItemAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ()).(closure #1)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/ContainedKBCollectionViewCell.swift"
+                  timestampString = "459133366.53318"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459132255.295482"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
+            landmarkName = "editButtonPressed()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.editButtonPressed (TiperKeyboard2.PreviewViewController)() -&gt; ()"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "459133366.533786"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "309"
+                  endingLineNumber = "309"
+                  offsetFromSymbolStart = "1486">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.(editButtonPressed (TiperKeyboard2.PreviewViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "459133366.533897"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459132262.661855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "editButtonPressed()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459132329.943159"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "editButtonPressed()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459132348.308431"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "editButtonPressed()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "459132822.189441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
+            landmarkName = "editButtonPressed()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
