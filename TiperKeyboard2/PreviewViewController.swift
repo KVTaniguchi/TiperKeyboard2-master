@@ -15,7 +15,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var data = [[String:String]]()
     var allData = [String  : [[String:String]]]()
     var allColors = [[String:String]]()
-    var count = 0, selectedItem = 0, currentKBIndex = 0
+    var count = 0, currentKBIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
@@ -49,7 +49,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         else {
             if sharedDefaults?.objectForKey(defaultskey) != nil {
               // For legacy users, add the extra keyboards for free
-              
                 data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
                 colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
                 count = data.count
@@ -67,12 +66,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 sharedDefaults?.synchronize()
             }
             else {
-                // for new users add the in app purchases option
-                data.append(["Next Keyboard":"This key changes keyboards"])
                 colors["Next Keyboard"] = "0"
             }
             
-            allData["0"] = data
+            allData["0"] = [["Next Keyboard":"This key changes keyboards"]]
             allColors.append(colors)
             saveData()
         }
@@ -118,7 +115,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
         
         [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
-//            textField.backgroundColor = UIColor.darkGrayColor()
+            textField.backgroundColor = UIColor.darkGrayColor()
             textField.textColor = UIColor.whiteColor()
             textField.setTranslatesAutoresizingMaskIntoConstraints(false)
             textField.delegate = self
@@ -131,19 +128,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             return textField
         }
         
-        textFieldThree.backgroundColor = UIColor.redColor()
-        textFieldTwo.backgroundColor = UIColor.blueColor()
-        textFieldOne.backgroundColor = UIColor.orangeColor()
-        
         colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
 
-        colorPaletteView.updateColorCallback = { (index) in
-            var dict = self.data[self.selectedItem]
-            self.colors[dict.keys.first!] = "\(index)"
-            self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
+        colorPaletteView.updateColorCallback = { index in
+            self.currentKBCollectionView().updateCellCircleViewWithColor(index)
+            var currentColors = self.allColors[self.currentKBIndex]
+            currentColors[self.textFieldOne.text!] = "\(index)"
+            self.allColors[self.currentKBIndex] = currentColors
             self.saveData()
         }
         containerView.addSubview(colorPaletteView)
@@ -172,7 +166,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-padding-[instrLab]-padding-[edit]-padding-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[cv]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
@@ -258,9 +252,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func deleteButtonPressed () {
 //        if data.count > 2 {
-//            data.removeAtIndex(selectedItem)
+//            data.removeAtIndex(currentKBCollectionView().selectedItem)
 //            saveData()
-//            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+//            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: currentKBCollectionView().selectedItem, inSection: 0)])
 //            if data.count == 1 {
 //                UIView.animateWithDuration(1.0, animations: {
 //                    self.deleteKeysButton.alpha = 0.0
@@ -268,13 +262,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 //                })
 //            }
 //        }
+        
+        print(currentKBCollectionView().selectedItem)
+        
         let currentPath = collectionView?.indexPathsForVisibleItems().first as! NSIndexPath
         if allData["\(currentPath.item)"]!.count > 1 {
             navigationItem.rightBarButtonItem?.tintColor = view.tintColor
             navigationItem.rightBarButtonItem?.enabled = true
             
-            currentKBCollectionView().keyData.removeAtIndex(selectedItem)
-            currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
+            currentKBCollectionView().keyData.removeAtIndex(currentKBCollectionView().selectedItem)
+            currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: currentKBCollectionView().selectedItem, inSection: 0)])
             if data.count == 1 {
                 UIView.animateWithDuration(1.0, animations: {
                     self.deleteKeysButton.alpha = 0.0
@@ -345,6 +342,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             allData = mutatingData
             allData["\(currentKBIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
+            allColors.append(["Next Keyboard":"0"])
             collectionView?.reloadData()
             collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentKBIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         }
@@ -358,8 +356,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("allKBCell", forIndexPath: indexPath) as! ContainedKBCollectionViewCell
         let kbData = allData["\(indexPath.item)"]
+        let colors = allColors[indexPath.item]
         data = kbData!
-        cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected)
+        cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected, keyColors: colors)
         cell.animateCallbackWithData = { amount in
             self.updateAndSaveData()
             

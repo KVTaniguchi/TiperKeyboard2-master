@@ -31,16 +31,16 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         layout.scrollDirection = .Horizontal
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
-        collectionView!.backgroundColor = getRandomColor()
+        collectionView!.backgroundColor = UIColor.whiteColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
         collectionView!.dataSource = self
-        collectionView!.contentSize = CGSizeMake(contentView.frame.width - 30, 260)
+        collectionView!.contentSize = CGSizeMake(contentView.frame.width, 260)
         contentView.addSubview(collectionView!)
         
-        let leftConstraints = NSLayoutConstraint(item: collectionView!, attribute: .Left, relatedBy: .Equal, toItem: contentView, attribute: .Left, multiplier: 1.0, constant: 15)
-        let rightContraints = NSLayoutConstraint(item: collectionView!, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -15)
+        let leftConstraints = NSLayoutConstraint(item: collectionView!, attribute: .Left, relatedBy: .Equal, toItem: contentView, attribute: .Left, multiplier: 1.0, constant: 10)
+        let rightContraints = NSLayoutConstraint(item: collectionView!, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -10)
         let topConstraint = NSLayoutConstraint(item: collectionView!, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1.0, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: collectionView!, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1.0, constant: 0)
         
@@ -51,20 +51,9 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         return sizeBucket.getSizes(collectionView.frame, count: keyData.count, indexPath: indexPath)
     }
     
-    func getRandomColor() -> UIColor {
-        
-        var randomRed:CGFloat = CGFloat(drand48())
-        
-        var randomGreen:CGFloat = CGFloat(drand48())
-        
-        var randomBlue:CGFloat = CGFloat(drand48())
-        
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-        
-    }
-    
-    func configureKBCellWithData (data : [[String:String]], isEditing: Bool) {
+    func configureKBCellWithData (data : [[String:String]], isEditing: Bool, keyColors : [String:String]) {
         keyData = data
+        colors = keyColors
         editingEnabled = isEditing
         collectionView?.reloadData()
     }
@@ -95,7 +84,6 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
                 return
             }
             animateCallbackWithData?(count: keyData.count)
-            // highlight the cell in some way
             cell?.layer.borderColor = contentView.tintColor.CGColor
             cell?.layer.borderWidth = 5.0
         }
@@ -105,7 +93,7 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         let keyBeingMoved = keyData[fromIndexPath.item]
         keyData.removeAtIndex(fromIndexPath.item)
         keyData.insert(keyBeingMoved, atIndex: toIndexPath.item)
-//        saveData()
+        updateAllDataWithData!(data : keyData)
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -128,6 +116,11 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
     func updateCellTextWithText(text : String) {
         let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
         cell.setLabelText(text)
+    }
+    
+    func updateCellCircleViewWithColor (color : Int) {
+        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
+        cell.circleView.backgroundColor = colorRef[color]
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
