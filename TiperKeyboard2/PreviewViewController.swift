@@ -4,12 +4,11 @@
 //  Copyright (c) 2015 Kevin Taniguchi. All rights reserved.
 
 import UIKit
-
 class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout{
     
     var scrollView = UIScrollView()
     var containerView = UIView()
-    var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
+    var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = [], compactHConstraints = []
     var collectionView : UICollectionView?
     var pagingIndicator  = UIPageControl()
     var data = [[String:String]]()
@@ -80,6 +79,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         view.addSubview(scrollView)
         containerView.frame = scrollView.bounds
         scrollView.addSubview(containerView)
+        
+        pagingIndicator.setTranslatesAutoresizingMaskIntoConstraints(false)
+        pagingIndicator.currentPageIndicatorTintColor = view.tintColor
+        pagingIndicator.pageIndicatorTintColor = UIColor.darkGrayColor()
+        pagingIndicator.numberOfPages = allData.count
+        pagingIndicator.currentPage = 0
+        containerView.addSubview(pagingIndicator)
         
         var layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1.0
@@ -158,17 +164,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
-        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 10 : 30]
-        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton]
+        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 4 : 10]
+        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton, "pager":pagingIndicator]
 
-        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
-        expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
-        compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-padding-[instrLab]-padding-[edit]-padding-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[pager]-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
+        expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(edit)]-[edit]-[delete(edit)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
+        compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-[pager]-[tfThree(44)]-padding-[instrLab]-padding-[edit]-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
+        
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
-        containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        containerView.addConstraint(NSLayoutConstraint(item: pagingIndicator, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
         [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
         [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
@@ -228,6 +234,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             defaultTextLabel.hidden = false
             defaultTextLabel.alpha = 1.0
             collectionView?.alpha = 0.0
+            pagingIndicator.hidden = true
             [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.alpha = 0.0}
             [editKeysButton, textFieldThree, instructionalLabel, questionButton].map{$0.hidden = true}
         }
@@ -238,6 +245,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 self.defaultTextLabel.hidden = true
                 self.collectionView?.alpha = 1.0
+                self.pagingIndicator.hidden = false
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.alpha = 1.0}
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.hidden = false}
             })
@@ -424,19 +432,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         return CGSizeMake(view.frame.size.width, 260)
     }
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        currentKBIndex = indexPath.item
-        
-//        if allData["\(indexPath.item)"]?.count < 8 || indexPath.item + 1 == allData.count {
-//            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
-//            navigationItem.rightBarButtonItem?.enabled = true
-//        }
-//        else {
-//            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-//            navigationItem.rightBarButtonItem?.enabled = false
-//        }
-    }
-    
     // MARK Scroll view delegate methods
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         for textField in [textFieldOne, textFieldTwo] {
@@ -444,6 +439,13 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 textField.resignFirstResponder()
             }
         }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let currentPaths = collectionView?.indexPathsForVisibleItems()
+        let currentIndex = currentPaths?.first as! NSIndexPath
+        currentKBIndex = currentIndex.item
+        pagingIndicator.currentPage = currentIndex.item
     }
     
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
