@@ -5,7 +5,7 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate{
+class PreviewViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout{
     
     var scrollView = UIScrollView()
     var containerView = UIView()
@@ -81,7 +81,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         containerView.frame = scrollView.bounds
         scrollView.addSubview(containerView)
         
-        var layout = ReorderableCollectionViewFlowLayout()
+        var layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 1.0
         layout.minimumLineSpacing = 1.0
         layout.scrollDirection = .Horizontal
@@ -166,7 +166,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(260)]-padding-[tfThree(44)]-padding-[instrLab]-padding-[edit]-padding-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[cv]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
@@ -421,7 +421,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(view.frame.size.width - 30, 260)
+        return CGSizeMake(view.frame.size.width, 260)
     }
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {

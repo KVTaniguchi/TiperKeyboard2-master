@@ -39,16 +39,22 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         collectionView!.contentSize = CGSizeMake(contentView.frame.width, 260)
         contentView.addSubview(collectionView!)
         
-        let leftConstraints = NSLayoutConstraint(item: collectionView!, attribute: .Left, relatedBy: .Equal, toItem: contentView, attribute: .Left, multiplier: 1.0, constant: 10)
-        let rightContraints = NSLayoutConstraint(item: collectionView!, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: -10)
+        let leftConstraints = NSLayoutConstraint(item: collectionView!, attribute: .Left, relatedBy: .Equal, toItem: contentView, attribute: .Left, multiplier: 1.0, constant: 0)
+        let rightContraints = NSLayoutConstraint(item: collectionView!, attribute: .Right, relatedBy: .Equal, toItem: contentView, attribute: .Right, multiplier: 1.0, constant: 0)
         let topConstraint = NSLayoutConstraint(item: collectionView!, attribute: .Top, relatedBy: .Equal, toItem: contentView, attribute: .Top, multiplier: 1.0, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: collectionView!, attribute: .Bottom, relatedBy: .Equal, toItem: contentView, attribute: .Bottom, multiplier: 1.0, constant: 0)
         
         NSLayoutConstraint.activateConstraints([leftConstraints, rightContraints, topConstraint, bottomConstraint])
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return sizeBucket.getSizes(collectionView.frame, count: keyData.count, indexPath: indexPath)
+    // MARK Actions
+    func addNewKey () {
+        if keyData.count < 8 {
+            count++
+            keyData.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
+            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+            updateAllDataWithData?(data: keyData)
+        }
     }
     
     func configureKBCellWithData (data : [[String:String]], isEditing: Bool, keyColors : [String:String]) {
@@ -58,6 +64,17 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         collectionView?.reloadData()
     }
     
+    func updateCellTextWithText(text : String) {
+        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
+        cell.setLabelText(text)
+    }
+    
+    func updateCellCircleViewWithColor (color : Int) {
+        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
+        cell.circleView.backgroundColor = colorRef[color]
+    }
+    
+    // MARK Collection Methods
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         var previousCell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0))
         previousCell?.layer.borderColor = UIColor.clearColor().CGColor
@@ -89,38 +106,8 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         }
     }
     
-    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
-        let keyBeingMoved = keyData[fromIndexPath.item]
-        keyData.removeAtIndex(fromIndexPath.item)
-        keyData.insert(keyBeingMoved, atIndex: toIndexPath.item)
-        updateAllDataWithData!(data : keyData)
-    }
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return keyData.count
-    }
-    
-    func addNewKey () {
-        if keyData.count < 8 {
-            count++
-            keyData.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-            collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
-            updateAllDataWithData?(data: keyData)
-        }
-    }
-    
-    func updateCellTextWithText(text : String) {
-        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
-        cell.setLabelText(text)
-    }
-    
-    func updateCellCircleViewWithColor (color : Int) {
-        let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: selectedItem, inSection: 0)) as! PreviewCell
-        cell.circleView.backgroundColor = colorRef[color]
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -140,6 +127,22 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
         }
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return keyData.count
+    }
+    
+    // MARK Flow Layout Methods
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return sizeBucket.getSizes(collectionView.frame, count: keyData.count, indexPath: indexPath)
+    }
+    
+    func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
+        let keyBeingMoved = keyData[fromIndexPath.item]
+        keyData.removeAtIndex(fromIndexPath.item)
+        keyData.insert(keyBeingMoved, atIndex: toIndexPath.item)
+        updateAllDataWithData!(data : keyData)
     }
 
     func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
