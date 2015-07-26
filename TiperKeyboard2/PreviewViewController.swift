@@ -187,10 +187,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidAppear(animated)
         
         clearText()
-        if data.count == 8 {
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-            navigationItem.rightBarButtonItem?.enabled = false
-        }
+//        if data.count == 8 {
+//            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+//            navigationItem.rightBarButtonItem?.enabled = false
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -406,6 +406,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         cell.updateAllDataWithData = { data in
             self.allData["\(indexPath.item)"] = data
+            self.saveData()
         }
         
         cell.updateTextField = { text in
@@ -426,14 +427,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         currentKBIndex = indexPath.item
         
-        if allData["\(indexPath.item)"]?.count < 8 || indexPath.item + 1 == allData.count {
-            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
-            navigationItem.rightBarButtonItem?.enabled = true
-        }
-        else {
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-            navigationItem.rightBarButtonItem?.enabled = false
-        }
+//        if allData["\(indexPath.item)"]?.count < 8 || indexPath.item + 1 == allData.count {
+//            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
+//            navigationItem.rightBarButtonItem?.enabled = true
+//        }
+//        else {
+//            navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+//            navigationItem.rightBarButtonItem?.enabled = false
+//        }
     }
     
     // MARK Scroll view delegate methods
