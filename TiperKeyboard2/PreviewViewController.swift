@@ -12,8 +12,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     var collectionView : UICollectionView?
     var pagingIndicator  = UIPageControl()
     var data = [[String:String]]()
-    var allData = [String  : [[String:String]]]()
-    var allColors = [[String:String]]()
+    var allData = [String : [[String:String]]]()
+    var allColors = [String : [String:String]]()
     var count = 0, currentKBIndex = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
@@ -42,7 +42,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         if sharedDefaults?.objectForKey(defaultsAllKBKey) != nil {
             allData = sharedDefaults?.objectForKey(defaultsAllKBKey) as! [String : [[String:String]]]!
-            allColors = sharedDefaults?.objectForKey(defaultsAllColorsKey) as! [[String:String]]
+            allColors = sharedDefaults?.objectForKey(defaultsAllColorsKey) as! [String : [String:String]]
             count = allData["0"]!.count
         }
         else {
@@ -69,8 +69,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             
             allData["0"] = [["Next Keyboard":"This key changes keyboards"]]
-            allColors.append(colors)
-            saveData()
+            allColors["0"] = ["Next Keyboard" : "0"]
+            updateAndSaveData()
         }
         
         scrollView.frame = view.bounds
@@ -141,10 +141,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         colorPaletteView.updateColorCallback = { index in
             self.currentKBCollectionView().updateCellCircleViewWithColor(index)
-            var currentColors = self.allColors[self.currentKBIndex]
-            currentColors[self.textFieldOne.text!] = "\(index)"
-            self.allColors[self.currentKBIndex] = currentColors
-            self.saveData()
+            var currentColors = self.allColors["\(self.currentKBIndex)"]!
+            println("CURENT COLORS \(currentColors)")
+            currentColors[self.textFieldOne.text] = "\(index)"
+            self.allColors["\(self.currentKBIndex)"] = currentColors
+            self.updateAndSaveData()
         }
         containerView.addSubview(colorPaletteView)
         
@@ -200,7 +201,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     override func viewWillDisappear(animated: Bool) {
-         saveData()
+         updateAndSaveData()
     }
     
     // MARK Notifications
@@ -348,25 +349,38 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                     mutatingData["\(key.toInt()! + 1)"] = value
                 }
             }
+            
             allData = mutatingData
+            
+            var mutatingColor = allColors
+            for (key, value) in allColors {
+                if key.toInt()! > currentKBIndex {
+                    mutatingColor["\(key.toInt()! + 1)"] = value
+                }
+            }
+            
+            allColors = mutatingColor
             allData["\(currentKBIndex + 1)"] = [["Next Keyboard":"This key changes keyboards"]]
-            allColors.append(["Next Keyboard":"0"])
+            allColors["\(currentKBIndex + 1)"] = ["Next Keyboard":"0"]
+            pagingIndicator.numberOfPages = allData.count
             collectionView?.reloadData()
             collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: currentKBIndex + 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+            
+            updateAndSaveData()
         }
     }
     
     func saveDataButtonPressed () {
         RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 1)
-        saveData()
+        updateAndSaveData()
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("allKBCell", forIndexPath: indexPath) as! ContainedKBCollectionViewCell
         let kbData = allData["\(indexPath.item)"]
-        let colors = allColors[indexPath.item]
+        let colors = allColors["\(indexPath.item)"]
         data = kbData!
-        cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected, keyColors: colors)
+        cell.configureKBCellWithData(kbData!, isEditing: editKeysButton.selected, keyColors: colors!)
         cell.animateCallbackWithData = { amount in
             self.updateAndSaveData()
             
@@ -414,7 +428,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         cell.updateAllDataWithData = { data in
             self.allData["\(indexPath.item)"] = data
-            self.saveData()
+            self.updateAndSaveData()
         }
         
         cell.updateTextField = { text in
@@ -422,6 +436,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        currentKBIndex = indexPath.item
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -443,7 +461,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentPaths = collectionView?.indexPathsForVisibleItems()
-        let currentIndex = currentPaths?.first as! NSIndexPath
+        let currentIndex = currentPaths?.last as! NSIndexPath
         currentKBIndex = currentIndex.item
         pagingIndicator.currentPage = currentIndex.item
     }
@@ -454,11 +472,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     // MARK Convenience
     func updateAndSaveData () {
-        var currentData = allData["\(currentKBIndex)"]!
-        currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
-        allData["\(currentKBIndex)"] = currentData
-        currentKBCollectionView().keyData = currentData
-        saveData()
+        if !textFieldOne.text.isEmpty && !textFieldTwo.text.isEmpty {
+            var currentData = allData["\(currentKBIndex)"]!
+            currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
+            allData["\(currentKBIndex)"] = currentData
+            currentKBCollectionView().keyData = currentData
+            saveData()
+            
+            println("\n\nCOLRS : \(allColors)\n\n")
+        }
     }
     
     func clearText () {
