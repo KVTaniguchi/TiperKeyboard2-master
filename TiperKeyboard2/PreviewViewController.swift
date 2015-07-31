@@ -264,6 +264,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         // while in side this if brace, if the keyData for this KB is 2, delete the entire keyboard
         var deleteClosure : () -> () = {
             self.currentKBCollectionView().keyData.removeAtIndex(self.currentKBCollectionView().selectedItem)
+            // remove from colors as well if they are there for it
+            if var colors = self.allColors["\(self.currentKBIndex)"] {
+                colors.removeValueForKey("\(self.currentKBCollectionView().selectedItem)")
+            }
+            
             self.currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: self.currentKBCollectionView().selectedItem, inSection: 0)])
 
             self.allData["\(self.currentKBIndex)"] = self.currentKBCollectionView().keyData
@@ -272,8 +277,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         if currentKBIndex > 0 {
             if currentKBCollectionView().keyData.count == 2 {
-                // delete entire KB
                 allData.removeValueForKey("\(currentKBIndex)")
+                if allColors["\(currentKBIndex)"] != nil {
+                    allColors.removeValueForKey("\(currentKBIndex)")
+                }
                 collectionView?.reloadData()
             }
             else {
