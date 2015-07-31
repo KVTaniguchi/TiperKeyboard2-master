@@ -260,36 +260,33 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func deleteButtonPressed () {
-//        if data.count > 2 {
-//            data.removeAtIndex(currentKBCollectionView().selectedItem)
-//            saveData()
-//            collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: currentKBCollectionView().selectedItem, inSection: 0)])
-//            if data.count == 1 {
-//                UIView.animateWithDuration(1.0, animations: {
-//                    self.deleteKeysButton.alpha = 0.0
-//                    self.deleteKeysButton.hidden = true
-//                })
-//            }
-//        }
+        println("SELECTED : \(currentKBCollectionView().selectedItem)")
+        // if on a KB > 0, enable continual delete
         
-        print(currentKBCollectionView().selectedItem)
-        
-        let currentPath = collectionView?.indexPathsForVisibleItems().first as! NSIndexPath
-        if allData["\(currentPath.item)"]!.count > 1 {
-            navigationItem.rightBarButtonItem?.tintColor = view.tintColor
-            navigationItem.rightBarButtonItem?.enabled = true
-            
-            currentKBCollectionView().keyData.removeAtIndex(currentKBCollectionView().selectedItem)
-            currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: currentKBCollectionView().selectedItem, inSection: 0)])
-            if data.count == 1 {
-                UIView.animateWithDuration(1.0, animations: {
-                    self.deleteKeysButton.alpha = 0.0
-                    self.deleteKeysButton.hidden = true
-                })
-            }
-            
-            saveData()
+        // while in side this if brace, if the keyData for this KB is 2, delete the entire keyboard
+        var deleteClosure : () -> () = {
+            self.currentKBCollectionView().keyData.removeAtIndex(self.currentKBCollectionView().selectedItem)
+            self.currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: self.currentKBCollectionView().selectedItem, inSection: 0)])
+
+            // remove
+            self.allData["\(self.currentKBIndex)"] = self.currentKBCollectionView().keyData
+            self.saveData()
         }
+        
+        if currentKBIndex > 0 {
+            if currentKBCollectionView().keyData.count == 2 {
+                // delete entire KB
+                allData.removeValueForKey("\(currentKBIndex)")
+            }
+            else {
+                deleteClosure()
+            }
+        }
+        else if currentKBCollectionView().keyData.count > 0 {
+            deleteClosure()
+        }
+        
+        saveData()
     }
     
     func editButtonPressed () {
