@@ -260,15 +260,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func deleteButtonPressed () {
-        println("SELECTED : \(currentKBCollectionView().selectedItem)")
-        // if on a KB > 0, enable continual delete
         
         // while in side this if brace, if the keyData for this KB is 2, delete the entire keyboard
         var deleteClosure : () -> () = {
             self.currentKBCollectionView().keyData.removeAtIndex(self.currentKBCollectionView().selectedItem)
             self.currentKBCollectionView().collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: self.currentKBCollectionView().selectedItem, inSection: 0)])
 
-            // remove
             self.allData["\(self.currentKBIndex)"] = self.currentKBCollectionView().keyData
             self.saveData()
         }
@@ -277,6 +274,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             if currentKBCollectionView().keyData.count == 2 {
                 // delete entire KB
                 allData.removeValueForKey("\(currentKBIndex)")
+                collectionView?.reloadData()
             }
             else {
                 deleteClosure()
