@@ -228,7 +228,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func checkKeyCount () {
-        if count == 0 {
+        if allData.count == 0 {
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
@@ -246,7 +246,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 self.defaultTextLabel.hidden = true
                 self.collectionView?.alpha = 1.0
-                self.pagingIndicator.hidden = false
+                self.pagingIndicator.hidden = self.allData.count == 1
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.alpha = 1.0}
                 [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.questionButton].map{$0.hidden = false}
             })
@@ -463,6 +463,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         addNewItem()
+        pagingIndicator.currentPage = currentKBIndex
     }
     
     // MARK Convenience
@@ -472,10 +473,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
             allData["\(currentKBIndex)"] = currentData
             currentKBCollectionView().keyData = currentData
-            saveData()
-            
             println("\n\nCOLRS : \(allColors)\n\n")
         }
+       saveData()
     }
     
     func clearText () {
