@@ -283,7 +283,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         else if currentKBCollectionView().keyData.count > 0 {
             deleteClosure()
         }
-        
+        pagingIndicator.hidden = allData.count == 1
         saveData()
     }
     
@@ -397,10 +397,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
                 
                 UIView.animateWithDuration(0.5, animations: {
-                    if amount > 2 {
-                        self.deleteKeysButton.alpha = 1.0
-                        self.deleteKeysButton.hidden = false
-                    }
+                    self.deleteKeysButton.alpha = 1.0
+                    self.deleteKeysButton.hidden = false
                     
                     self.colorPaletteView.alpha = 0.0
                     self.colorPaletteView.hidden = true
