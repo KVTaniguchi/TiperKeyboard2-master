@@ -342,7 +342,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         if currentKBCollectionView().keyData.count < 8 {
             currentKBCollectionView().addNewKey()
             count = currentKBCollectionView().keyData.count
-            checkKeyCount()
         }
         else if allData.count < 5 {
             var mutatingData = allData

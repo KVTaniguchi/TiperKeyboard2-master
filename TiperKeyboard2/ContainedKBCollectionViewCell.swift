@@ -54,6 +54,10 @@ class ContainedKBCollectionViewCell: UICollectionViewCell, UICollectionViewDataS
             keyData.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
             updateAllDataWithData?(data: keyData)
+            
+            if editingEnabled == true {
+                collectionView?.visibleCells().map{$0.layer.borderColor = UIColor.clearColor().CGColor}
+            }
         }
     }
     
