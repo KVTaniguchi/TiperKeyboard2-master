@@ -142,7 +142,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         colorPaletteView.updateColorCallback = { index in
             self.currentKBCollectionView().updateCellCircleViewWithColor(index)
             var currentColors = self.allColors["\(self.currentKBIndex)"]!
-            println("CURENT COLORS \(currentColors)")
             currentColors[self.textFieldOne.text] = "\(index)"
             self.allColors["\(self.currentKBIndex)"] = currentColors
             self.updateAndSaveData()
@@ -477,7 +476,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             currentData[currentKBCollectionView().selectedItem] = [textFieldOne.text:textFieldTwo.text]
             allData["\(currentKBIndex)"] = currentData
             currentKBCollectionView().keyData = currentData
-            println("\n\nCOLRS : \(allColors)\n\n")
         }
        saveData()
     }

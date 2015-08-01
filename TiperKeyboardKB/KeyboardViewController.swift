@@ -44,11 +44,16 @@ class KeyboardViewController: UIInputViewController {
     
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
-    var data = [[String:String]]()
-    var colors = [String:String]()
+    var allData = [String : [[String:String]]]()
+    var allColors = [String : [String:String]]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
+    
+    
     var colorRef = [UIColor]()
+    var pagingIndicator = UIPageControl()
+    
+    let scrollview = UIScrollView()
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -57,28 +62,64 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.blackColor()
 
-        if self.sharedDefaults?.objectForKey(defaultskey) != nil {
-            self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        if sharedDefaults?.objectForKey(defaultskey) != nil {
+            allData = sharedDefaults?.objectForKey(defaultskey) as! [String : [[String:String]]]
         }
-
-        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         
-        self.colorRef = KBColorPalette.colorRef
+        if sharedDefaults?.objectForKey(defaultColors) != nil {
+            allColors = sharedDefaults?.objectForKey(defaultColors) as! [String : [String:String]]
+        }
         
-        for (index, entry) in enumerate(self.data) {
-            for (key, value) in entry {
-                if let var color = self.colors[key] as String! {
-                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
-                }
-                else {
-                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+        colorRef = KBColorPalette.colorRef
+        
+        for (topkey, keyArray) in allData {
+            
+            let colorsForKeyBoardDictionary = allColors["\(topkey)"]! as [String:String]
+            
+            for (index, entry) in enumerate(keyArray) {
+                for (key, value) in entry {
+                    if let var color = colorsForKeyBoardDictionary[key] as String! {
+//                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                    }
+                    else {
+//                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+                    }
                 }
             }
         }
+        
+//        for (index, entry) in enumerate(self.data) {
+//            for (key, value) in entry {
+//                if let var color = self.colors[key] as String! {
+//                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+//                }
+//                else {
+//                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+//                }
+//            }
+//        }
+        
+//        for (allKey, allValue) in enumerate(self.allData) {
+//            for (key, value) in allValue {
+//                if let var color = self.colors[key] as String! {
+////                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+//                }
+//                else {
+////                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+//                }
+//            }
+//        }
     }
     
+    func randomColor () -> UIColor {
+        let red = CGFloat(Double(arc4random() % 256) / 256.0)
+        let green = CGFloat(Double(arc4random() % 256) / 256.0)
+        let blue = CGFloat(Double(arc4random() % 256) / 256.0)
+        return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
 
@@ -128,11 +169,11 @@ class KeyboardViewController: UIInputViewController {
         var keyHeight = 0.0 as CGFloat
         var keyWidth = 0.0 as CGFloat
         
-        if self.data.count != 3 {
+        if self.allData.count != 3 {
             keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier:0.5, constant: 0)
         }
         
-        switch self.data.count  {
+        switch self.allData.count  {
             case 2:
                 topRelationalAttribute = NSLayoutAttribute.Top
                 topRelationalItem = view
