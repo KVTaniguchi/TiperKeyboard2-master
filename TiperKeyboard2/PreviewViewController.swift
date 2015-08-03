@@ -66,6 +66,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
             else {
                 colors["Next Keyboard"] = "0"
+                count = 0
             }
             
             allData["0"] = [["Next Keyboard":"This key changes keyboards"]]
@@ -227,7 +228,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func checkKeyCount () {
-        if allData.count == 0 {
+        if allData["\(currentKBIndex)"]?.count == 1 {
             navigationItem.leftBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.leftBarButtonItem?.enabled = false
             
@@ -341,6 +342,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
         if currentKBCollectionView().keyData.count < 8 {
             currentKBCollectionView().addNewKey()
             count = currentKBCollectionView().keyData.count
+            collectionView?.reloadData()
         }
         else if allData.count < 5 {
             var mutatingData = allData
@@ -368,6 +370,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             updateAndSaveData()
         }
+        
+        checkKeyCount()
     }
     
     func saveDataButtonPressed () {

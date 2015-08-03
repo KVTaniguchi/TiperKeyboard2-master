@@ -13,5 +13,101 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "460257102.79326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "checkKeyCount()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.checkKeyCount (TiperKeyboard2.PreviewViewController)() -&gt; ()"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "460248327.206377"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "243"
+                  endingLineNumber = "243"
+                  offsetFromSymbolStart = "1945">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.(checkKeyCount (TiperKeyboard2.PreviewViewController) -&gt; () -&gt; ()).(closure #3)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "460248327.206482"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "244"
+                  endingLineNumber = "244"
+                  offsetFromSymbolStart = "15">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "460257102.79326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "checkKeyCount()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.checkKeyCount (TiperKeyboard2.PreviewViewController)() -&gt; ()"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "460248327.161308"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "1524">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.(checkKeyCount (TiperKeyboard2.PreviewViewController) -&gt; () -&gt; ()).(closure #2)"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "460248327.161457"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "17">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -50,59 +50,10 @@ class KeyboardViewController: UIInputViewController {
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var colorRef = [UIColor]()
     var pagingIndicator = UIPageControl()
+    var containerViews = [UIView]()
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        var topContainer = UIView()
-        topContainer.backgroundColor = UIColor.purpleColor()
-        topContainer.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(topContainer)
-        let topContainerWConstraints = NSLayoutConstraint(item: topContainer, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0)
-        let topContainerHConstraints = NSLayoutConstraint(item: topContainer, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: 1.0, constant: 0)
-        NSLayoutConstraint.activateConstraints([topContainerHConstraints, topContainerWConstraints])
-        
-        
-        var scrollview = UIScrollView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-        scrollview.contentSize = CGSizeMake(view.frame.width * CGFloat(allData.count), view.frame.height)
-        scrollview.backgroundColor = UIColor.orangeColor()
-        topContainer.addSubview(scrollview)
-        
-        colorRef = KBColorPalette.colorRef
-        
-        var index = 0.0 as CGFloat
-        for (topkey, keyArray) in allData {
-            let containerView = UIView()
-            containerView.backgroundColor = randomColor()
-            containerView.frame = CGRectMake(index*view.frame.width, 0, view.frame.width, view.frame.height)
-            scrollview.addSubview(containerView)
-            
-            let colorsForKeyBoardDictionary = allColors["\(topkey)"]! as [String:String]
-            
-            for (index, entry) in enumerate(keyArray) {
-                if index == 0 {
-                    let testLabel = UILabel()
-                    testLabel.numberOfLines = 0
-                    testLabel.lineBreakMode = .ByWordWrapping
-                    testLabel.text = "\(entry)"
-                    testLabel.sizeToFit()
-                    containerView.addSubview(testLabel)
-                }
-
-                for (key, value) in entry {
-                    if let var color = colorsForKeyBoardDictionary[key] as String! {
-//                        addKeyboardButtonToContainerView(containerView, keyTitle: key, tag: index, keyText: value, colorIndex: "0")
-                        addKeyboardButtonToContainerView(containerView, keyTitle: key, tag: index, keyText: value, colorIndex: "0", numberOfKeys: keyArray.count)
-                    }
-                    else {
-//                        addKeyboardButtonToContainerView(containerView, keyTitle: key, tag: index, keyText: value, colorIndex: "0")
-                    }
-                }
-            }
-            index++
-        }
     }
 
     override func viewDidLoad() {
@@ -118,70 +69,38 @@ class KeyboardViewController: UIInputViewController {
             allColors = sharedDefaults?.objectForKey(defaultColors) as! [String : [String:String]]
         }
         
-        var topContainer = UIView()
-        topContainer.backgroundColor = UIColor.purpleColor()
-        topContainer.setTranslatesAutoresizingMaskIntoConstraints(false)
-        view.addSubview(topContainer)
-        let topContainerWConstraints = NSLayoutConstraint(item: topContainer, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0)
-        let topContainerHConstraints = NSLayoutConstraint(item: topContainer, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: 1.0, constant: 0)
-        NSLayoutConstraint.activateConstraints([topContainerHConstraints, topContainerWConstraints])
-        
-        
-        var scrollview = UIScrollView(frame: CGRectMake(0, 0, 375, 180))
-        scrollview.contentSize = CGSizeMake(375 * CGFloat(allData.count), 180)
-        scrollview.backgroundColor = UIColor.orangeColor()
-        topContainer.addSubview(scrollview)
-    
         colorRef = KBColorPalette.colorRef
         
-//        var index = 0.0 as CGFloat
-//        for (topkey, keyArray) in allData {
-//            let containerView = UIView()
-//            containerView.backgroundColor = randomColor()
-//            containerView.frame = CGRectMake(index*375, 0, 375, 180)
-//            scrollview.addSubview(containerView)
-//            
-//            let colorsForKeyBoardDictionary = allColors["\(topkey)"]! as [String:String]
-//            
-//            for (index, entry) in enumerate(keyArray) {
-//                for (key, value) in entry {
-//                    if let var color = colorsForKeyBoardDictionary[key] as String! {
-////                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
-//
-//                    }
-//                    else {
-////                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
-//
-//                        
-//                    }
-//                }
-//            }
-//            index++
-//        }
+        let container = UIView()
+        container.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.addSubview(container)
+        let containerHConstraints = NSLayoutConstraint(item: container, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0)
+        let containerWConstraints = NSLayoutConstraint(item: container, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: 1.0, constant: 0)
+        NSLayoutConstraint.activateConstraints([containerHConstraints, containerWConstraints])
         
-//        for (index, entry) in enumerate(self.data) {
-//            for (key, value) in entry {
-//                if let var color = self.colors[key] as String! {
-//                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
-//                }
-//                else {
-//                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
-//                }
-//            }
-//        }
         
-//        for (allKey, allValue) in enumerate(self.allData) {
-//            for (key, value) in allValue {
-//                if let var color = self.colors[key] as String! {
-////                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
-//                    addKeyboardButtonToContainerView(<#container: UIView#>, keyTitle: <#String#>, tag: <#NSInteger#>, keyText: <#String#>, colorIndex: <#String#>)
-//                }
-//                else {
-////                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
-//                }
-//            }
-//        }
-        
+        var index = 0.0 as CGFloat
+        for (topkey, keyArray) in allData {
+            
+            let colorsForKeyBoardDictionary = allColors["\(topkey)"]! as [String:String]
+            
+            for (index, entry) in enumerate(keyArray) {
+                for (key, value) in entry {
+                    if let var color = colorsForKeyBoardDictionary[key] as String! {
+//                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                        if index == 0 {
+                            addKeyboardButtonToContainerView(container, keyTitle: key, tag: index, keyText: value, colorIndex: "0", numberOfKeys: keyArray.count)
+                        }
+                    }
+                    else {
+//                        self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+
+                        
+                    }
+                }
+            }
+            index++
+        }
     }
     
     func randomColor () -> UIColor {
@@ -241,13 +160,13 @@ class KeyboardViewController: UIInputViewController {
         var keyWidth = 0.0 as CGFloat
         
         if numberOfKeys != 3 {
-            keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: container, attribute: .Width, multiplier:0.5, constant: 0)
+            keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier:0.5, constant: 0)
         }
         
         switch numberOfKeys  {
             case 2:
                 topRelationalAttribute = NSLayoutAttribute.Top
-                topRelationalItem = container
+                topRelationalItem = view
                 keyHeight = 1.0
                 if tag == 0 {
                     sideAttribute = NSLayoutAttribute.Left
@@ -258,18 +177,18 @@ class KeyboardViewController: UIInputViewController {
             case 3:
                 if tag == 0 {
                     topRelationalAttribute = NSLayoutAttribute.Top
-                    topRelationalItem = container
+                    topRelationalItem = view
                 }
                 else {
                     topRelationalItem = self.buttonArray[tag - 1] as UIButton
                     topRelationalAttribute = NSLayoutAttribute.Bottom
                 }
-                keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: container, attribute: .Width, multiplier:1.0, constant: 0)
+                keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier:1.0, constant: 0)
                 keyHeight = 0.333
                 sideAttribute = NSLayoutAttribute.Left
             case 4:
                 if tag == 0 || tag == 2 {
-                    topRelationalItem = container
+                    topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
                 }
                 else {
@@ -293,7 +212,7 @@ class KeyboardViewController: UIInputViewController {
                     keyHeight = 0.333
                 }
                 if tag == 0 || tag == 2 {
-                    topRelationalItem = container
+                    topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
                 }
                 else {
@@ -303,7 +222,7 @@ class KeyboardViewController: UIInputViewController {
             
             case 6:
                 if tag == 0 || tag == 3 {
-                    topRelationalItem = container
+                    topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
                 }
                 else {
@@ -328,7 +247,7 @@ class KeyboardViewController: UIInputViewController {
                     sideAttribute = NSLayoutAttribute.Right
                 }
                 if tag == 0 || tag == 3 {
-                    topRelationalItem = container
+                    topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
                 }
                 else {
@@ -337,7 +256,7 @@ class KeyboardViewController: UIInputViewController {
                 }
             case 8 :
                 if tag == 0 || tag == 4 {
-                    topRelationalItem = container
+                    topRelationalItem = view
                     topRelationalAttribute = NSLayoutAttribute.Top
                 }
                 else {
@@ -356,14 +275,14 @@ class KeyboardViewController: UIInputViewController {
                 keyHeight = 0.20
                 sideAttribute = NSLayoutAttribute.Left
                 topRelationalAttribute = NSLayoutAttribute.Top
-                topRelationalItem = container
+                topRelationalItem = view
         }
         
         keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: topRelationalItem, attribute: topRelationalAttribute!, multiplier: 1.0, constant: 0)
-        keyboardSideConstraint = NSLayoutConstraint(item: keyboardButton, attribute: sideAttribute!, relatedBy: .Equal, toItem: container, attribute: sideAttribute! , multiplier: 1.0, constant: 0)
-        keyboardHeight = NSLayoutConstraint(item: keyboardButton, attribute: .Height, relatedBy: .Equal, toItem: container, attribute: .Height, multiplier: keyHeight, constant: 0)
+        keyboardSideConstraint = NSLayoutConstraint(item: keyboardButton, attribute: sideAttribute!, relatedBy: .Equal, toItem: view, attribute: sideAttribute! , multiplier: 1.0, constant: 0)
+        keyboardHeight = NSLayoutConstraint(item: keyboardButton, attribute: .Height, relatedBy: .Equal, toItem: view, attribute: .Height, multiplier: keyHeight, constant: 0)
         
-        container.addConstraints([keyboardTopConstraint, keyboardHeight, keyboardWidth, keyboardSideConstraint])
+        view.addConstraints([keyboardTopConstraint, keyboardHeight, keyboardWidth, keyboardSideConstraint])
         self.buttonArray.append(keyboardButton)
     }
     
