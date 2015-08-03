@@ -16,6 +16,7 @@
 		F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F616577D1B12AA67005D0BFF /* keyboard-75.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
 		F62E48C81B1018840074012E /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62E48C71B1018840074012E /* InformationViewController.swift */; };
+		F67F7B0B1B6F1183007F9048 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F7B0A1B6F1183007F9048 /* StoreKit.framework */; };
 		F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69CDF191B042C930076C6A9 /* keyboard-75.png */; };
 		F69CDF1D1B0452120076C6A9 /* RKDropdownAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F69CDF1C1B0452120076C6A9 /* RKDropdownAlert.m */; };
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
@@ -79,6 +80,7 @@
 		F62E48C71B1018840074012E /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
+		F67F7B0A1B6F1183007F9048 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F69CDF191B042C930076C6A9 /* keyboard-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard-75.png"; sourceTree = "<group>"; };
 		F69CDF1B1B0452120076C6A9 /* RKDropdownAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDropdownAlert.h; sourceTree = "<group>"; };
 		F69CDF1C1B0452120076C6A9 /* RKDropdownAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDropdownAlert.m; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F67F7B0B1B6F1183007F9048 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +130,7 @@
 		F6FB59941A4F36CE000A39CD = {
 			isa = PBXGroup;
 			children = (
+				F67F7B0A1B6F1183007F9048 /* StoreKit.framework */,
 				F6FB599F1A4F36CE000A39CD /* TiperKeyboard2 */,
 				F6FB59B51A4F36CE000A39CD /* TiperKeyboard2Tests */,
 				F6FB59C71A4F378A000A39CD /* TiperKeyboardKB */,
@@ -290,6 +294,9 @@
 								enabled = 1;
 							};
 							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 						};

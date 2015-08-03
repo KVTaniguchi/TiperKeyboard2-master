@@ -4,8 +4,12 @@
 //  Copyright (c) 2015 Kevin Taniguchi. All rights reserved.
 
 import UIKit
+import StoreKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate{
+class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver{
+    
+    var skProduct : SKProduct?
+    var productID = "com.ShortKey.AllKeys"
     
     var scrollView = UIScrollView()
     var containerView = UIView()
@@ -22,12 +26,91 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
     
+    var isLegacyUser = false
+    
     let colorRef = ColorPalette.colorRef
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
     let sizeBucket = SizeBucket()
+    
+    func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!) {
+        
+    }
+    
+    func paymentQueue(queue: SKPaymentQueue!, restoreCompletedTransactionsFailedWithError error: NSError!) {
+        
+    }
+    
+    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!) {
+//        for (SKPaymentTransaction *transaction in transactions)
+//        {
+//            switch (transaction.transactionState) {
+//            case SKPaymentTransactionStatePurchased:
+//                [self unlockFeature];
+//                [[SKPaymentQueue defaultQueue]
+//                    finishTransaction:transaction];
+//                break;
+//                
+//            case SKPaymentTransactionStateFailed:
+//                NSLog(@"Transaction Failed");
+//                [[SKPaymentQueue defaultQueue]
+//                finishTransaction:transaction];
+//                break;
+//                
+//            default:
+//                break;
+//            }
+//        }
+        
+        for transaction in transactions {
+            if transaction.transactionState == SKPaymentTransactionState.Purchased {
+                isLegacyUser = true
+                addNewItem()
+            }
+            else if transaction.transactionState == SKPaymentTransactionState.Failed {
+                let alertController = UIAlertController(title: "Transaction Failed", message: "Please wait, then try again.", preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                presentViewController(alertController, animated: true, completion: nil)
+            }
+         }
+    }
+    
+    func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
+//        NSArray *products = response.products;
+//        
+//        if (products.count != 0)
+//        {
+//            _product = products[0];
+//            _buyButton.enabled = YES;
+//            _productTitle.text = _product.localizedTitle;
+//            _productDescription.text = _product.localizedDescription;
+//        } else {
+//            _productTitle.text = @"Product not found";
+//        }
+//        
+//        products = response.invalidProductIdentifiers;
+//        
+//        for (SKProduct *product in products)
+//        {
+//            NSLog(@"Product not found: %@", product);
+//        }
+        let products = response.products
+        if products.count > 0 {
+            skProduct = products.first as? SKProduct
+            let payment = SKPayment(product: skProduct)
+            SKPaymentQueue.defaultQueue().addPayment(payment)
+//            SKPayment *payment = [SKPayment paymentWithProduct:_product];
+//            [[SKPaymentQueue defaultQueue] addPayment:payment];
+        }
+        else {
+            println("Product not found")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
@@ -56,6 +139,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             
             sharedDefaults?.setValue(tempDict, forKey:defaultColors)
             sharedDefaults?.synchronize()
+            
+            isLegacyUser = true
         }
         else {
             data.append(["Next Keyboard":"This key changes keyboards"])
@@ -297,13 +382,51 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if data.count < 10 {
+        if isLegacyUser == false && data.count == 3 {
+            getProductInfo()
+        }
+        else if data.count < 10 {
             count++
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
             collectionView?.reloadData()
         }
     }
+
+    func getProductInfo () {
+        if SKPaymentQueue.canMakePayments() {
+            let request = SKProductsRequest(productIdentifiers: [NSSet(object: productID)])
+            request.delegate = self
+            request.start()
+        }
+        else {
+            let alertController = UIAlertController(title: "Please enable In App purchases in Settings.", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action  in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+//    -(void)getProductInfo: (InAppDemoViewController *) viewController
+//    {
+//    _homeViewController = viewController;
+//    
+//    if ([SKPaymentQueue canMakePayments])
+//    {
+//    SKProductsRequest *request = [[SKProductsRequest alloc]
+//    initWithProductIdentifiers:
+//    [NSSet setWithObject:self.productID]];
+//    request.delegate = self;
+//    
+//    [request start];
+//    }
+//    else
+//    _productDescription.text =
+//    @"Please enable In App Purchase in Settings";
+//    }
     
     func saveDataButtonPressed () {
         RKDropdownAlert.title("Saved", backgroundColor: UIColor(red: 48/255, green: 160/255, blue: 61/255, alpha: 1.0), textColor: UIColor.whiteColor(), time: 1)
@@ -457,7 +580,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     // MARK Textfield delegate methods
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField.isFirstResponder() == true {
             textField.resignFirstResponder()
@@ -466,7 +588,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     // MARK keyboard notifications
-    
     func keyboardShown (notification : NSNotification) {
         if UIScreen.mainScreen().bounds.height < 600 {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
