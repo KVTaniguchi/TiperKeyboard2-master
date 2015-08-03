@@ -83,6 +83,8 @@ class KeyboardViewController: UIInputViewController {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
 
         keyboardButton.layer.cornerRadius = 3
+        keyboardButton.layer.borderColor = UIColor.blackColor().CGColor
+        keyboardButton.layer.borderWidth = 0.5
         keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         if keyTitle != "Next Keyboard" {
@@ -242,6 +244,39 @@ class KeyboardViewController: UIInputViewController {
                 }
     
                 keyHeight = 0.25
+            case 9:
+                if tag == 0 || tag == 4 {
+                    topRelationalItem = view
+                    topRelationalAttribute = .Top
+                }
+                else {
+                    topRelationalAttribute = .Bottom
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                }
+                if tag < 4 {
+                    keyHeight = 0.25
+                    sideAttribute = .Left
+                }
+                else {
+                    keyHeight = 0.20
+                    sideAttribute = .Right
+                }
+            case 10:
+                if tag == 0 || tag == 5 {
+                    topRelationalItem = view
+                    topRelationalAttribute = .Top
+                }
+                else {
+                    topRelationalAttribute = NSLayoutAttribute.Bottom
+                    topRelationalItem = self.buttonArray[tag - 1] as UIButton
+                }
+                if tag < 5 {
+                    sideAttribute = .Left
+                }
+                else {
+                    sideAttribute = .Right
+                }
+                keyHeight = 0.20
             default:
                 keyHeight = 0.20
                 sideAttribute = NSLayoutAttribute.Left

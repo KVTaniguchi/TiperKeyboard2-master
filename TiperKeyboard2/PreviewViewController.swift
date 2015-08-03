@@ -297,7 +297,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if data.count < 8 {
+        if data.count < 10 {
             count++
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
@@ -435,7 +435,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         return false
     }
-    
     
     // MARK Scroll view delegate methods
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {

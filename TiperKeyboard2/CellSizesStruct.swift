@@ -38,6 +38,15 @@ public struct SizeBucket {
             }
         case 8:
             size = CGSizeMake(collectionView.width/2 - 3, collectionView.height/4 - 3)
+        case 9:
+            if indexPath.item < 4 {
+                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/4 - 2)
+            }
+            else {
+                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
+            }
+        case 10:
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
         default:
             println("2")
         }
