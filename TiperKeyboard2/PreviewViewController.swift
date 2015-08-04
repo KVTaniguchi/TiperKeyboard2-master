@@ -26,10 +26,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
     
-    var isLegacyUser = false
+    var isUpgradedUser = false
     
     let colorRef = ColorPalette.colorRef
-    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors"
+    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
     func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!) {
@@ -41,66 +41,30 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!) {
-//        for (SKPaymentTransaction *transaction in transactions)
-//        {
-//            switch (transaction.transactionState) {
-//            case SKPaymentTransactionStatePurchased:
-//                [self unlockFeature];
-//                [[SKPaymentQueue defaultQueue]
-//                    finishTransaction:transaction];
-//                break;
-//                
-//            case SKPaymentTransactionStateFailed:
-//                NSLog(@"Transaction Failed");
-//                [[SKPaymentQueue defaultQueue]
-//                finishTransaction:transaction];
-//                break;
-//                
-//            default:
-//                break;
-//            }
-//        }
         
         for transaction in transactions {
             if transaction.transactionState == SKPaymentTransactionState.Purchased {
-                isLegacyUser = true
+                isUpgradedUser = true
+                sharedDefaults?.setObject(true, forKey: defaultUpgraded)
                 addNewItem()
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
             }
             else if transaction.transactionState == SKPaymentTransactionState.Failed {
                 let alertController = UIAlertController(title: "Transaction Failed", message: "Please wait, then try again.", preferredStyle: .Alert)
                 let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 presentViewController(alertController, animated: true, completion: nil)
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
             }
          }
     }
     
     func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
-//        NSArray *products = response.products;
-//        
-//        if (products.count != 0)
-//        {
-//            _product = products[0];
-//            _buyButton.enabled = YES;
-//            _productTitle.text = _product.localizedTitle;
-//            _productDescription.text = _product.localizedDescription;
-//        } else {
-//            _productTitle.text = @"Product not found";
-//        }
-//        
-//        products = response.invalidProductIdentifiers;
-//        
-//        for (SKProduct *product in products)
-//        {
-//            NSLog(@"Product not found: %@", product);
-//        }
         let products = response.products
         if products.count > 0 {
             skProduct = products.first as? SKProduct
             let payment = SKPayment(product: skProduct)
             SKPaymentQueue.defaultQueue().addPayment(payment)
-//            SKPayment *payment = [SKPayment paymentWithProduct:_product];
-//            [[SKPaymentQueue defaultQueue] addPayment:payment];
         }
         else {
             println("Product not found")
@@ -123,6 +87,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
+        if sharedDefaults?.objectForKey(defaultUpgraded) != nil {
+            isUpgradedUser = sharedDefaults?.objectForKey(defaultUpgraded) as! Bool
+        }
+        
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
@@ -140,13 +108,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             sharedDefaults?.setValue(tempDict, forKey:defaultColors)
             sharedDefaults?.synchronize()
             
-            isLegacyUser = true
+            isUpgradedUser = true
+            sharedDefaults?.setObject(true, forKey: defaultUpgraded)
         }
         else {
             data.append(["Next Keyboard":"This key changes keyboards"])
             colors["Next Keyboard"] = "0"
             saveData()
         }
+        
         count = data.count
         
         scrollView.frame = view.bounds
@@ -382,7 +352,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if isLegacyUser == false && data.count == 3 {
+        if isUpgradedUser == false && data.count == 5 {
             getProductInfo()
         }
         else if data.count < 10 {
