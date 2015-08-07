@@ -9,7 +9,7 @@ import StoreKit
 class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver{
     
     var skProduct : SKProduct?
-    var productID = "com.ShortKey.AllKeys"
+    var productID = "com.ShortKey.All10Keys"
     
     var scrollView = UIScrollView()
     var containerView = UIView()
@@ -60,6 +60,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
+        
+        println(response.products)
+        
         let products = response.products
         if products.count > 0 {
             skProduct = products.first as? SKProduct
