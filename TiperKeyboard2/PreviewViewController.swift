@@ -25,6 +25,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton()
     var colorPaletteView = ColorPaletteView()
+    var layout = ReorderableCollectionViewFlowLayout()
     
     var isUpgradedUser = false
     
@@ -129,10 +130,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.frame = scrollView.bounds
         scrollView.addSubview(containerView)
         
-        var layout = ReorderableCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 1.0
-        layout.minimumLineSpacing = 1.0
-        layout.scrollDirection = .Horizontal
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0.0
+        layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
         collectionView!.backgroundColor = UIColor.clearColor()
@@ -508,7 +508,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return sizeBucket.getSizes(collectionView.frame, count: data.count, indexPath: indexPath)
+//        return sizeBucket.getSizes(collectionView.frame, count: data.count, indexPath: indexPath)
+//        if data.count == 5 {
+//            layout.scrollDirection = .Horizontal
+//        }
+//        else {
+//            layout.scrollDirection = .Vertical
+//        }
+        return sizeBucket.getVariableSizes(collectionView.frame, count: data.count, indexPath: indexPath)
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {
