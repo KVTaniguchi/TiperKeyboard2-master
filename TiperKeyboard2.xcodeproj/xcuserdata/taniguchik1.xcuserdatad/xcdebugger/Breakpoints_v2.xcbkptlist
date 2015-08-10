@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TiperKeyboard2/PreviewViewController.swift"
-            timestampString = "460352491.492689"
+            timestampString = "460793875.08163"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "addNewItem()"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TiperKeyboard2/CellSizesStruct.swift"
-            timestampString = "460613099.93807"
+            filePath = "TiperKeyboard2/Libs/Text Drawing/UIBezierPath+Text.m"
+            timestampString = "460790620.902541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "getVariableSizes(_:count:indexPath:)"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "-drawAttributedString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TiperKeyboard2/CellSizesStruct.swift"
-            timestampString = "460613099.93807"
+            filePath = "TiperKeyboard2/PreviewCell.swift"
+            timestampString = "460864876.306536"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "getVariableSizes(_:count:indexPath:)"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "setLabelText(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

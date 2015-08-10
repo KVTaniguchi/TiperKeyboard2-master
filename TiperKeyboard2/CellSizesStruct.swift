@@ -9,49 +9,52 @@
 import Foundation
 
 public struct SizeBucket {
-     func getSizes (collectionView : CGRect, count: Int, indexPath: NSIndexPath) -> CGSize {
-        var size = CGSize()
-        switch count {
-        case 1:
-            size = CGSizeMake(collectionView.width - 2, collectionView.height - 2)
-        case 2:
-            size = CGSizeMake((collectionView.width/2) - 2, collectionView.height - 2)
-        case 3:
-            size = CGSizeMake(collectionView.width - 2, collectionView.height/3 - 2)
-        case 4:
+    
+    
+    
+    func getSizes (collectionView : CGRect, count: Int, indexPath: NSIndexPath) -> CGSize {
+    var size = CGSize()
+    switch count {
+    case 1:
+        size = CGSizeMake(collectionView.width - 2, collectionView.height - 2)
+    case 2:
+        size = CGSizeMake((collectionView.width/2) - 2, collectionView.height - 2)
+    case 3:
+        size = CGSizeMake(collectionView.width - 2, collectionView.height/3 - 2)
+    case 4:
+        size = CGSizeMake((collectionView.width/2) - 2, (collectionView.height/2) - 2)
+    case 5:
+        if indexPath.item < 2 {
             size = CGSizeMake((collectionView.width/2) - 2, (collectionView.height/2) - 2)
-        case 5:
-            if indexPath.item < 2 {
-                size = CGSizeMake((collectionView.width/2) - 2, (collectionView.height/2) - 2)
-            }
-            else {
-                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/3 - 2)
-            }
-        case 6:
-            size = CGSizeMake((collectionView.width/2) - 2, (collectionView.height/3) - 2)
-        case 7:
-            if indexPath.item < 3 {
-                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/3 - 2)
-            }
-            else {
-                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/4 - 2)
-            }
-        case 8:
-            size = CGSizeMake(collectionView.width/2 - 3, collectionView.height/4 - 3)
-        case 9:
-            if indexPath.item < 4 {
-                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/4 - 2)
-            }
-            else {
-                size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
-            }
-        case 10:
-            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
-        default:
-            println("2")
         }
-        
-        return size
+        else {
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/3 - 2)
+        }
+    case 6:
+        size = CGSizeMake((collectionView.width/2) - 2, (collectionView.height/3) - 2)
+    case 7:
+        if indexPath.item < 3 {
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/3 - 2)
+        }
+        else {
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/4 - 2)
+        }
+    case 8:
+        size = CGSizeMake(collectionView.width/2 - 3, collectionView.height/4 - 3)
+    case 9:
+        if indexPath.item < 4 {
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/4 - 2)
+        }
+        else {
+            size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
+        }
+    case 10:
+        size = CGSizeMake(collectionView.width/2 - 2, collectionView.height/5 - 2)
+    default:
+        println("2")
+    }
+
+    return size
     }
     
     func getVariableSizes (frame : CGRect, count: Int, indexPath: NSIndexPath) -> CGSize {
@@ -95,19 +98,26 @@ public struct SizeBucket {
                 default:
                    size = CGSizeMake(frame.width/3 - 2, frame.height/3 - 2)
             }
+        case 6:
+            switch indexPath.item {
+                case 0:
+                    size = CGSizeMake(frame.width / 2 - 2, frame.height / 2 - 2)
+                case 1:
+                    size = CGSizeMake(frame.width / 2 - 2, frame.height / 2 - 2)
+                default:
+                    size = CGSizeMake(frame.width / 2 - 2, frame.height/4 - 2)
+                }
         default :
             size = CGSizeZero
-
-
-
         }
         
             return size
-    
     }
     
     
-    
+    func prioritySizes (radius : CGFloat, priority : CGFloat ) -> CGSize {
+        return CGSizeMake(radius/priority, radius/priority)
+    }
     
     
     

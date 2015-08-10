@@ -59,21 +59,29 @@ class KeyboardViewController: UIInputViewController {
         
         self.view.backgroundColor = UIColor.blackColor()
 
-        if self.sharedDefaults?.objectForKey(defaultskey) != nil {
-            self.data = self.sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
+        if sharedDefaults?.objectForKey(defaultskey) != nil {
+            data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
         }
 
-        self.colors = self.sharedDefaults?.objectForKey(defaultColors) as! [String:String]
+        colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         
-        self.colorRef = KBColorPalette.colorRef
+        colorRef = KBColorPalette.colorRef
         
-        for (index, entry) in enumerate(self.data) {
+        var tempData = [[String:String]]()
+        tempData = data
+        
+        for (index, entry) in enumerate(tempData) {
             for (key, value) in entry {
+                
+                if key == "Next Keyboard" {
+                    data.removeAtIndex(index)
+                }
+                
                 if let var color = self.colors[key] as String! {
-                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
                 }
                 else {
-                    self.addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
                 }
             }
         }
