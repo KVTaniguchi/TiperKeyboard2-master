@@ -20,15 +20,13 @@ class PreviewCell: UICollectionViewCell {
         
         contentView.backgroundColor = UIColor.lightGrayColor()
         keyTextLabel.textColor = UIColor.whiteColor()
+        keyTextLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         keyTextLabel.numberOfLines = 2
         keyTextLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         keyTextLabel.preferredMaxLayoutWidth = contentView.frame.width - 2
-        keyTextLabel.frame = contentView.frame
         keyTextLabel.backgroundColor = UIColor.orangeColor()
         keyTextLabel.font = UIFont(name: "Helvetica", size: 10)
         contentView.addSubview(keyTextLabel)
-        
-        contentView.clipsToBounds = true
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]-5-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))

@@ -141,8 +141,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.frame = scrollView.bounds
         scrollView.addSubview(containerView)
         
-        layout.minimumInteritemSpacing = 0.0
-        layout.minimumLineSpacing = 0.0
+        layout.minimumInteritemSpacing = 2.0
+        layout.minimumLineSpacing = 2.0
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -528,7 +528,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        var radius = 0.0 as CGFloat
+        var radius = 200.0 as CGFloat
         var priority = 3
         
         if data.count > 1 {
@@ -538,10 +538,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             }
         }
         
-        if data.count < 4 && indexPath.item == 0 {
-            radius = 200
+        if data.count < 3 && indexPath.item == 0 {
+            radius = CGFloat(200 - data.count * 10)
         }
-        else if data.count < 5 && indexPath.item == 0 {
+        else if data.count < 4 && indexPath.item == 0 {
             radius = 150
         }
         else {
