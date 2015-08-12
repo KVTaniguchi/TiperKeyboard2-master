@@ -386,7 +386,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         if isUpgradedUser == false && data.count == 5 {
             getProductInfo()
         }
-        else if data.count < 10 {
+        else if data.count < 15 {
             count++
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
@@ -546,12 +546,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             switch indexPath.item {
-            case 0: radius = 100
-            case 1: radius = 70
-            case 2: radius = 70
+            case 0: radius = 105
+            case 1: radius = 90
+            case 2: radius = 80
             case 3: radius = 70
-            case 4: radius = 70
-            default : radius = 70
+            case 4: radius = 60
+            default : radius = CGFloat(70 - (data.count))
             }
         }
 
