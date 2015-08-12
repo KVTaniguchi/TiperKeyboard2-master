@@ -490,6 +490,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             cell.layer.borderWidth = 5
         }
         
+        cell.contentView.layer.cornerRadius = cell.frame.height/5
+        
         for (key, value) in dict {
             cell.setLabelText(key)
 //            let colorIndex = colors[key]
@@ -501,7 +503,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             cell.alpha = 1.0
         })
         
-        cell.contentView.layer.cornerRadius = cell.frame.height/2
+        
         
         // Set vertical effect
         cell.verticalMotionEffect.minimumRelativeValue = -10
@@ -536,8 +538,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             }
         }
         
-        println("IITEM # \(indexPath.item) DATA COUNT \(data.count) \(data[indexPath.item])")
-        
         if data.count < 4 && indexPath.item == 0 {
             radius = 200
         }
@@ -545,12 +545,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             radius = 150
         }
         else {
-            switch priority {
-            case 0: radius = 120
-            default: radius = 70
+            switch indexPath.item {
+            case 0: radius = 100
+            case 1: radius = 70
+            case 2: radius = 70
+            case 3: radius = 70
+            case 4: radius = 70
+            default : radius = 70
             }
         }
-        
+
         return CGSizeMake(radius, radius)
     }
     

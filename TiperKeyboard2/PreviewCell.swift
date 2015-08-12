@@ -68,18 +68,11 @@ class PreviewCell: UICollectionViewCell {
 
         }
         else {
-//            keyTextLabel.hidden = false
-//            circleView.hidden = false
-//            imageView.hidden = true
-//            keyTextLabel.text = "kv.taniguchi@gmail.com"
-//            keyTextLabel.arcSize = 90
-//            keyTextLabel.text = text
-            
             let drawer = TextDrawer()
-            let asdf = NSAttributedString(string: "kv.taniguchi@gmail.com")
+            let attrText = NSAttributedString(string: text, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10.0)])
             let rad = CGFloat(contentView.frame.height/2 - 10)
-            
-            drawer.drawCurvedStringOnLayer(contentView.layer, withAttributedText: asdf, atAngle: 174.3, withRadius: rad)
+
+            drawer.drawCurvedStringOnLayer(contentView.layer, withAttributedText: attrText, atAngle: 174.3, withRadius: rad)
         }
     }
     

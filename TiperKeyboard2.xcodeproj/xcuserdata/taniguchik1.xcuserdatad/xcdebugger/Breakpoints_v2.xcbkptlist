@@ -41,14 +41,78 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TiperKeyboard2/PreviewCell.swift"
-            timestampString = "460864876.306536"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "461038950.776094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "setLabelText(_:)"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
+            landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "461038950.776094"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "545"
+            endingLineNumber = "545"
+            landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TiperKeyboard2/PreviewViewController.swift"
+            timestampString = "461038950.776094"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
+            landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.collectionView (TiperKeyboard2.PreviewViewController)(ObjectiveC.UICollectionView, layout : ObjectiveC.UICollectionViewLayout, sizeForItemAtIndexPath : ObjectiveC.NSIndexPath) -&gt; C.CGSize"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "461036863.448147"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
+                  offsetFromSymbolStart = "1747">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TiperKeyboard2.PreviewViewController.collectionView (TiperKeyboard2.PreviewViewController)(ObjectiveC.UICollectionView, layout : ObjectiveC.UICollectionViewLayout, sizeForItemAtIndexPath : ObjectiveC.NSIndexPath) -&gt; C.CGSize"
+                  moduleName = "TiperKeyboard2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/taniguchik1/Documents/TiperKeyboard2-master/TiperKeyboard2/PreviewViewController.swift"
+                  timestampString = "461036863.448301"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "547"
+                  endingLineNumber = "547"
+                  offsetFromSymbolStart = "1842">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
