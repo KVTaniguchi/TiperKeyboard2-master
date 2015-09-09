@@ -24,11 +24,10 @@ class PreviewCell: UICollectionViewCell {
         keyTextLabel.numberOfLines = 2
         keyTextLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         keyTextLabel.preferredMaxLayoutWidth = contentView.frame.width - 2
-        keyTextLabel.backgroundColor = UIColor.orangeColor()
         keyTextLabel.font = UIFont(name: "Helvetica", size: 10)
         contentView.addSubview(keyTextLabel)
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]-5-|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
         imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -38,6 +37,8 @@ class PreviewCell: UICollectionViewCell {
         contentView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView]))
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView]))
+        
+        contentView.clipsToBounds = true
     }
     
     func setLabelText (text: String) {

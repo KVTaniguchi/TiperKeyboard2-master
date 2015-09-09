@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-public struct SizeBucket {
+public struct KeyBoardSizeBucket {
     func getSizes (numberOfKeys : Int, indexOfItem : Int, frame : CGRect) -> CGSize {
         var radius = CGFloat(0.0)
         var width = CGFloat(0.0)

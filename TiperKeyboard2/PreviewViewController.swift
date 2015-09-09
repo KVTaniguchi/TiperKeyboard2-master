@@ -17,7 +17,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var collectionView : UICollectionView?
     var data = [[String:String]]()
     var tempData = [String:String]()
-    var priorities = [String:String]()
     var count = 0, selectedItem = 0
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
@@ -32,7 +31,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var isUpgradedUser = false
     
     let colorRef = ColorPalette.colorRef
-    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded", defaultPriority = "tiperPriority"
+    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
     func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!) {
@@ -100,10 +99,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
             colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-            
-            if  sharedDefaults?.objectForKey(defaultPriority) != nil {
-                priorities = sharedDefaults?.objectForKey(defaultPriority) as! [String:String]
-            }
             
             var tempDict = [String:String]()
             for (key, value) in colors {
@@ -248,6 +243,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         nextKBButton.layer.cornerRadius = 20
         
         checkKeyCount()
+        
+        print("key counat : \(data.count)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -383,10 +380,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if isUpgradedUser == false && data.count == 5 {
+        if isUpgradedUser == false && data.count == 100 {
             getProductInfo()
         }
-        else if data.count < 15 {
+        else if data.count < 13 {
             count++
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
@@ -528,34 +525,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        var radius = 200.0 as CGFloat
-        var priority = 3
-        
-        if data.count > 1 {
-            let item = data[indexPath.item] as [String:String]
-            for (key,value) in item {
-//                priority = key.toInt()!
-            }
-        }
-        
-        if data.count < 3 && indexPath.item == 0 {
-            radius = CGFloat(200 - data.count * 10)
-        }
-        else if data.count < 4 && indexPath.item == 0 {
-            radius = 150
-        }
-        else {
-            switch indexPath.item {
-            case 0: radius = 105
-            case 1: radius = 90
-            case 2: radius = 80
-            case 3: radius = 70
-            case 4: radius = 60
-            default : radius = CGFloat(70 - (data.count))
-            }
-        }
-
-        return CGSizeMake(radius, radius)
+        return sizeBucket.getSizes(data.count, indexOfItem: indexPath.item, frame : collectionView.frame)
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, willMoveToIndexPath toIndexPath: NSIndexPath!) {

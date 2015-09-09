@@ -49,6 +49,7 @@ class KeyboardViewController: UIInputViewController {
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var colorRef = [UIColor]()
+    let sizeBucket = KeyBoardSizeBucket()
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -57,14 +58,13 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.whiteColor()
 
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
         }
 
         colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-        
         colorRef = KBColorPalette.colorRef
         
         var tempData = [[String:String]]()
@@ -72,24 +72,85 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in enumerate(tempData) {
             for (key, value) in entry {
-                
-                if key == "Next Keyboard" {
-                    data.removeAtIndex(index)
-                }
-                
                 if let var color = self.colors[key] as String! {
-                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+//                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
+                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
                 }
                 else {
-                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+//                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
+                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "0")
                 }
             }
         }
     }
     
+    func addSystemKeys () {
+        let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
+        keyboardButton.layer.cornerRadius = 3
+        keyboardButton.layer.borderColor = UIColor.blackColor().CGColor
+        keyboardButton.layer.borderWidth = 0.5
+        keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        var nextButton = NextKeyboardButton()
+        nextButton.backgroundColor = UIColor.darkGrayColor()
+        nextButton.layer.cornerRadius = 10
+        nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
+        
+        var deleteButton = UIButton()
+        deleteButton.backgroundColor = UIColor.lightGrayColor()
+        deleteButton.setTitle("del", forState: UIControlState.Normal)
+        deleteButton.layer.cornerRadius = 10
+        deleteButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
+        
+        keyboardButton.addSubview(nextButton)
+        keyboardButton.addSubview(deleteButton)
+    }
+    
+    func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
+        let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
+        keyboardButton.layer.cornerRadius = 3
+        keyboardButton.layer.borderColor = UIColor.blackColor().CGColor
+        keyboardButton.layer.borderWidth = 0.5
+        keyboardButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        keyboardButton.setTitle(keyTitle, forState: .Normal)
+        keyboardButton.keyText = keyText
+        keyboardButton.addTarget(self, action:"keyPressed:", forControlEvents: .TouchUpInside)
+        keyboardButton.backgroundColor = self.colorRef[colorIndex.toInt()!] as UIColor!
+        
+        self.view.addSubview(keyboardButton)
+        
+        var keyboardTopConstraint = NSLayoutConstraint()
+        var keyboardWidth = NSLayoutConstraint()
+        var keyboardSideConstraint = NSLayoutConstraint()
+        var keyboardHeight = NSLayoutConstraint()
+        var sideAttribute : NSLayoutAttribute?
+        var topRelationalItem : UIView?
+        var topRelationalAttribute : NSLayoutAttribute?
+        var keyHeight = 0.0 as CGFloat
+        var keyWidth = 0.0 as CGFloat
+        
+        let size = sizeBucket.getSizes(data.count, indexOfItem: tag, frame: view.frame)
+        switch data.count {
+        case 1:
+            topRelationalAttribute = NSLayoutAttribute.Top
+            sideAttribute = NSLayoutAttribute.CenterX
+            keyboardWidth = NSLayoutConstraint(item: keyboardButton, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 50)
+            
+        default: print("")
+        }
+        
+        keyboardTopConstraint = NSLayoutConstraint(item: keyboardButton, attribute: .Top, relatedBy: .Equal, toItem: topRelationalItem, attribute: topRelationalAttribute!, multiplier: 1.0, constant: 0)
+        keyboardSideConstraint = NSLayoutConstraint(item: keyboardButton, attribute: sideAttribute!, relatedBy: .Equal, toItem: self.view, attribute: sideAttribute! , multiplier: 1.0, constant: 0)
+        keyboardHeight = NSLayoutConstraint(item: keyboardButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 50)
+        
+        self.view.addConstraints([keyboardTopConstraint, keyboardHeight, keyboardWidth, keyboardSideConstraint])
+        self.buttonArray.append(keyboardButton)
+    }
+    
     func addKeyboardButton (keyTitle: String, tag: NSInteger, keyText: String, colorIndex: String) {
         let keyboardButton = KeyButton.buttonWithType(.Custom) as! KeyButton
-
         keyboardButton.layer.cornerRadius = 3
         keyboardButton.layer.borderColor = UIColor.blackColor().CGColor
         keyboardButton.layer.borderWidth = 0.5
