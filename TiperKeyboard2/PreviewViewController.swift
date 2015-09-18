@@ -6,7 +6,7 @@
 import UIKit
 import StoreKit
 
-class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver{
+class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate {
     
     var skProduct : SKProduct?
     var productID = "com.ShortKey.All10Keys"
@@ -33,52 +33,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
-    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
-        
-    }
-    
-    func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
-        
-    }
-    
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        
-        for transaction in transactions {
-            if transaction.transactionState == SKPaymentTransactionState.Purchased {
-                isUpgradedUser = true
-                sharedDefaults?.setObject(true, forKey: defaultUpgraded)
-                addNewItem()
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction )
-            }
-            else if transaction.transactionState == SKPaymentTransactionState.Failed {
-                let alertController = UIAlertController(title: "Transaction Failed", message: "Please wait, then try again.", preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alertController.addAction(cancelAction)
-                presentViewController(alertController, animated: true, completion: nil)
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction )
-            }
-         }
-    }
-    
-    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-        
-//        print(response.products)
-//        
-//        let products = response.products
-//        if products.count > 0 {
-//            skProduct = products.first as? SKProduct
-//            let payment = SKPayment(product: skProduct)
-//            SKPaymentQueue.defaultQueue().addPayment(payment)
-//        }
-//        else {
-//            print("Product not found")
-//        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
@@ -112,7 +68,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             // clean out the next keyboard / delete button button
             let tempData = data
             for (index, dict) in tempData.enumerate() {
-                for (key, value) in dict {
+                for key in dict.keys {
                     if key == "Next keyboard" {
                         data.removeAtIndex(index)
                     }
@@ -243,7 +199,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         checkKeyCount()
         
-        print("key counat : \(data.count)", terminator: "")
+        print("DAA IS :\(data)")
     }
     
     override func viewWillAppear(animated: Bool) {

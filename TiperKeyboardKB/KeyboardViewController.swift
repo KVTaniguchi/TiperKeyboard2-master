@@ -58,7 +58,7 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.redColor()
 
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -67,25 +67,45 @@ class KeyboardViewController: UIInputViewController {
         if sharedDefaults?.objectForKey(defaultColors) != nil {
             colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         }
-        
-        var tempData = [[String:String]]()
-        tempData = data
-        
-        let button = UIButton(.Custom)
+      
+
+
         
         
-        for (index, entry) in tempData.enumerate() {
-            for (key, value) in entry {
-                if let color = self.colors[key] as String! {
+
+//        var tempData = [[String:String]]()
+//        tempData = data
+        
+        // TODO using a standard UIButton works but using other classes does not - 
+
+        
+//        for (index, entry) in tempData.enumerate() {
+//            for (key, value) in entry {
+//                if let color = self.colors[key] as String! {
 //                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:color)
 //                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
-                }
-                else {
+//                }
+//                else {
 //                    addKeyboardButton(key, tag: index, keyText: value, colorIndex:"0")
 //                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "0")
-                }
-            }
-        }
+//                }
+//            }
+//        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        let testButton = UIButton(type: .Custom)
+        testButton.setTitle("\(view.frame)", forState: .Normal)
+        testButton.setTitle("qwerq", forState: .Disabled)
+        testButton.backgroundColor = UIColor.purpleColor()
+//        testButton.translatesAutoresizingMaskIntoConstraints = false
+        testButton.frame = CGRectMake(0, 0, 375, 216)
+        view.addSubview(testButton)
+        
+        // TODO - 
+        // iOS 9 no longer lets you set views with autolayout in the keyboard
+        // this means that manual frame layout must be used for all keys
+        // i have verified that the data is being transferred correctly
     }
     
     func addSystemKeys () {
