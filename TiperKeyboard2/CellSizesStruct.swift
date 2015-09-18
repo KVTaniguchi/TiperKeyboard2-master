@@ -11,8 +11,6 @@ import Foundation
 public struct SizeBucket {
     func getSizes (numberOfKeys : Int, indexOfItem : Int, frame : CGRect) -> CGSize {
         var radius = CGFloat(0.0)
-        var width = CGFloat(0.0)
-        var height = CGFloat(0.0)
         switch numberOfKeys {
         case 1 : radius = 0.64 * frame.width
         case 2 : radius = indexOfItem == 0 ? 0.58 * frame.width : 0.38 * frame.width

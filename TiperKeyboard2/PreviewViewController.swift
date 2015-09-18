@@ -27,7 +27,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var colorPaletteView = ColorPaletteView()
     var layout = ReorderableCollectionViewFlowLayout()
     
-    
     var isUpgradedUser = false
     
     let colorRef = ColorPalette.colorRef
@@ -111,7 +110,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             }
             
             // clean out the next keyboard / delete button button
-            var tempData = data
+            let tempData = data
             for (index, dict) in tempData.enumerate() {
                 for (key, value) in dict {
                     if key == "Next keyboard" {
@@ -187,7 +186,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
 
         colorPaletteView.updateColorCallback = { (index) in
-            var dict = self.data[self.selectedItem]
+            let dict = self.data[self.selectedItem]
             self.colors[dict.keys.first!] = "\(index)"
             self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
             self.saveData()
@@ -220,8 +219,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return button
         }
         
-        var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 20 : 50]
-        var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
+        let metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 20 : 50]
+        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
 
         expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
@@ -510,7 +509,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         saveData()
     }
     
-    func collectionView(collectionView: UICollectionView!, canMoveItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         if indexPath.item < (data.count-1) {
             return true
         }
