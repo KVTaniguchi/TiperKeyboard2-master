@@ -34,46 +34,46 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
-    func paymentQueue(queue: SKPaymentQueue!, removedTransactions transactions: [AnyObject]!) {
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
         
     }
     
-    func paymentQueue(queue: SKPaymentQueue!, restoreCompletedTransactionsFailedWithError error: NSError!) {
+    func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
         
     }
     
-    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!) {
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         
         for transaction in transactions {
             if transaction.transactionState == SKPaymentTransactionState.Purchased {
                 isUpgradedUser = true
                 sharedDefaults?.setObject(true, forKey: defaultUpgraded)
                 addNewItem()
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction )
             }
             else if transaction.transactionState == SKPaymentTransactionState.Failed {
                 let alertController = UIAlertController(title: "Transaction Failed", message: "Please wait, then try again.", preferredStyle: .Alert)
                 let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 presentViewController(alertController, animated: true, completion: nil)
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction as! SKPaymentTransaction)
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction )
             }
          }
     }
     
-    func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
+    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
         
-        println(response.products)
-        
-        let products = response.products
-        if products.count > 0 {
-            skProduct = products.first as? SKProduct
-            let payment = SKPayment(product: skProduct)
-            SKPaymentQueue.defaultQueue().addPayment(payment)
-        }
-        else {
-            println("Product not found")
-        }
+//        print(response.products)
+//        
+//        let products = response.products
+//        if products.count > 0 {
+//            skProduct = products.first as? SKProduct
+//            let payment = SKPayment(product: skProduct)
+//            SKPaymentQueue.defaultQueue().addPayment(payment)
+//        }
+//        else {
+//            print("Product not found")
+//        }
     }
 
     override func viewDidLoad() {
@@ -112,7 +112,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             
             // clean out the next keyboard / delete button button
             var tempData = data
-            for (index, dict) in enumerate(tempData) {
+            for (index, dict) in tempData.enumerate() {
                 for (key, value) in dict {
                     if key == "Next keyboard" {
                         data.removeAtIndex(index)
@@ -140,7 +140,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumLineSpacing = 2.0
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView?.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView!.backgroundColor = UIColor.redColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
@@ -159,7 +159,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             label.textAlignment = .Center
             label.preferredMaxLayoutWidth = self.view.frame.width
             label.lineBreakMode = .ByWordWrapping
-            label.setTranslatesAutoresizingMaskIntoConstraints(false)
+            label.translatesAutoresizingMaskIntoConstraints = false
             self.containerView.addSubview(label)
             return label
         }
@@ -170,7 +170,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
             textField.backgroundColor = UIColor.darkGrayColor()
             textField.textColor = UIColor.whiteColor()
-            textField.setTranslatesAutoresizingMaskIntoConstraints(false)
+            textField.translatesAutoresizingMaskIntoConstraints = false
             textField.delegate = self
             textField.autocorrectionType = .No
             textField.borderStyle = UITextBorderStyle.None
@@ -181,7 +181,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return textField
         }
         
-        colorPaletteView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
         
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
         [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
@@ -197,7 +197,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
             button.layer.cornerRadius = 5
             button.setTitleColor(self.view.tintColor, forState: .Normal)
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             self.containerView.addSubview(button)
             return button
         }
@@ -213,7 +213,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         deleteButton.setTitle("del", forState: .Normal)
         nextKBButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
         [deleteButton, nextKBButton].map{ button -> UIButton in
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             button.backgroundColor = UIColor.redColor()
             button.clipsToBounds = true
             self.containerView.addSubview(button)
@@ -223,18 +223,18 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         var metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 20 : 50]
         var views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
 
-        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(0), metrics: metrics, views:views)
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfThree(44)]-padding-[instrLab]-15-[edit]-30-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(0), metrics: nil, views: views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Top, relatedBy: .Equal, toItem: collectionView, attribute: .Bottom, multiplier: 1.0, constant: 0)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40)])
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: .AlignAllCenterY | NSLayoutFormatOptions.AlignAllTop | NSLayoutFormatOptions.AlignAllBottom, metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: [.AlignAllCenterY, NSLayoutFormatOptions.AlignAllTop, NSLayoutFormatOptions.AlignAllBottom], metrics: nil, views: views))
         
         [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
         [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
@@ -244,7 +244,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         checkKeyCount()
         
-        print("key counat : \(data.count)")
+        print("key counat : \(data.count)", terminator: "")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -285,7 +285,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-            tempData[textFieldOne.text] = textFieldTwo.text
+            tempData[textFieldOne.text!] = textFieldTwo.text
             data.insert(tempData, atIndex: selectedItem)
             data.removeAtIndex(selectedItem + 1)
             collectionView?.reloadItemsAtIndexPaths([NSIndexPath(forItem: selectedItem, inSection: 0)])
@@ -319,10 +319,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     // MARK Actions
     func questionButtonPressed () {
-//        let infoView = InformationViewController()
-//        navigationController?.pushViewController(infoView, animated: true)
-        let testView = TESTViewController()
-        navigationController?.pushViewController(testView, animated: true)
+        let infoView = InformationViewController()
+        navigationController?.pushViewController(infoView, animated: true)
     }
     
     func deleteButtonPressed () {
@@ -380,33 +378,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        if isUpgradedUser == false && data.count == 100 {
-            getProductInfo()
-        }
-        else if data.count < 13 {
-            count++
-            data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-            checkKeyCount()
-            collectionView?.reloadData()
-        }
-    }
-
-    func getProductInfo () {
-        if SKPaymentQueue.canMakePayments() {
-            let request = SKProductsRequest(productIdentifiers: [NSSet(object: productID)])
-            request.delegate = self
-            request.start()
-        }
-        else {
-            let alertController = UIAlertController(title: "Please enable In App purchases in Settings.", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { action  in
-                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
-            })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            alertController.addAction(okAction)
-            presentViewController(alertController, animated: true, completion: nil)
-        }
+        count++
+        data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
+        checkKeyCount()
+        collectionView?.reloadData()
     }
     
     func saveDataButtonPressed () {
@@ -417,8 +392,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     // MARK Collectionview methods
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         selectedItem = indexPath.item
-        var cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
-        var originalColor = cell?.contentView.backgroundColor
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? PreviewCell
+        let originalColor = cell?.contentView.backgroundColor
         
         if editKeysButton.selected == false {
             UIView.animateWithDuration(0.2, animations: {
@@ -428,8 +403,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                         cell?.contentView.backgroundColor = originalColor
                     })
             })
-            var keyDict = data[indexPath.item]
-            for (key, value) in keyDict {
+            let keyDict = data[indexPath.item]
+            for value in keyDict.values {
                 textFieldThree.text = value
             }
         }

@@ -20,7 +20,7 @@ class PreviewCell: UICollectionViewCell {
         
         contentView.backgroundColor = UIColor.lightGrayColor()
         keyTextLabel.textColor = UIColor.whiteColor()
-        keyTextLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        keyTextLabel.translatesAutoresizingMaskIntoConstraints = false
         keyTextLabel.numberOfLines = 2
         keyTextLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
         keyTextLabel.preferredMaxLayoutWidth = contentView.frame.width - 2
@@ -30,13 +30,13 @@ class PreviewCell: UICollectionViewCell {
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
         contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         imageView.hidden = true
         contentView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterX, relatedBy: .Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         contentView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView]))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["img":imageView]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView]))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView]))
         
         contentView.clipsToBounds = true
     }
@@ -45,7 +45,7 @@ class PreviewCell: UICollectionViewCell {
         keyTextLabel.text = text
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

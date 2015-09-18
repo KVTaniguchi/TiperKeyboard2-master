@@ -301,6 +301,7 @@
 		F6FB59951A4F36CE000A39CD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Kevin Taniguchi";

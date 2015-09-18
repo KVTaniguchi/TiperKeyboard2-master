@@ -67,7 +67,7 @@ class TESTViewController: UIViewController {
         let drawer = TextDrawer()
         var inReverse = ""
         
-        for letter in "kv.taniguchi@gmail.com" {
+        for letter in "kv.taniguchi@gmail.com".characters {
             inReverse = "\(letter)" + inReverse
         }
         

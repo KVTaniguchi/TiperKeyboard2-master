@@ -33,7 +33,7 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         introLabel.textAlignment = .Center
         introLabel.textColor = UIColor.blackColor()
         introLabel.preferredMaxLayoutWidth = view.frame.width
-        introLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        introLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(introLabel)
         
         previewTextField.autocorrectionType = .No
@@ -42,7 +42,7 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         previewTextField.backgroundColor = UIColor.lightGrayColor()
         previewTextField.placeholder = "Tap to try out Short Key"
         previewTextField.delegate = self
-        previewTextField.setTranslatesAutoresizingMaskIntoConstraints(false)
+        previewTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(previewTextField)
         
         var paragraphStyle = NSMutableParagraphStyle()
@@ -52,16 +52,16 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         settingsInstructionLabel.attributedText = attrString
-        settingsInstructionLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        settingsInstructionLabel.translatesAutoresizingMaskIntoConstraints = false
         settingsInstructionLabel.numberOfLines = 0
         settingsInstructionLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         settingsInstructionLabel.textAlignment = .Left
         settingsInstructionLabel.textColor = UIColor.darkGrayColor()
         settingsInstructionLabel.preferredMaxLayoutWidth = view.frame.width
         view.addSubview(settingsInstructionLabel)
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[intro]-[settingsInstructionLabel]-30-[preview(44)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["settingsInstructionLabel":settingsInstructionLabel, "preview":previewTextField, "intro":introLabel]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-40-[settingsInstructionLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["settingsInstructionLabel":settingsInstructionLabel]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[preview]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["preview":previewTextField]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-80-[intro]-[settingsInstructionLabel]-30-[preview(44)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["settingsInstructionLabel":settingsInstructionLabel, "preview":previewTextField, "intro":introLabel]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-40-[settingsInstructionLabel]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["settingsInstructionLabel":settingsInstructionLabel]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[preview]-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["preview":previewTextField]))
         view.addConstraint(NSLayoutConstraint(item: introLabel, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1.0, constant: 0))
     }
     
