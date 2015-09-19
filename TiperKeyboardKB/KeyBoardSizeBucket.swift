@@ -14,7 +14,7 @@ public struct KeyBoardSizeBucket {
         var radius = CGFloat(0.0)
         switch numberOfKeys {
         case 1 : radius = 0.45 * frame.width
-        case 2 : radius = indexOfItem == 0 ? 0.5 * frame.width : 0.30 * frame.width
+        case 2 : radius = indexOfItem == 0 ? 0.45 * frame.width : 0.30 * frame.width
         case 3 :
             switch indexOfItem {
             case 0 : radius = 0.58 * frame.width

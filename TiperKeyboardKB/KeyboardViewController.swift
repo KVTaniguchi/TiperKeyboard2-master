@@ -58,26 +58,22 @@ class KeyboardViewController: UIInputViewController {
         if sharedDefaults?.objectForKey(defaultColors) != nil {
             colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
         }
-
-
     }
     
     override func viewDidLayoutSubviews() {
+        buttonArray.removeAll()
         
         screenWidth = view.frame.width
         screenHeight = view.frame.height
         
-        var tempData = [[String:String]]()
-        tempData = data
-        
-        for (index, entry) in tempData.enumerate() {
+        for (index, entry) in data.enumerate() {
             for (key, value) in entry {
-                if let color = self.colors[key] as String! {
-                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
-                }
-                else {
+//                if let color = self.colors[key] as String! {
+////                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
+//                }
+//                else {
                     addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "0")
-                }
+//                }
             }
         }
 
@@ -106,20 +102,34 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
-        let size = sizeBucket.getSizes(data.count, indexOfItem: tag, frame: CGRectMake(0, 0, 375, 166))
-
+//        let size = sizeBucket.getSizes(data.count, indexOfItem: tag, frame: CGRectMake(0, 0, 375, 166))
+        let keyButton = UIButton(type: .Custom)
+        keyButton.layer.cornerRadius = 10
+        keyButton.setTitle("T \(tag)", forState: .Normal)
+        keyButton.setTitle(keyText, forState: .Disabled)
+        keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+        
         switch data.count {
         case 1 :
-            let keyButton = UIButton(type: .Custom)
-            keyButton.layer.cornerRadius = 10
-            keyButton.setTitle("SIZE W\(size.width) SIZE H\(size.height)", forState: .Normal)
-            keyButton.setTitle(keyText, forState: .Disabled)
-            keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
-            keyButton.backgroundColor = UIColor.purpleColor()
-            keyButton.frame = CGRectMake(midScreenWidth - size.width/2, 0, size.width, size.height)
-            view.addSubview(keyButton)
-        case 2:            print("asdf")
-        case 3:            print("asdf")
+            keyButton.frame = CGRectMake(0, 0, screenWidth, screenHeight/2)
+            break
+        case 2:
+            keyButton.frame = CGRectMake(tag == 0 ? 0 : midScreenWidth, 0, screenWidth/2 - 2, screenHeight/2)
+            break
+        case 3:
+            if tag == 0 {
+                keyButton.frame = CGRectMake(0, 0, screenWidth/2, 200)
+                keyButton.backgroundColor = UIColor.blueColor()
+            }
+            else if tag == 1 {
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 0, screenWidth/2 - 5, 100)
+                keyButton.backgroundColor = UIColor.purpleColor()
+            }
+            else {
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 5, 50)
+                keyButton.backgroundColor = UIColor.orangeColor()
+            }
+            break
         case 4:            print("asdf")
         case 5:            print("asdf")
         case 6:            print("asdf")
@@ -129,7 +139,8 @@ class KeyboardViewController: UIInputViewController {
         default:
             print("asdf")
         }
-
+        
+        view.addSubview(keyButton)
     }
     
     func keyPressed (button: UIButton) {
@@ -159,13 +170,17 @@ class KeyboardViewController: UIInputViewController {
     }
 
     override func textDidChange(textInput: UITextInput?) {
-        var textColor: UIColor
-        let proxy = self.textDocumentProxy 
-        if proxy.keyboardAppearance == UIKeyboardAppearance.Dark {
-            textColor = UIColor.whiteColor()
-        }
-        else {
-            textColor = UIColor.blackColor()
-        }
+    }
+    
+    func getRandomColor() -> UIColor{
+        
+        let randomRed:CGFloat = CGFloat(drand48())
+        
+        let randomGreen:CGFloat = CGFloat(drand48())
+        
+        let randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
     }
 }

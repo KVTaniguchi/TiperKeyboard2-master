@@ -198,8 +198,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         nextKBButton.layer.cornerRadius = 20
         
         checkKeyCount()
-        
-        print("DAA IS :\(data)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -221,6 +219,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     override func viewWillDisappear(animated: Bool) {
          saveData()
+        
+        print("DAA IS :\(data) COUT NIS \(data.count)")
     }
     
     // MARK Notifications
