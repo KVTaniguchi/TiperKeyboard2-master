@@ -102,7 +102,6 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
-//        let size = sizeBucket.getSizes(data.count, indexOfItem: tag, frame: CGRectMake(0, 0, 375, 166))
         let keyButton = UIButton(type: .Custom)
         keyButton.layer.cornerRadius = 10
         keyButton.setTitle("T \(tag)", forState: .Normal)
@@ -119,18 +118,30 @@ class KeyboardViewController: UIInputViewController {
         case 3:
             if tag == 0 {
                 keyButton.frame = CGRectMake(0, 0, screenWidth/2, 200)
-                keyButton.backgroundColor = UIColor.blueColor()
             }
             else if tag == 1 {
                 keyButton.frame = CGRectMake(screenWidth/2 + 1, 0, screenWidth/2 - 5, 100)
-                keyButton.backgroundColor = UIColor.purpleColor()
             }
             else {
                 keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 5, 50)
-                keyButton.backgroundColor = UIColor.orangeColor()
             }
             break
-        case 4:            print("asdf")
+        case 4:
+            switch tag {
+            case 0:
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                break
+            case 1:
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                break
+            case 2:
+                keyButton.frame = CGRectMake(0, 101, screenWidth/2, 100)
+                break
+            case 3:
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2, 60)
+                break
+            default: print("asdf")
+            }
         case 5:            print("asdf")
         case 6:            print("asdf")
         case 7:            print("asdf")
@@ -138,6 +149,24 @@ class KeyboardViewController: UIInputViewController {
                         print("asdf")
         default:
             print("asdf")
+        }
+        
+        switch tag {
+        case 0:
+            keyButton.backgroundColor = UIColor.orangeColor()
+        case 1:
+            keyButton.backgroundColor = UIColor.blueColor()
+        case 2:
+            keyButton.backgroundColor = UIColor.purpleColor()
+        case 3:
+            keyButton.backgroundColor = UIColor.grayColor()
+        case 4:
+            keyButton.backgroundColor = UIColor.yellowColor()
+        case 5:
+            keyButton.backgroundColor = UIColor.lightGrayColor()
+        case 6:
+            keyButton.backgroundColor = UIColor.whiteColor()
+        default: print("asdf")
         }
         
         view.addSubview(keyButton)
