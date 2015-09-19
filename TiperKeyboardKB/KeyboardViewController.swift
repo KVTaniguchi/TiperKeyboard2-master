@@ -142,14 +142,34 @@ class KeyboardViewController: UIInputViewController {
                 break
             default: print("asdf")
             }
-        case 5:            print("asdf")
-        case 6:            print("asdf")
-        case 7:            print("asdf")
-        case 8:
-                        print("asdf")
-        default:
-            print("asdf")
+        case 5:
+            switch tag {
+            case 0:
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                break
+            case 1:
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                break
+            case 2:
+                keyButton.frame = CGRectMake(0, 101, screenWidth/3, 100)
+                break
+            case 3:
+                keyButton.frame = CGRectMake(screenWidth/3 + 1, 101, screenWidth/3, 100)
+                break
+            case 4:
+                keyButton.frame = CGRectMake((screenWidth * 2/3) + 1, 101, screenWidth/3, 60)
+                break
+            case 6:            print("asdf")
+            case 7:            print("asdf")
+            case 8:
+                            print("asdf")
+            default:
+                print("asdf")
+            }
+            
+        default: print("asdf")
         }
+        
         
         switch tag {
         case 0:
