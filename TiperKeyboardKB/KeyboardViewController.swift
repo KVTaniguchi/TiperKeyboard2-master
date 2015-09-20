@@ -25,7 +25,6 @@ class KeyboardViewController: UIInputViewController {
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var colorRef = KBColorPalette.colorRef
-    let sizeBucket = KeyBoardSizeBucket()
     
     var screenWidth : CGFloat = 0.0
     var screenHeight : CGFloat = 0.0

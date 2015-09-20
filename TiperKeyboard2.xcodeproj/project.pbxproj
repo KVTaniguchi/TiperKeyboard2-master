@@ -12,13 +12,11 @@
 		F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B92221AFF03BF00F7A9F8 /* ColorPalette.swift */; };
 		F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
-		F61070631B77279900DDE4A4 /* TESTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61070621B77279900DDE4A4 /* TESTViewController.swift */; };
 		F61070661B772A9B00DDE4A4 /* CoreTextArcView.m in Sources */ = {isa = PBXBuildFile; fileRef = F61070651B772A9B00DDE4A4 /* CoreTextArcView.m */; };
 		F613F5BB1BAF4EAC00D3C25B /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F613F5BA1BAF4EAC00D3C25B /* SplashV3.png */; settings = {ASSET_TAGS = (); }; };
 		F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F616577D1B12AA67005D0BFF /* keyboard-75.png */; };
 		F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62010171AFF0B8100FB9212 /* KBColorPalete.swift */; };
 		F62E48C81B1018840074012E /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62E48C71B1018840074012E /* InformationViewController.swift */; };
-		F65741701B9FDB910008FEAB /* KeyBoardSizeBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657416F1B9FDB910008FEAB /* KeyBoardSizeBucket.swift */; };
 		F6676B191B7831D100EC573D /* TextDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6676B181B7831D100EC573D /* TextDrawer.m */; };
 		F67F7B0B1B6F1183007F9048 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F67F7B0A1B6F1183007F9048 /* StoreKit.framework */; };
 		F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F69CDF191B042C930076C6A9 /* keyboard-75.png */; };
@@ -79,7 +77,6 @@
 		F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPaletteView.swift; sourceTree = "<group>"; };
 		F60DFF1D1AFEED2E00019FAB /* forward-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forward-7.png"; sourceTree = "<group>"; };
 		F6106FF51B77074D00DDE4A4 /* TiperKeyboardKB-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TiperKeyboardKB-Bridging-Header.h"; sourceTree = "<group>"; };
-		F61070621B77279900DDE4A4 /* TESTViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TESTViewController.swift; sourceTree = "<group>"; };
 		F61070641B772A9B00DDE4A4 /* CoreTextArcView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextArcView.h; sourceTree = "<group>"; };
 		F61070651B772A9B00DDE4A4 /* CoreTextArcView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextArcView.m; sourceTree = "<group>"; };
 		F613F5BA1BAF4EAC00D3C25B /* SplashV3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashV3.png; sourceTree = "<group>"; };
@@ -88,7 +85,6 @@
 		F62E48C71B1018840074012E /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
 		F64375081A59DF4F00E1335D /* TiperKeyboard2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboard2.entitlements; sourceTree = "<group>"; };
 		F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TiperKeyboardKB.entitlements; sourceTree = "<group>"; };
-		F657416F1B9FDB910008FEAB /* KeyBoardSizeBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyBoardSizeBucket.swift; sourceTree = "<group>"; };
 		F6676B171B7831D100EC573D /* TextDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextDrawer.h; sourceTree = "<group>"; };
 		F6676B181B7831D100EC573D /* TextDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextDrawer.m; sourceTree = "<group>"; };
 		F67F7B0A1B6F1183007F9048 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -182,7 +178,6 @@
 				F6FB59A01A4F36CE000A39CD /* Supporting Files */,
 				F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */,
 				F60B213C1B13CA7F00148804 /* CellSizesStruct.swift */,
-				F61070621B77279900DDE4A4 /* TESTViewController.swift */,
 				F6676B171B7831D100EC573D /* TextDrawer.h */,
 				F6676B181B7831D100EC573D /* TextDrawer.m */,
 			);
@@ -220,7 +215,6 @@
 			children = (
 				F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */,
 				F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */,
-				F657416F1B9FDB910008FEAB /* KeyBoardSizeBucket.swift */,
 				F69CDF191B042C930076C6A9 /* keyboard-75.png */,
 				F62010171AFF0B8100FB9212 /* KBColorPalete.swift */,
 				F6FB59C81A4F378A000A39CD /* Supporting Files */,
@@ -399,7 +393,6 @@
 				F69CDF1D1B0452120076C6A9 /* RKDropdownAlert.m in Sources */,
 				F6021A291B07C69A007C0C21 /* PreviewCell.swift in Sources */,
 				F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */,
-				F61070631B77279900DDE4A4 /* TESTViewController.swift in Sources */,
 				F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */,
 				F62E48C81B1018840074012E /* InformationViewController.swift in Sources */,
 				F6676B191B7831D100EC573D /* TextDrawer.m in Sources */,
@@ -421,7 +414,6 @@
 			files = (
 				F6FB59CB1A4F378A000A39CD /* KeyboardViewController.swift in Sources */,
 				F62010181AFF0B8100FB9212 /* KBColorPalete.swift in Sources */,
-				F65741701B9FDB910008FEAB /* KeyBoardSizeBucket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

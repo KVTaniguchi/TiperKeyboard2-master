@@ -158,11 +158,11 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         deleteButton.setTitle("del", forState: .Normal)
         deleteButton.backgroundColor = UIColor.blackColor()
+        nextKBButton.backgroundColor = UIColor.lightGrayColor()
         nextKBButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
         [deleteButton, nextKBButton].map{ button -> UIButton in
             button.layer.cornerRadius = 5
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.backgroundColor = UIColor.lightGrayColor()
             button.clipsToBounds = true
             self.containerView.addSubview(button)
             return button
@@ -176,7 +176,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfThree(44)]-padding-[instrLab]-15-[edit]-30-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cv]-15-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
@@ -434,10 +434,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if indexPath.item < (data.count-1) {
-            return true
-        }
-        return false
+        return true
     }
     
     func collectionView(collectionView: UICollectionView!, itemAtIndexPath fromIndexPath: NSIndexPath!, canMoveToIndexPath toIndexPath: NSIndexPath!) -> Bool {
