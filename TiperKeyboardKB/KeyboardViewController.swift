@@ -49,7 +49,7 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.redColor()
+        self.view.backgroundColor = UIColor.darkGrayColor()
 
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -83,19 +83,17 @@ class KeyboardViewController: UIInputViewController {
     func addSystemKeys () {
         let nextButton = UIButton()
         nextButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
-        nextButton.backgroundColor = UIColor.darkGrayColor()
+        nextButton.backgroundColor = UIColor.whiteColor()
         nextButton.layer.cornerRadius = 10
         nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
-        nextButton.sizeToFit()
-        nextButton.frame = CGRectMake(screenWidth - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8, screenWidth/8)
+        nextButton.frame = CGRectMake(screenWidth - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
         
         let deleteButton = UIButton()
-        deleteButton.backgroundColor = UIColor.lightGrayColor()
+        deleteButton.backgroundColor = UIColor.blackColor()
         deleteButton.setTitle("del", forState: UIControlState.Normal)
         deleteButton.layer.cornerRadius = 10
         deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
-        deleteButton.sizeToFit()
-        deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8, screenWidth/8)
+        deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
         
         view.addSubview(deleteButton)
         view.addSubview(nextButton)
@@ -107,7 +105,7 @@ class KeyboardViewController: UIInputViewController {
         keyButton.layer.borderColor = UIColor.blackColor().CGColor
         keyButton.layer.borderWidth = 0.5
         keyButton.setTitle(keyTitle, forState: .Normal)
-        keyButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
+        keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
         keyButton.backgroundColor = UIColor.lightGrayColor()
@@ -127,7 +125,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(screenWidth/2 + 1, 0, screenWidth/2 - 5, 100)
             }
             else {
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 5, 50)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 5, 48)
             }
             break
         case 4:
@@ -142,7 +140,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 101, screenWidth/2 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 1, 60)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 1, 58)
                 break
             default: print("asdf")
             }
@@ -161,7 +159,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(screenWidth/3 - 1, 101, screenWidth/3 - 1, 100)
                 break
             case 4:
-                keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3 - 1, 60)
+                keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3 - 1, 58)
                 break
             default:
                 print("asdf")
@@ -184,7 +182,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(screenWidth/2 - 1, 111, screenWidth/4 - 1, 100)
                 break
             case 5:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 111, screenWidth/4 - 1, 60)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 111, screenWidth/4 - 1, 58)
                 break
             default:
                 print("asdf")
@@ -210,7 +208,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4 - 1, 100)
                 break
             case 6:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 60)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 58)
                 break
             default:
                 print("asdf")
@@ -240,7 +238,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 7:
-                keyButton.frame = CGRectMake(0, 169, screenWidth * 3/4 - 1, 48)
+                keyButton.frame = CGRectMake(0, 169, screenWidth * 3/4 - 1, 47)
             default:
                 print("asdf")
             }
@@ -272,7 +270,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 169, screenWidth/2, 48)
                 break
             case 8:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 169, screenWidth/4 - 1, 48)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 169, screenWidth/4 - 1, 46)
                 break
             default:
                 print("asdf")

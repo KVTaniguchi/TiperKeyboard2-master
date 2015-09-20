@@ -7,10 +7,7 @@ import UIKit
 import StoreKit
 
 class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate {
-    
-    var skProduct : SKProduct?
     var productID = "com.ShortKey.All10Keys"
-    
     var scrollView = UIScrollView()
     var containerView = UIView()
     var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
@@ -25,9 +22,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton(), deleteButton = UIButton(), nextKBButton = UIButton()
     var layout = ReorderableCollectionViewFlowLayout()
-    
     var isUpgradedUser = false
-    
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
@@ -93,8 +88,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumLineSpacing = 2.0
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        collectionView?.layer.borderWidth = 0.5
+        collectionView?.layer.borderColor = UIColor.lightGrayColor().CGColor
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView!.backgroundColor = UIColor.darkGrayColor()
+        collectionView!.backgroundColor = UIColor.clearColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
@@ -165,7 +162,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         nextKBButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
         [deleteButton, nextKBButton].map{ button -> UIButton in
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.backgroundColor = UIColor.redColor()
+            button.backgroundColor = UIColor.lightGrayColor()
             button.clipsToBounds = true
             self.containerView.addSubview(button)
             return button
@@ -183,7 +180,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
         containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         
-        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Top, relatedBy: .Equal, toItem: collectionView, attribute: .Bottom, multiplier: 1.0, constant: 0)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Top, relatedBy: .Equal, toItem: collectionView, attribute: .Bottom, multiplier: 1.0, constant: 1)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40)])
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: [.AlignAllCenterY, NSLayoutFormatOptions.AlignAllTop, NSLayoutFormatOptions.AlignAllBottom], metrics: nil, views: views))
         
@@ -420,21 +417,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             cell.hidden = false
             cell.alpha = 1.0
         })
-        
-        // Set vertical effect
-        cell.verticalMotionEffect.minimumRelativeValue = -10
-        cell.verticalMotionEffect.maximumRelativeValue = 10
-        
-        // Set horizontal effect
-        cell.horizontalMotionEffect.minimumRelativeValue = -10
-        cell.horizontalMotionEffect.maximumRelativeValue = 10
-        
-        // Create group to combine both
-        let group = UIMotionEffectGroup()
-        group.motionEffects = [cell.horizontalMotionEffect, cell.verticalMotionEffect]
-        
-        // Add both effects to your view
-        collectionView.addMotionEffect(group)
         
         return cell
     }
