@@ -78,6 +78,7 @@ class KeyboardViewController: UIInputViewController {
         }
 
         addSystemKeys()
+        
     }
     
     func addSystemKeys () {
@@ -108,7 +109,7 @@ class KeyboardViewController: UIInputViewController {
         keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
-        keyButton.backgroundColor = UIColor.lightGrayColor()
+        keyButton.backgroundColor = UIColor.whiteColor()
         
         switch data.count {
         case 1 :
@@ -276,8 +277,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectZero
             }
             
-            
-        default: print("asdf")
+            default: keyButton.frame = CGRectZero
         }
         
         view.addSubview(keyButton)
@@ -310,17 +310,5 @@ class KeyboardViewController: UIInputViewController {
     }
 
     override func textDidChange(textInput: UITextInput?) {
-    }
-    
-    func getRandomColor() -> UIColor{
-        
-        let randomRed:CGFloat = CGFloat(drand48())
-        
-        let randomGreen:CGFloat = CGFloat(drand48())
-        
-        let randomBlue:CGFloat = CGFloat(drand48())
-        
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-        
     }
 }
