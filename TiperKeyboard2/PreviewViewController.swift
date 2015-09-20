@@ -24,12 +24,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var textFieldOne = UITextField(), textFieldTwo = UITextField(), textFieldThree = UITextField()
     var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
     var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton(), deleteButton = UIButton(), nextKBButton = UIButton()
-    var colorPaletteView = ColorPaletteView()
     var layout = ReorderableCollectionViewFlowLayout()
     
     var isUpgradedUser = false
     
-    let colorRef = ColorPalette.colorRef
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
@@ -96,7 +94,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView!.backgroundColor = UIColor.redColor()
+        collectionView!.backgroundColor = UIColor.darkGrayColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
         collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
         collectionView!.delegate = self
@@ -136,18 +134,16 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return textField
         }
         
-        colorPaletteView.translatesAutoresizingMaskIntoConstraints = false
-        
-        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.alpha = 0}
-        [textFieldTwo, textFieldOne, colorPaletteView, deleteKeysButton].map{$0.hidden = true}
+        [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.alpha = 0}
+        [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.hidden = true}
 
-        colorPaletteView.updateColorCallback = { (index) in
-            let dict = self.data[self.selectedItem]
-            self.colors[dict.keys.first!] = "\(index)"
-            self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
-            self.saveData()
-        }
-        containerView.addSubview(colorPaletteView)
+//        colorPaletteView.updateColorCallback = { (index) in
+//            let dict = self.data[self.selectedItem]
+//            self.colors[dict.keys.first!] = "\(index)"
+//            self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
+//            self.saveData()
+//        }
+//        containerView.addSubview(colorPaletteView)
         
         [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
             button.layer.cornerRadius = 5
@@ -176,9 +172,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         
         let metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 20 : 50]
-        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "colorP":colorPaletteView, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
+        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
 
-        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[colorP]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfThree(44)]-padding-[instrLab]-15-[edit]-30-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
@@ -191,8 +187,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40)])
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: [.AlignAllCenterY, NSLayoutFormatOptions.AlignAllTop, NSLayoutFormatOptions.AlignAllBottom], metrics: nil, views: views))
         
-        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
-        [textFieldThree, textFieldTwo, textFieldOne, colorPaletteView].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
+        [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
         
         deleteButton.layer.cornerRadius = 20
         nextKBButton.layer.cornerRadius = 20
@@ -203,7 +199,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        colorPaletteView.alpha = 0.0
         scrollView.contentSize = CGSizeMake(view.frame.width, view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height))
     }
     
@@ -235,8 +230,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     func textChanged (notification:NSNotification) {
         if self.navigationController?.topViewController == self {
-            colorPaletteView.alpha = 1.0
-            colorPaletteView.hidden = false
             tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.WhileEditing
@@ -301,7 +294,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         editKeysButton.selected = !editKeysButton.selected
         if editKeysButton.selected {
             UIView.animateWithDuration(0.5, animations: {
-                [self.colorPaletteView, self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
+                [self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
                 }) { (value) in
                     self.instructionalLabel.text = "Touch a key to edit it"
                     self.editKeysButton.setTitle("Done", forState: .Normal)
@@ -315,7 +308,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
-            [colorPaletteView, deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
+            [deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
             
             containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
@@ -326,8 +319,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             UIView.animateWithDuration(0.4, animations: {
                 [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
                 self.textFieldThree.hidden = false
-                self.colorPaletteView.alpha = 0.0
-                self.colorPaletteView.hidden = true
                 }, completion: { (value) in })
         }
     }
@@ -391,9 +382,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                     self.deleteKeysButton.hidden = false
                 }
                 
-                self.colorPaletteView.alpha = 0.0
-                self.colorPaletteView.hidden = true
-                
                 [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
                     textField.alpha = 1.0
                     textField.hidden = false
@@ -424,18 +412,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         cell.contentView.layer.cornerRadius = cell.frame.height/5
         
-        for (key, value) in dict {
+        for key in dict.keys {
             cell.setLabelText(key)
-//            let colorIndex = colors[key]
-//            cell.circleView.backgroundColor = colors[key] == nil ? UIColor.clearColor() : colorRef[colorIndex!.toInt()!] as UIColor!
         }
         
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             cell.hidden = false
             cell.alpha = 1.0
         })
-        
-        
         
         // Set vertical effect
         cell.verticalMotionEffect.minimumRelativeValue = -10

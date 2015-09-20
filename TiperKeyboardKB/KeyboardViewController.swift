@@ -24,7 +24,7 @@ class KeyboardViewController: UIInputViewController {
     var colors = [String:String]()
     var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
-    var colorRef = [UIColor]()
+    var colorRef = KBColorPalette.colorRef
     let sizeBucket = KeyBoardSizeBucket()
     
     var screenWidth : CGFloat = 0.0
@@ -68,12 +68,12 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in data.enumerate() {
             for (key, value) in entry {
-//                if let color = self.colors[key] as String! {
-////                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
-//                }
-//                else {
-                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "0")
-//                }
+                if let color = self.colors[key] as String! {
+                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
+                }
+                else {
+                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "\(index)")
+                }
             }
         }
 
@@ -104,9 +104,13 @@ class KeyboardViewController: UIInputViewController {
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
         let keyButton = UIButton(type: .Custom)
         keyButton.layer.cornerRadius = 10
-        keyButton.setTitle("T \(tag)", forState: .Normal)
+        keyButton.layer.borderColor = UIColor.blackColor().CGColor
+        keyButton.layer.borderWidth = 0.5
+        keyButton.setTitle(keyTitle, forState: .Normal)
+        keyButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+        keyButton.backgroundColor = UIColor.lightGrayColor()
         
         switch data.count {
         case 1 :
@@ -129,35 +133,35 @@ class KeyboardViewController: UIInputViewController {
         case 4:
             switch tag {
             case 0:
-                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3 - 1, 100)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3 - 1, 100)
                 break
             case 2:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/2, 100)
+                keyButton.frame = CGRectMake(0, 101, screenWidth/2 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2, 60)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 1, 60)
                 break
             default: print("asdf")
             }
         case 5:
             switch tag {
             case 0:
-                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3 - 1, 100)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3 - 1, 100)
                 break
             case 2:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(0, 101, screenWidth/3 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(screenWidth/3 - 1, 101, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(screenWidth/3 - 1, 101, screenWidth/3 - 1, 100)
                 break
             case 4:
-                keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3, 60)
+                keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3 - 1, 60)
                 break
             default:
                 print("asdf")
@@ -165,22 +169,22 @@ class KeyboardViewController: UIInputViewController {
         case 6:
             switch tag {
             case 0:
-                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3 - 1, 110)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3 - 1, 110)
                 break
             case 2:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(0, 111, screenWidth/4 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/4 - 1, 111, screenWidth/4 - 1, 100)
                 break
             case 4:
-                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/2 - 1, 111, screenWidth/4 - 1, 100)
                 break
             case 5:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 60)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 111, screenWidth/4 - 1, 60)
                 break
             default:
                 print("asdf")
@@ -191,22 +195,22 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 0, screenWidth/2 - 1, 100)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4 - 1, 100)
                 break
             case 2:
-                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4 - 1, 100)
                 break
             case 4:
-                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4 - 1, 100)
                 break
             case 5:
-                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4 - 1, 100)
                 break
             case 6:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 60)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 60)
                 break
             default:
                 print("asdf")
@@ -218,25 +222,25 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 0, screenWidth/2 - 1, 100)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4 - 1, 100)
                 break
             case 2:
-                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4 - 1, 67)
                 break
             case 4:
-                keyButton.frame = CGRectMake(screenWidth/4 + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(screenWidth/4 + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 5:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 6:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 7:
-                keyButton.frame = CGRectMake(0, 169, screenWidth * 3/4, 48)
+                keyButton.frame = CGRectMake(0, 169, screenWidth * 3/4 - 1, 48)
             default:
                 print("asdf")
             }
@@ -247,59 +251,34 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 0, screenWidth/2 - 1, 100)
                 break
             case 1:
-                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4 - 1, 100)
                 break
             case 2:
-                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4, 100)
+                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4 - 1, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4 - 1, 67)
                 break
             case 4:
-                keyButton.frame = CGRectMake(screenWidth/4 + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(screenWidth/4 + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 5:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 6:
-                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 67)
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 67)
                 break
             case 7:
                 keyButton.frame = CGRectMake(0, 169, screenWidth/2, 48)
                 break
             case 8:
-                keyButton.frame = CGRectMake(screenWidth/2 + 1, 169, screenWidth/4, 48)
+                keyButton.frame = CGRectMake(screenWidth/2 + 1, 169, screenWidth/4 - 1, 48)
                 break
             default:
                 print("asdf")
             }
             
             
-        default: print("asdf")
-        }
-        
-        
-        
-        
-        
-        
-        switch tag {
-        case 0:
-            keyButton.backgroundColor = UIColor.orangeColor()
-        case 1:
-            keyButton.backgroundColor = UIColor.blueColor()
-        case 2:
-            keyButton.backgroundColor = UIColor.purpleColor()
-        case 3:
-            keyButton.backgroundColor = UIColor.grayColor()
-        case 4:
-            keyButton.backgroundColor = UIColor.yellowColor()
-        case 5:
-            keyButton.backgroundColor = UIColor.lightGrayColor()
-        case 6:
-            keyButton.backgroundColor = UIColor.whiteColor()
-        case 7:
-            keyButton.backgroundColor = UIColor.greenColor()
         default: print("asdf")
         }
         
