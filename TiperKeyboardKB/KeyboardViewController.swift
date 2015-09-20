@@ -87,7 +87,7 @@ class KeyboardViewController: UIInputViewController {
         nextButton.layer.cornerRadius = 10
         nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
         nextButton.sizeToFit()
-        nextButton.frame = CGRectMake(screenWidth - 50.0, screenHeight - 50.0, 50, 50)
+        nextButton.frame = CGRectMake(screenWidth - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8, screenWidth/8)
         
         let deleteButton = UIButton()
         deleteButton.backgroundColor = UIColor.lightGrayColor()
@@ -95,7 +95,7 @@ class KeyboardViewController: UIInputViewController {
         deleteButton.layer.cornerRadius = 10
         deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
         deleteButton.sizeToFit()
-        deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - 50, screenHeight - 50, 50, 50)
+        deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8, screenWidth/8)
         
         view.addSubview(deleteButton)
         view.addSubview(nextButton)
@@ -154,21 +154,100 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(0, 101, screenWidth/3, 100)
                 break
             case 3:
-                keyButton.frame = CGRectMake(screenWidth/3 + 1, 101, screenWidth/3, 100)
+                keyButton.frame = CGRectMake(screenWidth/3 - 1, 101, screenWidth/3, 100)
                 break
             case 4:
-                keyButton.frame = CGRectMake((screenWidth * 2/3) + 1, 101, screenWidth/3, 60)
+                keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3, 60)
                 break
-            case 6:            print("asdf")
-            case 7:            print("asdf")
-            case 8:
-                            print("asdf")
+            default:
+                print("asdf")
+            }
+        case 6:
+            switch tag {
+            case 0:
+                keyButton.frame = CGRectMake(0, 0, screenWidth * 2/3, 100)
+                break
+            case 1:
+                keyButton.frame = CGRectMake(screenWidth * 2/3, 0, screenWidth/3, 100)
+                break
+            case 2:
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 100)
+                break
+            case 3:
+                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4, 100)
+                break
+            case 4:
+                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4, 100)
+                break
+            case 5:
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 60)
+                break
+            default:
+                print("asdf")
+            }
+        case 7:
+            switch tag {
+            case 0:
+                keyButton.frame = CGRectMake(0, 0, screenWidth/2 - 1, 100)
+                break
+            case 1:
+                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4, 100)
+                break
+            case 2:
+                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4, 100)
+                break
+            case 3:
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 100)
+                break
+            case 4:
+                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4, 100)
+                break
+            case 5:
+                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4, 100)
+                break
+            case 6:
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 60)
+                break
+            default:
+                print("asdf")
+            }
+        
+        case 8:
+            switch tag {
+            case 0:
+                keyButton.frame = CGRectMake(0, 0, screenWidth/2 - 1, 100)
+                break
+            case 1:
+                keyButton.frame = CGRectMake(screenWidth/2, 0, screenWidth/4, 100)
+                break
+            case 2:
+                keyButton.frame = CGRectMake(screenWidth * 3/4, 0, screenWidth/4, 100)
+                break
+            case 3:
+                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 60)
+                break
+            case 4:
+                keyButton.frame = CGRectMake(screenWidth/4 - 1, 101, screenWidth/4, 60)
+                break
+            case 5:
+                keyButton.frame = CGRectMake(screenWidth/2 - 1, 101, screenWidth/4, 60)
+                break
+            case 6:
+                keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4, 60)
+                break
+            case 7:
+//                keyButton.frame = CGRectMake(0, 101, screenWidth/4, 60)                
             default:
                 print("asdf")
             }
             
+            
         default: print("asdf")
         }
+        
+        
+        
+        
         
         
         switch tag {

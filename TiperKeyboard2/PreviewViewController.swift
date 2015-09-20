@@ -333,10 +333,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func addNewItem () {
-        count++
-        data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
-        checkKeyCount()
-        collectionView?.reloadData()
+        if count < 9 {
+            count++
+            data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
+            checkKeyCount()
+            collectionView?.reloadData()
+        }
+        else {
+            navigationItem.rightBarButtonItem?.enabled = false
+        }
     }
     
     func saveDataButtonPressed () {
