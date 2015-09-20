@@ -45,10 +45,10 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         previewTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(previewTextField)
         
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
         
-        var attrString = NSMutableAttributedString(string: instructionText)
+        let attrString = NSMutableAttributedString(string: instructionText)
         attrString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
         
         settingsInstructionLabel.attributedText = attrString

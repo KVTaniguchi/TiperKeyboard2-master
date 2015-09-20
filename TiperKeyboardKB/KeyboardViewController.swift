@@ -108,7 +108,7 @@ class KeyboardViewController: UIInputViewController {
         keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
-        keyButton.backgroundColor = UIColor.whiteColor()
+        keyButton.backgroundColor = UIColor(red: 238/255, green: 246/255, blue: 245/255, alpha: 1.0)
         
         switch data.count {
         case 1 :

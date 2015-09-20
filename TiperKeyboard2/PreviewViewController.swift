@@ -200,16 +200,19 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         super.viewDidAppear(animated)
         
         clearText()
-        if data.count == 8 {
+        if data.count == 9 {
             navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
             navigationItem.rightBarButtonItem?.enabled = false
+        }
+        else {
+            navigationItem.rightBarButtonItem?.enabled = true
         }
     }
     
     override func viewWillDisappear(animated: Bool) {
-         saveData()
+        super.viewWillDisappear(animated)
         
-        print("DAA IS :\(data) COUT NIS \(data.count)")
+        saveData()
     }
     
     // MARK Notifications
@@ -324,7 +327,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             checkKeyCount()
             collectionView?.reloadData()
         }
-        else {
+        if count == 9 {
             navigationItem.rightBarButtonItem?.enabled = false
         }
     }
