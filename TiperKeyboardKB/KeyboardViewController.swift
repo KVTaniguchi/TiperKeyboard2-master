@@ -142,7 +142,7 @@ class KeyboardViewController: UIInputViewController {
             case 3:
                 keyButton.frame = CGRectMake(screenWidth/2 + 1, 101, screenWidth/2 - 1, 58)
                 break
-            default: print("asdf")
+            default: keyButton.frame = CGRectZero
             }
         case 5:
             switch tag {
@@ -162,7 +162,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake((screenWidth * 2/3) - 1, 101, screenWidth/3 - 1, 58)
                 break
             default:
-                print("asdf")
+                keyButton.frame = CGRectZero
             }
         case 6:
             switch tag {
@@ -185,7 +185,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 111, screenWidth/4 - 1, 58)
                 break
             default:
-                print("asdf")
+                keyButton.frame = CGRectZero
             }
         case 7:
             switch tag {
@@ -211,7 +211,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake((screenWidth * 3/4) + 1, 101, screenWidth/4 - 1, 58)
                 break
             default:
-                print("asdf")
+                keyButton.frame = CGRectZero
             }
         
         case 8:
@@ -240,7 +240,7 @@ class KeyboardViewController: UIInputViewController {
             case 7:
                 keyButton.frame = CGRectMake(0, 169, screenWidth * 3/4 - 1, 47)
             default:
-                print("asdf")
+                keyButton.frame = CGRectZero
             }
             
         case 9:
@@ -273,7 +273,7 @@ class KeyboardViewController: UIInputViewController {
                 keyButton.frame = CGRectMake(screenWidth/2 + 1, 169, screenWidth/4 - 1, 46)
                 break
             default:
-                print("asdf")
+                keyButton.frame = CGRectZero
             }
             
             
