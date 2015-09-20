@@ -88,8 +88,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumLineSpacing = 2.0
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView?.layer.borderWidth = 0.5
-        collectionView?.layer.borderColor = UIColor.lightGrayColor().CGColor
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         collectionView!.backgroundColor = UIColor.clearColor()
         collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
@@ -159,8 +157,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
         
         deleteButton.setTitle("del", forState: .Normal)
+        deleteButton.backgroundColor = UIColor.blackColor()
         nextKBButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
         [deleteButton, nextKBButton].map{ button -> UIButton in
+            button.layer.cornerRadius = 5
             button.translatesAutoresizingMaskIntoConstraints = false
             button.backgroundColor = UIColor.lightGrayColor()
             button.clipsToBounds = true
@@ -186,9 +186,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
         [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
-        
-        deleteButton.layer.cornerRadius = 20
-        nextKBButton.layer.cornerRadius = 20
         
         checkKeyCount()
     }
