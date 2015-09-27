@@ -16,8 +16,8 @@ public struct SizeBucket {
         case 2 : radius = indexOfItem == 0 ? 0.57 * frame.width : 0.37 * frame.width
         case 3 :
             switch indexOfItem {
-            case 0 : radius = 0.57 * frame.width
-            case 1 : radius = 0.37 * frame.width
+            case 0 : radius = 0.50 * frame.width
+            case 1 : radius = 0.45 * frame.width
             default : return CGSizeMake(frame.width - 2, 0.20 * frame.height)
             }
         case 4 :

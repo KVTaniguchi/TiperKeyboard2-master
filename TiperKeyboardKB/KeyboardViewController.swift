@@ -17,12 +17,11 @@ class NextKeyboardButton : UIButton {
 }
 
 class KeyboardViewController: UIInputViewController {
-    
+    var buttonArray = [UIButton]()
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
     var colors = [String:String]()
-    var buttonArray = [UIButton]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
     var colorRef = KBColorPalette.colorRef
     
@@ -47,8 +46,6 @@ class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = UIColor.darkGrayColor()
 
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
@@ -60,7 +57,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        buttonArray.removeAll()
+        super.viewDidLayoutSubviews()
         
         screenWidth = view.frame.width
         screenHeight = view.frame.height
@@ -78,6 +75,7 @@ class KeyboardViewController: UIInputViewController {
 
         addSystemKeys()
         
+        view.backgroundColor = UIColor.whiteColor()
     }
     
     func addSystemKeys () {
@@ -88,27 +86,26 @@ class KeyboardViewController: UIInputViewController {
         nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
         nextButton.frame = CGRectMake(screenWidth - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
         
-        let deleteButton = UIButton()
-        deleteButton.backgroundColor = UIColor.blackColor()
-        deleteButton.setTitle("del", forState: UIControlState.Normal)
+        let deleteButton = UIButton(type: .Custom)
+        deleteButton.setImage(UIImage(named: "delete_sign-50"), forState: .Normal)
         deleteButton.layer.cornerRadius = 10
         deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
         deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
-        
+        buttonArray.append(nextButton)
+        buttonArray.append(deleteButton)
         view.addSubview(deleteButton)
         view.addSubview(nextButton)
     }
     
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
         let keyButton = UIButton(type: .Custom)
+        keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         keyButton.layer.cornerRadius = 10
         keyButton.layer.borderColor = UIColor.blackColor().CGColor
         keyButton.layer.borderWidth = 0.5
         keyButton.setTitle(keyTitle, forState: .Normal)
-        keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
-        keyButton.backgroundColor = UIColor(red: 238/255, green: 246/255, blue: 245/255, alpha: 1.0)
+        buttonArray.append(keyButton)
         
         switch data.count {
         case 1 :
@@ -306,6 +303,7 @@ class KeyboardViewController: UIInputViewController {
     }
 
     override func textWillChange(textInput: UITextInput?) {
+        
     }
 
     override func textDidChange(textInput: UITextInput?) {

@@ -24,6 +24,7 @@
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
 		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
+		F6BF84C31BB7857F0071A452 /* delete_sign-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BF84C21BB7857F0071A452 /* delete_sign-50.png */; settings = {ASSET_TAGS = (); }; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
@@ -95,6 +96,7 @@
 		F69E5CB01B02FC6200AFA35E /* TiperKeyboard2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TiperKeyboard2-Bridging-Header.h"; sourceTree = "<group>"; };
 		F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		F6BF84C21BB7857F0071A452 /* delete_sign-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_sign-50.png"; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				F64375091A59F41A00E1335D /* TiperKeyboardKB.entitlements */,
+				F6BF84C21BB7857F0071A452 /* delete_sign-50.png */,
 				F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */,
 				F69CDF191B042C930076C6A9 /* keyboard-75.png */,
 				F62010171AFF0B8100FB9212 /* KBColorPalete.swift */,
@@ -374,6 +377,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6BF84C31BB7857F0071A452 /* delete_sign-50.png in Resources */,
 				F69CDF1A1B042C930076C6A9 /* keyboard-75.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
