@@ -171,7 +171,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         let metrics = ["cvH":UIScreen.mainScreen().bounds.height < 600 ? 200 : 260, "padding":UIScreen.mainScreen().bounds.height < 600 ? 20 : 50]
         let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
 
-        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(220)]-50-[tfOne(44)]-[tfTwo(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
+        expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfOne(44)]-[tfTwo(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfThree(44)]-padding-[instrLab]-15-[edit]-30-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
         containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
