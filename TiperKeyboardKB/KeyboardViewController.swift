@@ -39,10 +39,6 @@ class KeyboardViewController: UIInputViewController {
             return screenHeight / 2
         }
     }
-    
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +100,7 @@ class KeyboardViewController: UIInputViewController {
         keyButton.layer.borderColor = UIColor.blackColor().CGColor
         keyButton.layer.borderWidth = 0.5
         keyButton.setTitle(keyTitle, forState: .Normal)
+        keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
         buttonArray.append(keyButton)
         
@@ -291,6 +288,8 @@ class KeyboardViewController: UIInputViewController {
         let text = button.titleForState(.Disabled)
         let proxy = textDocumentProxy 
         proxy.insertText(text!)
+        
+        advanceToNextInputMode()
     }
     
     func deleteWord () {
