@@ -23,7 +23,6 @@ class KeyboardViewController: UIInputViewController {
     var data = [[String:String]]()
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
-    var colorRef = KBColorPalette.colorRef
     
     var screenWidth : CGFloat = 0.0
     var screenHeight : CGFloat = 0.0
