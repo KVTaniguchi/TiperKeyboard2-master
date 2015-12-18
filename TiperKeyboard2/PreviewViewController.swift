@@ -50,7 +50,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             
             var tempDict = [String:String]()
             for (key, value) in colors {
-                data.map { dict -> [String:String] in
+                _ = data.map { dict -> [String:String] in
                     if dict[key] != nil {
                         tempDict[key] = value
                     }
@@ -101,7 +101,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         defaultTextLabel.hidden = count > 1
         instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
         
-        [defaultTextLabel, instructionalLabel].map { label -> UILabel in
+        _ = [defaultTextLabel, instructionalLabel].map { label -> UILabel in
             label.numberOfLines = 0
             label.textColor = UIColor.darkGrayColor()
             label.textAlignment = .Center
@@ -115,7 +115,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .CenterX, relatedBy: .Equal, toItem:containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
         containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
         
-        [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
+        _ = [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
             textField.backgroundColor = UIColor.darkGrayColor()
             textField.textColor = UIColor.whiteColor()
             textField.translatesAutoresizingMaskIntoConstraints = false
@@ -129,18 +129,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return textField
         }
         
-        [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.alpha = 0}
-        [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.hidden = true}
-
-//        colorPaletteView.updateColorCallback = { (index) in
-//            let dict = self.data[self.selectedItem]
-//            self.colors[dict.keys.first!] = "\(index)"
-//            self.collectionView!.reloadItemsAtIndexPaths([NSIndexPath(forItem: self.selectedItem, inSection: 0)])
-//            self.saveData()
-//        }
-//        containerView.addSubview(colorPaletteView)
-        
-        [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
+        _ = [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.alpha = 0}
+        _ = [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.hidden = true}
+        _ = [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
             button.layer.cornerRadius = 5
             button.setTitleColor(self.view.tintColor, forState: .Normal)
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -160,7 +151,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         deleteButton.backgroundColor = UIColor.blackColor()
         nextKBButton.backgroundColor = UIColor.lightGrayColor()
         nextKBButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
-        [deleteButton, nextKBButton].map{ button -> UIButton in
+        _ = [deleteButton, nextKBButton].map{ button -> UIButton in
             button.layer.cornerRadius = 5
             button.translatesAutoresizingMaskIntoConstraints = false
             button.clipsToBounds = true
@@ -184,8 +175,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40)])
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: [.AlignAllCenterY, NSLayoutFormatOptions.AlignAllTop, NSLayoutFormatOptions.AlignAllBottom], metrics: nil, views: views))
         
-        [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
-        [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
+        _ = [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
+        _ = [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
         
         checkKeyCount()
     }
@@ -245,8 +236,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             defaultTextLabel.hidden = false
             defaultTextLabel.alpha = 1.0
             
-            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton, deleteButton, nextKBButton].map{$0.alpha = 0.0}
-            [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton, deleteButton, nextKBButton].map{$0.hidden = true}
+            _ = [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton, deleteButton, nextKBButton].map{$0.alpha = 0.0}
+            _ = [editKeysButton, textFieldThree, instructionalLabel, collectionView!, questionButton, deleteButton, nextKBButton].map{$0.hidden = true}
         }
         else if data.count > 0 {
             UIView.animateWithDuration(1.0, animations: {
@@ -256,8 +247,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 self.defaultTextLabel.hidden = true
                 self.defaultTextLabel.alpha = 0.0
                 
-                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton, self.deleteButton, self.nextKBButton].map{$0.alpha = 1.0}
-                [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton, self.deleteButton, self.nextKBButton].map{$0.hidden = false}
+                _ = [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton, self.deleteButton, self.nextKBButton].map{$0.alpha = 1.0}
+                _ = [self.editKeysButton, self.textFieldThree, self.instructionalLabel, self.collectionView!, self.questionButton, self.deleteButton, self.nextKBButton].map{$0.hidden = false}
             })
         }
     }
@@ -291,7 +282,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         editKeysButton.selected = !editKeysButton.selected
         if editKeysButton.selected {
             UIView.animateWithDuration(0.5, animations: {
-                [self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
+                _ = [self.textFieldOne, self.textFieldTwo, self.textFieldThree, self.editKeysButton, self.instructionalLabel, self.questionButton].map{$0.alpha = 0.0}
                 }) { (value) in
                     self.instructionalLabel.text = "Touch a key to edit it"
                     self.editKeysButton.setTitle("Done", forState: .Normal)
@@ -305,7 +296,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
-            [deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
+            _ = [deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
             
             containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
             containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
@@ -314,7 +305,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             editKeysButton.setTitle("Edit keys", forState: .Normal)
             collectionView?.reloadData()
             UIView.animateWithDuration(0.4, animations: {
-                [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
+                _ = [self.textFieldThree, self.editKeysButton, self.questionButton, self.instructionalLabel].map {$0.alpha = 1.0}
                 self.textFieldThree.hidden = false
                 }, completion: { (value) in })
         }
@@ -379,7 +370,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                     self.deleteKeysButton.hidden = false
                 }
                 
-                [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
+                _ = [self.textFieldOne, self.textFieldTwo].map { textField -> UITextField in
                     textField.alpha = 1.0
                     textField.hidden = false
                     textField.userInteractionEnabled = true
@@ -458,7 +449,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     // MARK Convenience
     func clearText () {
-        [textFieldOne, textFieldThree, textFieldThree].map{$0.text = ""}
+        _ = [textFieldOne, textFieldThree, textFieldThree].map{$0.text = ""}
     }
     
     func saveData () {
