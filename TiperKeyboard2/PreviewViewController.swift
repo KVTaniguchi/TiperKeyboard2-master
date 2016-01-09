@@ -7,10 +7,9 @@ import UIKit
 import StoreKit
 
 class PreviewViewController: UIViewController, UICollectionViewDelegate, ReorderableCollectionViewDelegateFlowLayout, ReorderableCollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate {
-    var productID = "com.ShortKey.All10Keys"
     var scrollView = UIScrollView()
     var containerView = UIView()
-    var expandedVConstraints = [], expandedHConstraints = [], compactVConstraints = []
+    var expandedVConstraints = [NSLayoutConstraint](), expandedHConstraints = [NSLayoutConstraint](), compactVConstraints = [NSLayoutConstraint]()
     var collectionView : UICollectionView?
     var data = [[String:String]]()
     var tempData = [String:String]()
@@ -18,10 +17,10 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     var lastContentOffSet : CGFloat = 0.0
     var colors = [String:String]()
     var sharedDefaults = NSUserDefaults(suiteName: "group.InfoKeyboard")
-    var textFieldOne = UITextField(), textFieldTwo = UITextField(), textFieldThree = UITextField()
-    var defaultTextLabel = UILabel(), instructionalLabel = UILabel()
-    var editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton(), deleteButton = UIButton(), nextKBButton = UIButton()
-    var layout = ReorderableCollectionViewFlowLayout()
+    let textFieldOne = UITextField(), textFieldTwo = UITextField(), textFieldThree = UITextField()
+    let defaultTextLabel = UILabel(), instructionalLabel = UILabel()
+    let editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton(), deleteButton = UIButton(), nextKBButton = UIButton()
+    let layout = ReorderableCollectionViewFlowLayout()
     var isUpgradedUser = false
     let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
@@ -112,8 +111,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             return label
         }
         
-        containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .CenterX, relatedBy: .Equal, toItem:containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        containerView.addConstraint(NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120))
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: defaultTextLabel, attribute: .CenterX, relatedBy: .Equal, toItem:containerView, attribute: .CenterX, multiplier: 1.0, constant: 0)])
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: defaultTextLabel, attribute: .Top, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 120)])
         
         _ = [textFieldOne, textFieldTwo, textFieldThree].map { textField -> UITextField in
             textField.backgroundColor = UIColor.darkGrayColor()
@@ -121,7 +120,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             textField.translatesAutoresizingMaskIntoConstraints = false
             textField.delegate = self
             textField.autocorrectionType = .No
-            textField.borderStyle = UITextBorderStyle.None
+            textField.borderStyle = UITextBorderStyle.RoundedRect
             textField.userInteractionEnabled = false
             textField.textAlignment = .Center
             textField.returnKeyType = UIReturnKeyType.Done
@@ -165,18 +164,17 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         expandedVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfOne(44)]-[tfTwo(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .AlignAllCenterY, metrics: metrics, views: views)
         compactVConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[cv(240)]-padding-[tfThree(44)]-padding-[instrLab]-15-[edit]-30-[question]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: metrics, views:views)
-        containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
-        containerView.addConstraint(NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        
+        NSLayoutConstraint.activateConstraints(compactVConstraints)
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[instrLab]-20-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cv]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views:views))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[edit(160)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views))
+        NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: editKeysButton, attribute: .CenterX, relatedBy: .Equal, toItem: containerView, attribute: .CenterX, multiplier: 1.0, constant: 0)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Top, relatedBy: .Equal, toItem: collectionView, attribute: .Bottom, multiplier: 1.0, constant: 1)])
         NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: nextKBButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 40)])
         NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[del(40)][nextKB(40)]-15-|", options: [.AlignAllCenterY, NSLayoutFormatOptions.AlignAllTop, NSLayoutFormatOptions.AlignAllBottom], metrics: nil, views: views))
         
-        _ = [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0))}
-        _ = [textFieldThree, textFieldTwo, textFieldOne].map{self.containerView.addConstraint(NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0))}
+        _ = [textFieldThree, textFieldTwo, textFieldOne].map{NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: $0, attribute: .Left, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Left, multiplier: 1.0, constant: 0)])}
+        _ = [textFieldThree, textFieldTwo, textFieldOne].map{NSLayoutConstraint.activateConstraints([NSLayoutConstraint(item: $0, attribute: .Right, relatedBy: .Equal, toItem: self.instructionalLabel, attribute: .Right, multiplier: 1.0, constant: 0)])}
         
         checkKeyCount()
     }
@@ -298,9 +296,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             scrollView.setContentOffset(CGPointMake(0.0, -(navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)), animated: true)
             _ = [deleteKeysButton, textFieldOne, textFieldTwo, editKeysButton, questionButton, instructionalLabel].map{$0.alpha = 0.0}
             
-            containerView.removeConstraints(expandedVConstraints as! [NSLayoutConstraint])
-            containerView.removeConstraints(expandedHConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(compactVConstraints as! [NSLayoutConstraint])
+            NSLayoutConstraint.deactivateConstraints(expandedVConstraints)
+            NSLayoutConstraint.deactivateConstraints(expandedHConstraints)
+            NSLayoutConstraint.activateConstraints(compactVConstraints)
             instructionalLabel.text = "Tap a key to see what it will type for you.  Press, hold, & drag to move it.  Press + to add more keys."
             editKeysButton.setTitle("Edit keys", forState: .Normal)
             collectionView?.reloadData()
@@ -349,9 +347,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             instructionalLabel.alpha = 0.0
-            containerView.removeConstraints(compactVConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(expandedVConstraints as! [NSLayoutConstraint])
-            containerView.addConstraints(expandedHConstraints as! [NSLayoutConstraint])
+            containerView.removeConstraints(compactVConstraints)
+            containerView.addConstraints(expandedVConstraints)
+            containerView.addConstraints(expandedHConstraints)
             textFieldOne.placeholder = "What is the name of this key?"
             textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
             textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
