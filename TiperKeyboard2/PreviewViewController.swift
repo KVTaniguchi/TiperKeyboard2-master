@@ -87,14 +87,15 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         layout.minimumLineSpacing = 2.0
         layout.scrollDirection = .Vertical
         collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        collectionView!.backgroundColor = UIColor.clearColor()
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
-        collectionView!.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
-        collectionView!.delegate = self
-        collectionView!.dataSource = self
-        collectionView!.contentSize = CGSizeMake(view.frame.width - 30, 260)
-        containerView.addSubview(collectionView!)
+        guard let cv = collectionView else { return }
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.backgroundColor = UIColor.clearColor()
+        cv.contentInset = UIEdgeInsets(top: 0, left: 1.5, bottom: 0, right: 0)
+        cv.registerClass(PreviewCell.self, forCellWithReuseIdentifier: "buttonCell")
+        cv.delegate = self
+        cv.dataSource = self
+        cv.contentSize = CGSizeMake(view.frame.width - 30, 260)
+        containerView.addSubview(cv)
         
         defaultTextLabel.text = "Add keys by pressing the + Button in the upper right corner."
         defaultTextLabel.hidden = count > 1
@@ -347,9 +348,9 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         else {
             instructionalLabel.alpha = 0.0
-            containerView.removeConstraints(compactVConstraints)
-            containerView.addConstraints(expandedVConstraints)
-            containerView.addConstraints(expandedHConstraints)
+            NSLayoutConstraint.deactivateConstraints(compactVConstraints)
+            NSLayoutConstraint.activateConstraints(expandedVConstraints)
+            NSLayoutConstraint.activateConstraints(expandedHConstraints)
             textFieldOne.placeholder = "What is the name of this key?"
             textFieldOne.attributedPlaceholder = NSAttributedString(string: "What is the name of this key?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
             textFieldTwo.attributedPlaceholder = NSAttributedString(string: "What will this key type when pressed?", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor(), NSFontAttributeName:UIFont.systemFontOfSize(14)])
