@@ -13,7 +13,7 @@
 		F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CF2FE1B0842D300E7EFE0 /* ColorPaletteView.swift */; };
 		F60DFF1E1AFEED2E00019FAB /* forward-7.png in Resources */ = {isa = PBXBuildFile; fileRef = F60DFF1D1AFEED2E00019FAB /* forward-7.png */; };
 		F61070661B772A9B00DDE4A4 /* CoreTextArcView.m in Sources */ = {isa = PBXBuildFile; fileRef = F61070651B772A9B00DDE4A4 /* CoreTextArcView.m */; };
-		F613F5BB1BAF4EAC00D3C25B /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F613F5BA1BAF4EAC00D3C25B /* SplashV3.png */; settings = {ASSET_TAGS = (); }; };
+		F613F5BB1BAF4EAC00D3C25B /* SplashV3.png in Resources */ = {isa = PBXBuildFile; fileRef = F613F5BA1BAF4EAC00D3C25B /* SplashV3.png */; };
 		F616577E1B12AA67005D0BFF /* keyboard-75.png in Resources */ = {isa = PBXBuildFile; fileRef = F616577D1B12AA67005D0BFF /* keyboard-75.png */; };
 		F61BA0121BB8775600528FD1 /* ShortKeyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61BA0111BB8775600528FD1 /* ShortKeyUITests.swift */; };
 		F62E48C81B1018840074012E /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62E48C71B1018840074012E /* InformationViewController.swift */; };
@@ -23,7 +23,7 @@
 		F69E5CA61B02E7B000AFA35E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CA51B02E7B000AFA35E /* PreviewViewController.swift */; };
 		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
-		F6BF84C31BB7857F0071A452 /* delete_sign-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BF84C21BB7857F0071A452 /* delete_sign-50.png */; settings = {ASSET_TAGS = (); }; };
+		F6BF84C31BB7857F0071A452 /* delete_sign-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BF84C21BB7857F0071A452 /* delete_sign-50.png */; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
@@ -762,6 +762,7 @@
 				F61BA0171BB8775600528FD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F6FB59981A4F36CE000A39CD /* Build configuration list for PBXProject "TiperKeyboard2" */ = {
 			isa = XCConfigurationList;
