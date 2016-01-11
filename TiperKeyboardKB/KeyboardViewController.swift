@@ -27,17 +27,8 @@ class KeyboardViewController: UIInputViewController {
     var screenWidth : CGFloat = 0.0
     var screenHeight : CGFloat = 0.0
     
-    var midScreenWidth : CGFloat {
-        get {
-            return screenWidth / 2
-        }
-    }
-    
-    var midscreenHeight : CGFloat {
-        get {
-            return screenHeight / 2
-        }
-    }
+    var midScreenWidth : CGFloat { return screenWidth / 2 }
+    var midscreenHeight : CGFloat { return screenHeight / 2 }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +36,7 @@ class KeyboardViewController: UIInputViewController {
         if sharedDefaults?.objectForKey(defaultskey) != nil {
             data = sharedDefaults?.objectForKey(defaultskey) as! [[String:String]]
         }
-        
-        if sharedDefaults?.objectForKey(defaultColors) != nil {
-            colors = sharedDefaults?.objectForKey(defaultColors) as! [String:String]
-        }
+        view.backgroundColor = UIColor.whiteColor()
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,18 +47,11 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in data.enumerate() {
             for (key, value) in entry {
-                if let color = self.colors[key] as String! {
-                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: color)
-                }
-                else {
-                    addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "\(index)")
-                }
+                addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "\(index)")
             }
         }
-
-        addSystemKeys()
         
-        view.backgroundColor = UIColor.whiteColor()
+        addSystemKeys()
     }
     
     func addSystemKeys () {
@@ -95,9 +76,9 @@ class KeyboardViewController: UIInputViewController {
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
         let keyButton = UIButton(type: .Custom)
         keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        keyButton.layer.cornerRadius = 10
-        keyButton.layer.borderColor = UIColor.blackColor().CGColor
-        keyButton.layer.borderWidth = 0.5
+        keyButton.layer.cornerRadius = 5
+        keyButton.layer.borderColor = UIColor.darkGrayColor().CGColor
+        keyButton.layer.borderWidth = 1.0
         keyButton.setTitle(keyTitle, forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
         keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
@@ -105,10 +86,11 @@ class KeyboardViewController: UIInputViewController {
         
         switch data.count {
         case 1 :
-            keyButton.frame = CGRectMake(0, 0, screenWidth, screenHeight/2)
+            keyButton.frame = CGRectMake(0, 0, screenWidth, screenHeight - screenWidth/8 - 10)
             break
         case 2:
             keyButton.frame = CGRectMake(tag == 0 ? 0 : midScreenWidth, 0, screenWidth/2 - 2, screenHeight/2)
+            
             break
         case 3:
             if tag == 0 {
