@@ -28,14 +28,14 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "textChanged:", name: UITextFieldTextDidChangeNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PreviewViewController.textChanged(_:)), name: UITextFieldTextDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PreviewViewController.keyboardShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PreviewViewController.keyboardHidden(_:)), name: UIKeyboardDidHideNotification, object: nil)
 
         view.backgroundColor = UIColor.whiteColor()
         navigationController?.navigationBar.topItem?.title = "Short Key"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addNewItem")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveDataButtonPressed")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PreviewViewController.addNewItem))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: #selector(PreviewViewController.saveDataButtonPressed))
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
@@ -140,12 +140,12 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         }
         
         editKeysButton.setTitle("Edit Keys", forState: .Normal)
-        editKeysButton.addTarget(self, action: "editButtonPressed", forControlEvents: .TouchUpInside)
+        editKeysButton.addTarget(self, action: #selector(PreviewViewController.editButtonPressed), forControlEvents: .TouchUpInside)
         deleteKeysButton.setTitle("Delete", forState: .Normal)
-        deleteKeysButton.addTarget(self, action: "deleteButtonPressed", forControlEvents: .TouchUpInside)
+        deleteKeysButton.addTarget(self, action: #selector(PreviewViewController.deleteButtonPressed), forControlEvents: .TouchUpInside)
         questionButton.setTitle("?", forState: .Normal)
         questionButton.titleLabel?.font = UIFont.systemFontOfSize(20)
-        questionButton.addTarget(self, action: "questionButtonPressed", forControlEvents: .TouchUpInside)
+        questionButton.addTarget(self, action: #selector(PreviewViewController.questionButtonPressed), forControlEvents: .TouchUpInside)
         
         deleteButton.setTitle("del", forState: .Normal)
         deleteButton.backgroundColor = UIColor.blackColor()
@@ -312,7 +312,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     
     func addNewItem () {
         if count < 10 {
-            count++
+            count += 1
             data.insert(["Add a Title":"Press Edit Keys to add data."], atIndex: 0)
             checkKeyCount()
             collectionView?.reloadData()

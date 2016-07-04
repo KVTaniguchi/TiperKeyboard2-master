@@ -22,7 +22,7 @@ class InformationViewController: UIViewController, UITextFieldDelegate {
         view.backgroundColor = UIColor.whiteColor()
 
         var swipeGestureRecognizer : UISwipeGestureRecognizer?
-        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
+        swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(InformationViewController.swipeDown))
         swipeGestureRecognizer?.direction = .Down
         view.addGestureRecognizer(swipeGestureRecognizer!)
         

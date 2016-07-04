@@ -59,13 +59,13 @@ class KeyboardViewController: UIInputViewController {
         nextButton.setImage(UIImage(named: "keyboard-75"), forState: .Normal)
         nextButton.backgroundColor = UIColor.whiteColor()
         nextButton.layer.cornerRadius = 10
-        nextButton.addTarget(self, action:"advanceToNextInputMode", forControlEvents: .TouchUpInside)
+        nextButton.addTarget(self, action:#selector(UIInputViewController.advanceToNextInputMode), forControlEvents: .TouchUpInside)
         nextButton.frame = CGRectMake(screenWidth - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
         
         let deleteButton = UIButton(type: .Custom)
         deleteButton.setImage(UIImage(named: "delete_sign-50"), forState: .Normal)
         deleteButton.layer.cornerRadius = 10
-        deleteButton.addTarget(self, action: "deleteWord", forControlEvents: .TouchUpInside)
+        deleteButton.addTarget(self, action: #selector(KeyboardViewController.deleteWord), forControlEvents: .TouchUpInside)
         deleteButton.frame = CGRectMake(CGRectGetMinX(nextButton.frame) - screenWidth/8, screenHeight - screenWidth/8, screenWidth/8 - 1, screenWidth/8)
         buttonArray.append(nextButton)
         buttonArray.append(deleteButton)
@@ -81,7 +81,7 @@ class KeyboardViewController: UIInputViewController {
         keyButton.layer.borderWidth = 1.0
         keyButton.setTitle(keyTitle, forState: .Normal)
         keyButton.setTitle(keyText, forState: .Disabled)
-        keyButton.addTarget(self, action: "keyPressed:", forControlEvents: .TouchUpInside)
+        keyButton.addTarget(self, action: #selector(KeyboardViewController.keyPressed(_:)), forControlEvents: .TouchUpInside)
         buttonArray.append(keyButton)
         
         switch data.count {
@@ -277,7 +277,7 @@ class KeyboardViewController: UIInputViewController {
         let proxy = textDocumentProxy 
         proxy.deleteBackward()
         let tokens = proxy.documentContextBeforeInput!.componentsSeparatedByString(" ")
-        for var index = 0; index  < tokens.last!.utf16.count; index++ {
+        for _ in 0 ..< tokens.last!.utf16.count {
             proxy.deleteBackward()
         }
     }

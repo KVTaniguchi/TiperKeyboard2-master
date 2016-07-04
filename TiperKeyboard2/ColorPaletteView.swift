@@ -23,7 +23,7 @@ class ColorPaletteView: UIView {
             var colorButton = UIButton(type: UIButtonType.Custom)
             colorButton = UIButton(type: UIButtonType.Custom)
             colorButton.tag = index
-            colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
+            colorButton.addTarget(self, action: #selector(ColorPaletteView.activateColorPicker(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             colorButton.translatesAutoresizingMaskIntoConstraints = false
             colorButton.backgroundColor = colors[index]
             buttonArray.append(colorButton)
