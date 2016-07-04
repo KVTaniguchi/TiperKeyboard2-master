@@ -75,8 +75,9 @@ class KeyboardViewController: UIInputViewController {
     
     func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
         let keyButton = UIButton(type: .Custom)
+        keyButton.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
         keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        keyButton.layer.cornerRadius = 5
+        keyButton.layer.cornerRadius = 2
         keyButton.layer.borderColor = UIColor.darkGrayColor().CGColor
         keyButton.layer.borderWidth = 1.0
         keyButton.setTitle(keyTitle, forState: .Normal)
