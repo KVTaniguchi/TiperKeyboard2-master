@@ -23,32 +23,32 @@ class ColorPaletteView: UIView {
             var colorButton = UIButton(type: UIButtonType.Custom)
             colorButton = UIButton(type: UIButtonType.Custom)
             colorButton.tag = index
-            colorButton.addTarget(self, action: "activateColorPicker:", forControlEvents: UIControlEvents.TouchUpInside)
+            colorButton.addTarget(self, action: #selector(ColorPaletteView.activateColorPicker(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             colorButton.translatesAutoresizingMaskIntoConstraints = false
             colorButton.backgroundColor = colors[index]
             buttonArray.append(colorButton)
-            self.addSubview(colorButton)
+            addSubview(colorButton)
             
             if index == 0 || index == 5 {
-                self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0))
+                addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0))
             }
             else {
-                let previousButton = self.buttonArray[index - 1]
-                self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
+                let previousButton = buttonArray[index - 1]
+                addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Left, relatedBy: .Equal, toItem: previousButton, attribute: .Right, multiplier: 1.0, constant: 0))
                 if index == 9 || index == 4 {
-                    self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0))
+                    addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0))
                 }
             }
             
             if index < 5 {
-                self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0))
+                addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0))
             }
             else {
-                self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0))
+                addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0))
             }
             
-            self.addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0.5, constant: 0))
-            self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(width)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:["colorButton":colorButton]))
+            addConstraint(NSLayoutConstraint(item: colorButton, attribute: .Height, relatedBy: .Equal, toItem: self, attribute: .Height, multiplier: 0.5, constant: 0))
+            addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[colorButton(width)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:["colorButton":colorButton]))
         }
     }
 
@@ -57,7 +57,7 @@ class ColorPaletteView: UIView {
     }
     
     func activateColorPicker (sender : UIButton) {
-        self.updateColorCallback?(colorIndex:sender.tag)
+        updateColorCallback?(colorIndex:sender.tag)
     }
     
 }
