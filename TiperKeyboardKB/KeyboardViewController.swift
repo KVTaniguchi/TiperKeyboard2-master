@@ -47,7 +47,7 @@ class KeyboardViewController: UIInputViewController {
         
         for (index, entry) in data.enumerate() {
             for (key, value) in entry {
-                addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value, colorIndex: "\(index)")
+                addVariableKeySizeButtonWithTitle(key, tag: index, keyText: value)
             }
         }
         
@@ -73,7 +73,7 @@ class KeyboardViewController: UIInputViewController {
         view.addSubview(nextButton)
     }
     
-    func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String, colorIndex : String) {
+    func addVariableKeySizeButtonWithTitle(keyTitle : String, tag : NSInteger, keyText : String) {
         let keyButton = UIButton(type: .Custom)
         keyButton.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
         keyButton.setTitleColor(UIColor.blackColor(), forState: .Normal)

@@ -11,7 +11,6 @@ import UIKit
 class PreviewCell: UICollectionViewCell {
     
     let keyTextLabel = UILabel()
-    let imageView = UIImageView(image: UIImage(named: "keyboard-75"))
     let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
     let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
     
@@ -27,16 +26,8 @@ class PreviewCell: UICollectionViewCell {
         keyTextLabel.font = UIFont(name: "Helvetica", size: 10)
         contentView.addSubview(keyTextLabel)
         
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
-        contentView.addConstraint(NSLayoutConstraint(item: keyTextLabel, attribute: .CenterX, relatedBy: NSLayoutRelation.Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(imageView)
-        imageView.hidden = true
-        contentView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterX, relatedBy: .Equal, toItem: contentView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-        contentView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView]))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[img(35)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["img":imageView]))
+        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
+        keyTextLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor).active = true
         
         contentView.clipsToBounds = true
     }
