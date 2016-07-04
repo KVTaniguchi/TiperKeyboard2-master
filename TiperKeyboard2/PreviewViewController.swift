@@ -400,7 +400,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         cell.contentView.layer.cornerRadius = cell.frame.height/5
         
         for key in dict.keys {
-            cell.setLabelText(key)
+            cell.keyTextLabel.text = key
         }
         
         UIView.animateWithDuration(1.0, animations: { () -> Void in

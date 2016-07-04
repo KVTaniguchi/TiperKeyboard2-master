@@ -32,10 +32,6 @@ class PreviewCell: UICollectionViewCell {
         contentView.clipsToBounds = true
     }
     
-    func setLabelText (text: String) {
-        keyTextLabel.text = text
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
