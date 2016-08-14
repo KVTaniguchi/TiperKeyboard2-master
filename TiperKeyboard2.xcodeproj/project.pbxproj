@@ -23,6 +23,7 @@
 		F69E5CB61B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */; };
 		F6A1C0201AC7396C00EEC008 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59CA1A4F378A000A39CD /* KeyboardViewController.swift */; };
 		F6BF84C31BB7857F0071A452 /* delete_sign-50.png in Resources */ = {isa = PBXBuildFile; fileRef = F6BF84C21BB7857F0071A452 /* delete_sign-50.png */; };
+		F6E7C52D1D2B61210084A438 /* PreviewControllerSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E7C52C1D2B61210084A438 /* PreviewControllerSetup.swift */; };
 		F6FB59A31A4F36CE000A39CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */; };
 		F6FB59AA1A4F36CE000A39CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59A91A4F36CE000A39CD /* Images.xcassets */; };
 		F6FB59AD1A4F36CE000A39CD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FB59AB1A4F36CE000A39CD /* LaunchScreen.xib */; };
@@ -101,6 +102,7 @@
 		F69E5CB41B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		F69E5CB51B02FCCE00AFA35E /* ReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		F6BF84C21BB7857F0071A452 /* delete_sign-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_sign-50.png"; sourceTree = "<group>"; };
+		F6E7C52C1D2B61210084A438 /* PreviewControllerSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewControllerSetup.swift; sourceTree = "<group>"; };
 		F6FB599D1A4F36CE000A39CD /* TiperKeyboard2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiperKeyboard2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FB59A11A4F36CE000A39CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6FB59A21A4F36CE000A39CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 		F6FB59941A4F36CE000A39CD = {
 			isa = PBXGroup;
 			children = (
+				F6E7C52C1D2B61210084A438 /* PreviewControllerSetup.swift */,
 				F6FB599F1A4F36CE000A39CD /* TiperKeyboard2 */,
 				F6FB59B51A4F36CE000A39CD /* TiperKeyboard2Tests */,
 				F6FB59C71A4F378A000A39CD /* TiperKeyboardKB */,
@@ -335,16 +338,18 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Kevin Taniguchi";
 				TargetAttributes = {
 					F61BA00E1BB8775600528FD1 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = F6FB599C1A4F36CE000A39CD;
 					};
 					F6FB599C1A4F36CE000A39CD = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3B3FT42G96;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -364,6 +369,7 @@
 					F6FB59C51A4F378A000A39CD = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3B3FT42G96;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -452,6 +458,7 @@
 				F6021A291B07C69A007C0C21 /* PreviewCell.swift in Sources */,
 				F60CF2FF1B0842D300E7EFE0 /* ColorPaletteView.swift in Sources */,
 				F60B92231AFF03BF00F7A9F8 /* ColorPalette.swift in Sources */,
+				F6E7C52D1D2B61210084A438 /* PreviewControllerSetup.swift in Sources */,
 				F62E48C81B1018840074012E /* InformationViewController.swift in Sources */,
 				F6676B191B7831D100EC573D /* TextDrawer.m in Sources */,
 			);
@@ -521,6 +528,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.ShortKeyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = TiperKeyboard2;
 				USES_XCTRUNNER = YES;
 			};
@@ -537,6 +545,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Taniguchi.ShortKeyUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = TiperKeyboard2;
 				USES_XCTRUNNER = YES;
 			};
@@ -555,8 +565,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -565,6 +577,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -599,8 +612,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -608,6 +623,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -625,12 +641,12 @@
 		F6FB59BD1A4F36CE000A39CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -639,6 +655,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -646,12 +663,12 @@
 		F6FB59BE1A4F36CE000A39CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -660,6 +677,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboard2/TiperKeyboard2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -696,6 +715,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
 			};
 			name = Release;
@@ -721,6 +741,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboardKB/TiperKeyboardKB-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -742,6 +763,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "TiperKeyboardKB/TiperKeyboardKB-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
