@@ -11,33 +11,32 @@ import UIKit
 class PreviewCell: UICollectionViewCell {
     
     let keyTextLabel = UILabel()
-    let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
-    let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+    let verticalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+    let horizontalMotionEffect = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = UIColor.lightGrayColor()
-        keyTextLabel.textColor = UIColor.whiteColor()
+        contentView.backgroundColor = UIColor.lightGray
+        keyTextLabel.textColor = UIColor.white
         keyTextLabel.translatesAutoresizingMaskIntoConstraints = false
         keyTextLabel.numberOfLines = 2
-        keyTextLabel.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        keyTextLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
         keyTextLabel.preferredMaxLayoutWidth = contentView.frame.width - 2
         keyTextLabel.font = UIFont(name: "Helvetica", size: 10)
         contentView.addSubview(keyTextLabel)
         
-        NSLayoutConstraint.activateConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[keyTextLabel]|", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
-        keyTextLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor).active = true
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[keyTextLabel]|", options: NSLayoutFormatOptions.alignAllCenterX, metrics: nil, views: ["keyTextLabel":keyTextLabel]))
+        keyTextLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         
         contentView.clipsToBounds = true
     }
     
-    func setLabelText (text: String) {
+    func setLabelText (_ text: String) {
         keyTextLabel.text = text
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
+    }    
 }
