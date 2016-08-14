@@ -298,7 +298,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
             cell.layer.borderWidth = 5
         }
         
-        cell.contentView.layer.cornerRadius = cell.frame.height/5
+        cell.contentView.layer.cornerRadius = 2
         
         for key in dict.keys {
             cell.setLabelText(key)

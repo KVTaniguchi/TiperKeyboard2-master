@@ -66,7 +66,7 @@ extension PreviewViewController {
         _ = [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.alpha = 0}
         _ = [textFieldTwo, textFieldOne, deleteKeysButton].map{$0.isHidden = true}
         _ = [editKeysButton, deleteKeysButton, questionButton].map { button -> UIButton in
-            button.layer.cornerRadius = 5
+            button.layer.cornerRadius = 2
             button.setTitleColor(self.view.tintColor, for: UIControlState())
             button.translatesAutoresizingMaskIntoConstraints = false
             self.containerView.addSubview(button)
@@ -86,7 +86,7 @@ extension PreviewViewController {
         nextKBButton.backgroundColor = UIColor.lightGray
         nextKBButton.setImage(UIImage(named: "keyboard-75"), for: UIControlState())
         _ = [deleteButton, nextKBButton].map{ button -> UIButton in
-            button.layer.cornerRadius = 5
+            button.layer.cornerRadius = 2
             button.translatesAutoresizingMaskIntoConstraints = false
             button.clipsToBounds = true
             self.containerView.addSubview(button)

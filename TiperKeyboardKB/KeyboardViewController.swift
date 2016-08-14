@@ -58,13 +58,13 @@ class KeyboardViewController: UIInputViewController {
         let nextButton = UIButton()
         nextButton.setImage(UIImage(named: "keyboard-75"), for: UIControlState())
         nextButton.backgroundColor = UIColor.white
-        nextButton.layer.cornerRadius = 10
+        nextButton.layer.cornerRadius = 2
         nextButton.addTarget(self, action:#selector(UIInputViewController.advanceToNextInputMode), for: .touchUpInside)
         nextButton.frame = CGRect(x: screenWidth - screenWidth/8, y: screenHeight - screenWidth/8, width: screenWidth/8 - 1, height: screenWidth/8)
         
         let deleteButton = UIButton(type: .custom)
         deleteButton.setImage(UIImage(named: "delete_sign-50"), for: UIControlState())
-        deleteButton.layer.cornerRadius = 10
+        deleteButton.layer.cornerRadius = 2
         deleteButton.addTarget(self, action: #selector(KeyboardViewController.deleteWord), for: .touchUpInside)
         deleteButton.frame = CGRect(x: nextButton.frame.minX - screenWidth/8, y: screenHeight - screenWidth/8, width: screenWidth/8 - 1, height: screenWidth/8)
         buttonArray.append(nextButton)
