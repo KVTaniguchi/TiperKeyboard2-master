@@ -4,6 +4,4 @@
 
 #import "ReorderableCollectionViewFlowLayout.h"
 #import "RKDropdownAlert.h"
-
 #import "TextDrawer.h"
-#import "CoreTextArcView.h"
