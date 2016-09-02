@@ -21,7 +21,7 @@ class KeyboardViewController: UIInputViewController {
     let defaultskey = "tiper2Keyboard"
     let defaultColors = "tiper2Colors"
     var data = [[String:String]]()
-    var colors = [String:String]()
+    var colors = [String: String]()
     var sharedDefaults = UserDefaults(suiteName: "group.InfoKeyboard")
     
     var screenWidth : CGFloat = 0.0

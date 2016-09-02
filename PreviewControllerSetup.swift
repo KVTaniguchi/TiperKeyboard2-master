@@ -97,7 +97,7 @@ extension PreviewViewController {
     
     func setUpLayout() {
         let metrics = ["cvH":UIScreen.main.bounds.height < 600 ? 200 : 260, "padding":UIScreen.main.bounds.height < 600 ? 20 : 50]
-        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton]
+        let views = ["tfThree":textFieldThree,"tfTwo":textFieldTwo, "tfOne":textFieldOne, "edit":editKeysButton, "cv":collectionView!, "instrLab":instructionalLabel, "delete":deleteKeysButton, "question":questionButton, "nextKB":nextKBButton, "del":deleteButton] as [String : Any]
         
         expandedVConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[cv(240)]-padding-[tfOne(44)]-[tfTwo(44)]-[instrLab]-[edit]-[question]", options: NSLayoutFormatOptions(rawValue: 0), metrics: metrics, views:views)
         expandedHConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[question(100)]-(>=1)-[delete(100)]-|", options: .alignAllCenterY, metrics: metrics, views: views)

@@ -364,6 +364,7 @@
 					};
 					F6FB59B11A4F36CE000A39CD = {
 						CreatedOnToolsVersion = 6.1.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = F6FB599C1A4F36CE000A39CD;
 					};
 					F6FB59C51A4F378A000A39CD = {
@@ -699,6 +700,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
 			};
 			name = Debug;
@@ -716,6 +718,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Taniguchi.TiperKeyboard2.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TiperKeyboard2.app/TiperKeyboard2";
 			};
 			name = Release;

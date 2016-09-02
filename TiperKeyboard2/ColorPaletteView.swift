@@ -12,7 +12,7 @@ class ColorPaletteView: UIView {
     
     var buttonArray = [UIButton]()
     let colors = ColorPalette.colorRef
-    var updateColorCallback : ((colorIndex: Int) -> ())?
+    var updateColorCallback : ((_ colorIndex: Int) -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,7 +57,7 @@ class ColorPaletteView: UIView {
     }
     
     func activateColorPicker (_ sender : UIButton) {
-        updateColorCallback?(colorIndex:sender.tag)
+        updateColorCallback?(sender.tag)
     }
     
 }

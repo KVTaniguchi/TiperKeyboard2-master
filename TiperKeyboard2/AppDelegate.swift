@@ -12,17 +12,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var mainNavigationController : UINavigationController?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    @nonobjc func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        self.mainNavigationController = UINavigationController()
+        let mainNavigationController = UINavigationController()
         let previewViewController = PreviewViewController()
-        self.mainNavigationController?.pushViewController(previewViewController, animated: true)
+        mainNavigationController.pushViewController(previewViewController, animated: true)
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.rootViewController = self.mainNavigationController
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window!.rootViewController = mainNavigationController
+        window?.makeKeyAndVisible()
         
         return true
     }
