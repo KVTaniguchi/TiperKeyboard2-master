@@ -12,18 +12,15 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    @nonobjc func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+    
+    func applicationDidFinishLaunching(_ application: UIApplication) {
         let mainNavigationController = UINavigationController()
         let previewViewController = PreviewViewController()
         mainNavigationController.pushViewController(previewViewController, animated: true)
-        
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = mainNavigationController
         window?.makeKeyAndVisible()
-        
-        return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

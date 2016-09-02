@@ -84,7 +84,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -109,7 +109,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     // MARK Notifications
     func keyboardHidden (_ notif : Notification) {
         if editKeysButton.isSelected == false  && UIScreen.main.bounds.height < 600 {
-            scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
+            scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
         }
         else {
             scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 44)
@@ -117,7 +117,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func textChanged (_ notification:Notification) {
-        if self.navigationController?.topViewController == self {
+        if navigationController?.topViewController == self {
             tempData = [String:String]()
             let textField = notification.object as! UITextField
             textField.clearButtonMode = UITextFieldViewMode.whileEditing
@@ -261,7 +261,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height + 44)
             }
             else {
-                scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (self.navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
+                scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height - (navigationController!.navigationBar.frame.height + UIApplication.shared.statusBarFrame.height))
             }
             
             UIView.animate(withDuration: 0.5, animations: {
