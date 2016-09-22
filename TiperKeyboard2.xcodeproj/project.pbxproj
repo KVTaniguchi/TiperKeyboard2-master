@@ -350,6 +350,7 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3B3FT42G96;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -648,6 +649,7 @@
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3B3FT42G96;
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -670,6 +672,7 @@
 				CODE_SIGN_ENTITLEMENTS = TiperKeyboard2/TiperKeyboard2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3B3FT42G96;
 				INFOPLIST_FILE = TiperKeyboard2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
