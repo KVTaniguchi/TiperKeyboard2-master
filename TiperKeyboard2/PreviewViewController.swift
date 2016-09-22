@@ -22,7 +22,7 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     let editKeysButton = UIButton(), deleteKeysButton = UIButton(), questionButton = UIButton(), deleteButton = UIButton(), nextKBButton = UIButton()
     let layout = ReorderableCollectionViewFlowLayout()
     var isUpgradedUser = false
-    let defaultskey = "tiper2Keyboard", defaultColors = "tiper2Colors", defaultUpgraded = "tiper2Upgraded"
+    let defaultskey = "tiper2Keyboard", defaultUpgraded = "tiper2Upgraded"
     let sizeBucket = SizeBucket()
     
     override func viewDidLoad() {
@@ -45,7 +45,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
         
         if sharedDefaults?.object(forKey: defaultskey) != nil {
             data = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
-            colors = sharedDefaults?.object(forKey: defaultColors) as! [String:String]
             
             var tempDict = [String:String]()
             for (key, value) in colors {
@@ -67,7 +66,6 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
                 }
             }
             
-            sharedDefaults?.setValue(tempDict, forKey:defaultColors)
             sharedDefaults?.synchronize()
             
             isUpgradedUser = true
@@ -353,8 +351,8 @@ class PreviewViewController: UIViewController, UICollectionViewDelegate, Reorder
     }
     
     func saveData () {
+        print(data)
         sharedDefaults?.setValue(data, forKey:defaultskey)
-        sharedDefaults?.setValue(colors, forKey:defaultColors)
         sharedDefaults?.synchronize()
     }
     

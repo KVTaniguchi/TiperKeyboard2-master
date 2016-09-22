@@ -34,7 +34,10 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
 
         if sharedDefaults?.object(forKey: defaultskey) != nil {
+            let tempData = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
+            
             data = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
+            
         }
         view.backgroundColor = UIColor.white
     }
@@ -90,8 +93,12 @@ class KeyboardViewController: UIInputViewController {
             keyButton.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight - screenWidth/8 - 10)
             break
         case 2:
-            keyButton.frame = CGRect(x: tag == 0 ? 0 : midScreenWidth, y: 0, width: screenWidth/2 - 2, height: screenHeight/2)
-            
+            if tag == 0 {
+                keyButton.frame = CGRect(x: 0, y: 0, width: screenWidth/2 - 2, height: screenWidth/2 - 2)
+            }
+            else {
+                keyButton.frame = CGRect(x: midScreenWidth, y: 0, width: screenWidth/2 - 2, height: screenWidth/2 - 40)
+            }
             break
         case 3:
             if tag == 0 {
