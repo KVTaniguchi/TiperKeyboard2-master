@@ -34,7 +34,7 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
 
         if sharedDefaults?.object(forKey: defaultskey) != nil {
-            let tempData = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
+            _ = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
             
             data = sharedDefaults?.object(forKey: defaultskey) as! [[String:String]]
             
